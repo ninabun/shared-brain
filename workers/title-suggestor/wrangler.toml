@@ -1,0 +1,8 @@
+name = "shared-brain-title-suggestor"
+main = "src/index.js"
+compatibility_date = "2024-12-18"
+
+[vars]
+FIREBASE_PROJECT_ID = "sharedbrain-92f19"
+ALLOWED_EMAILS = "ninadabun@gmail.com"
+OPENAI_MODEL = "gpt-4.1-mini"

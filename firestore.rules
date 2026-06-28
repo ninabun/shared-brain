@@ -1,0 +1,45 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isBootstrapAdmin() {
+      return signedIn()
+        && request.auth.token.email == "ninadabun@gmail.com";
+    }
+
+    function isWorkspaceMember(workspaceId) {
+      return isBootstrapAdmin()
+        || signedIn()
+        && exists(/databases/$(database)/documents/workspaces/$(workspaceId)/members/$(request.auth.uid));
+    }
+
+    function isWorkspaceAdmin(workspaceId) {
+      return isBootstrapAdmin()
+        || isWorkspaceMember(workspaceId)
+        && get(/databases/$(database)/documents/workspaces/$(workspaceId)/members/$(request.auth.uid)).data.role == "admin";
+    }
+
+    match /profiles/{profileId} {
+      allow read, create, update, delete: if signedIn() && request.auth.uid == profileId;
+    }
+
+    match /workspaces/{workspaceId} {
+      allow read, update: if isWorkspaceMember(workspaceId);
+      allow create: if isBootstrapAdmin() && workspaceId == "main";
+      allow delete: if false;
+
+      match /members/{memberId} {
+        allow read: if isWorkspaceMember(workspaceId);
+        allow create, update, delete: if isWorkspaceAdmin(workspaceId);
+      }
+
+      match /ideas/{ideaId} {
+        allow read, create, update, delete: if isWorkspaceMember(workspaceId);
+      }
+    }
+  }
+}
