@@ -2,6 +2,8 @@
 
 A private visual second brain for video ideas, built with React, Firebase Auth, Firestore, and Firebase Storage.
 
+This repo also includes an Electron desktop shell and native SwiftUI iOS source. See [PLATFORM_APPS.md](./PLATFORM_APPS.md).
+
 ## What it does
 
 - Google sign-in
@@ -25,6 +27,12 @@ npm run dev -- --port 5173
 ```
 
 Open `http://127.0.0.1:5173`.
+
+Desktop app:
+
+```bash
+npm run desktop
+```
 
 Local preview link:
 

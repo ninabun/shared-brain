@@ -1,8 +1,11 @@
 node_modules/
 dist/
+docs/
 .npm-cache/
+.electron-cache/
 .firebase/
 .config/
+release/
 .env.local
 firebase-debug.log
 firestore-debug.log
