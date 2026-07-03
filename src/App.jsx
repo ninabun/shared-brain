@@ -14,6 +14,7 @@ import {
   Stethoscope,
   Workflow,
 } from "lucide-react";
+import React from "react";
 
 const featuredProjects = [
   "Healthcare AI Operating System",
