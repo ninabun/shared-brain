@@ -9,3 +9,6 @@ release/
 firebase-debug.log
 firestore-debug.log
 storage-debug.log
+
+.vercel
+.env*

@@ -1,0 +1,14 @@
+node_modules
+.npm-cache
+.electron-cache
+.firebase
+.config
+.git
+dist
+docs
+release
+functions
+ios
+desktop
+workers
+*.log

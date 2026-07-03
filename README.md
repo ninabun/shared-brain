@@ -78,6 +78,22 @@ npx --cache ./.npm-cache firebase-tools login
 npx --cache ./.npm-cache firebase-tools deploy --only hosting --project sharedbrain-92f19
 ```
 
+## Vercel Hosting
+
+Vercel can host the website while Firebase remains the backend for Auth and Firestore.
+
+Preview deploy:
+
+```bash
+npx vercel
+```
+
+Production deploy:
+
+```bash
+npx vercel --prod
+```
+
 ## AI title suggestions
 
 The OpenAI API key must be stored in the Cloudflare Worker, not in frontend code.
