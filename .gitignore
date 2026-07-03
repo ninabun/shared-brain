@@ -1,6 +1,5 @@
 node_modules/
 dist/
-docs/
 .npm-cache/
 .electron-cache/
 .firebase/
