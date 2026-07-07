@@ -1,0 +1,21 @@
+:root {
+  color-scheme: light;
+  background: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0;
+  background: #ffffff;
+}
+
+.blank-site {
+  min-height: 100vh;
+  background: #ffffff;
+}

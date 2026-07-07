@@ -1,11 +1,14 @@
 node_modules/
 dist/
+.next/
 .npm-cache/
 .electron-cache/
 .firebase/
 .config/
 release/
 .env.local
+apps/portfolio-3d/*.log
+apps/portfolio-3d/out/
 firebase-debug.log
 firestore-debug.log
 storage-debug.log
