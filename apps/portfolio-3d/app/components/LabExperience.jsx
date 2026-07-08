@@ -270,21 +270,22 @@ function HeroObject({ className = "", style = {} }) {
       transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
     >
       <motion.div
-        className="absolute inset-[-22%] rounded-full bg-[radial-gradient(circle,var(--sphere-glow,rgba(165,230,255,0.34)),transparent_60%)] blur-3xl transition-colors duration-[1600ms]"
-        animate={{ opacity: [0.5, 0.82, 0.5], scale: [0.94, 1.08, 0.94] }}
+        className="absolute inset-[-18%] rounded-full bg-[radial-gradient(circle,var(--sphere-glow,rgba(165,230,255,0.18)),transparent_64%)] blur-3xl transition-colors duration-[1600ms]"
+        animate={{ opacity: [0.28, 0.54, 0.28], scale: [0.94, 1.08, 0.94] }}
         transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="relative h-full w-full overflow-hidden rounded-full border border-white/72 bg-[radial-gradient(circle_at_36%_23%,rgba(255,255,255,0.42),transparent_18%),radial-gradient(circle_at_68%_76%,var(--sphere-edge,rgba(110,200,230,0.14)),transparent_34%),linear-gradient(145deg,rgba(255,255,255,0.22),rgba(255,255,255,0.04)_38%,rgba(72,105,128,0.08)_70%,rgba(255,255,255,0.18))] shadow-[inset_0_1px_0_rgba(255,255,255,0.82),inset_16px_18px_42px_rgba(255,255,255,0.2),inset_-26px_-34px_58px_rgba(58,82,98,0.16),0_30px_130px_var(--sphere-shadow,rgba(80,190,225,0.22))] ring-1 ring-white/56 backdrop-blur-[3px] transition-colors duration-[1600ms]"
+        className="relative h-full w-full overflow-hidden rounded-full border border-white/58 bg-[radial-gradient(circle_at_32%_20%,rgba(255,255,255,0.18),transparent_13%),radial-gradient(circle_at_72%_74%,var(--sphere-edge,rgba(110,200,230,0.1)),transparent_28%),linear-gradient(145deg,rgba(255,255,255,0.08),rgba(255,255,255,0.015)_42%,rgba(70,100,130,0.055)_74%,rgba(255,255,255,0.08))] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.44),inset_18px_22px_42px_rgba(255,255,255,0.08),inset_-28px_-36px_62px_rgba(45,75,95,0.18),0_28px_110px_var(--sphere-shadow,rgba(80,190,225,0.14))] ring-1 ring-white/42 backdrop-blur-[1.5px] transition-colors duration-[1600ms]"
         animate={{ rotate: [0, 3.5, 0], y: [0, -6, 0] }}
         transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
       >
-        <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_48%,rgba(255,255,255,0.06),transparent_42%)]" />
-        <div className="absolute inset-[4%] rounded-full border border-white/44 shadow-[inset_0_0_36px_rgba(255,255,255,0.24)]" />
-        <div className="absolute inset-[16%] rounded-full border border-[#1b2430]/8" />
-        <div className="absolute -left-[10%] top-[12%] h-[44%] w-[48%] rotate-[-28deg] rounded-full bg-white/22 blur-xl" />
-        <div className="absolute right-[8%] top-[16%] h-[2px] w-[34%] rotate-[24deg] rounded-full bg-white/70 blur-[1px]" />
-        <div className="absolute bottom-[15%] left-[24%] h-[1px] w-[46%] rotate-[-10deg] rounded-full bg-white/42 blur-[1px]" />
+        <div className="absolute inset-[2%] rounded-full border border-white/38 shadow-[inset_0_0_28px_rgba(255,255,255,0.18)]" />
+        <div className="absolute inset-[12%] rounded-full border border-[#466482]/10" />
+        <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_50%,transparent_0%,transparent_48%,rgba(255,255,255,0.16)_70%,rgba(255,255,255,0.34)_100%)]" />
+        <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_50%,transparent_0%,transparent_62%,var(--sphere-rim,rgba(99,230,216,0.22))_82%,transparent_100%)] mix-blend-multiply" />
+        <div className="absolute -left-[12%] top-[10%] h-[38%] w-[46%] rotate-[-28deg] rounded-full border border-white/30 bg-transparent blur-[1px]" />
+        <div className="absolute right-[8%] top-[16%] h-[2px] w-[34%] rotate-[24deg] rounded-full bg-white/58 blur-[1px]" />
+        <div className="absolute bottom-[15%] left-[24%] h-[1px] w-[46%] rotate-[-10deg] rounded-full bg-white/32 blur-[1px]" />
         <div className="absolute left-[10%] right-[10%] top-1/2 h-px -rotate-12 bg-gradient-to-r from-transparent via-[var(--sphere-line,rgba(78,155,190,0.22))] to-transparent" />
         <div className="absolute left-[13%] right-[13%] top-[36%] h-px rotate-[22deg] bg-gradient-to-r from-transparent via-white/58 to-transparent" />
         <div className="absolute left-[20%] right-[17%] top-[64%] h-px rotate-[8deg] bg-gradient-to-r from-transparent via-[var(--sphere-line,rgba(78,155,190,0.2))] to-transparent" />
@@ -316,8 +317,8 @@ function HeroObject({ className = "", style = {} }) {
           transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
         />
         <motion.div
-          className="absolute left-1/2 top-1/2 h-[18%] w-[18%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.34),var(--sphere-core-strong,rgba(177,236,255,0.18))_42%,transparent_72%)] blur-[1px]"
-          animate={{ opacity: [0.3, 0.62, 0.3], scale: [0.9, 1.16, 0.9] }}
+          className="absolute left-1/2 top-1/2 h-[12%] w-[12%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,var(--sphere-core-strong,rgba(177,236,255,0.12)),transparent_70%)] blur-[1px]"
+          animate={{ opacity: [0.12, 0.28, 0.12], scale: [0.9, 1.16, 0.9] }}
           transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
         />
         <div className="absolute inset-0 flex items-center justify-center">
@@ -474,28 +475,9 @@ function ThinkingFramework() {
   );
 }
 
-function PlatformArchitecture({ modules, onActivateArea, activeTheme }) {
+function PlatformArchitecture({ modules, onActivateArea }) {
   return (
     <div className="relative mt-16">
-      <div className="pointer-events-none sticky top-24 z-20 -mb-32 ml-auto hidden h-32 w-32 translate-x-4 lg:flex xl:translate-x-12">
-        <HeroObject
-          className="h-32 w-32 opacity-95"
-          style={{
-            "--sphere-glow": `rgba(${activeTheme.rgb},0.32)`,
-            "--sphere-core": `rgba(${activeTheme.rgb},0.18)`,
-            "--sphere-edge": `rgba(${activeTheme.rgb},0.22)`,
-            "--sphere-shadow": `rgba(${activeTheme.rgb},0.24)`,
-            "--sphere-core-strong": `rgba(${activeTheme.rgb},0.3)`,
-            "--sphere-core-soft": `rgba(${activeTheme.rgb},0.12)`,
-            "--sphere-line": `rgba(${activeTheme.rgb},0.38)`,
-            "--sphere-stroke": `rgba(${activeTheme.rgb},0.48)`,
-            "--sphere-dot": `rgba(${activeTheme.rgb},0.7)`,
-            "--sphere-orbit": `rgba(${activeTheme.rgb},0.78)`,
-            "--sphere-text-size": "0.56rem",
-            "--sphere-text-gap": "0.28rem",
-          }}
-        />
-      </div>
       <motion.div
         className="pointer-events-none absolute left-[12%] right-[12%] top-16 hidden h-px bg-[linear-gradient(90deg,transparent,rgba(99,230,216,0.36)_18%,rgba(79,139,255,0.3)_50%,rgba(139,123,255,0.28)_82%,transparent)] lg:block"
         initial={{ scaleX: 0, opacity: 0 }}
@@ -613,7 +595,7 @@ export default function LabExperience() {
         style={{ scale: heroScale, opacity: heroOpacity }}
         className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-start overflow-hidden px-5 pb-8 pt-18 text-center sm:px-8 lg:px-12"
       >
-        <div className="absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2 bg-[radial-gradient(circle_at_50%_34%,rgba(255,255,255,0.72),transparent_24%),radial-gradient(circle_at_50%_40%,rgba(var(--active-rgb),0.12),transparent_30%),radial-gradient(circle_at_24%_28%,rgba(255,255,255,0.42),transparent_30%),linear-gradient(180deg,#F7FAFC_0%,#EAF2F8_62%,rgba(246,249,251,0)_100%)] transition-colors duration-[1800ms]" />
+        <div className="absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2 bg-[radial-gradient(circle_at_50%_34%,rgba(226,237,245,0.68),transparent_25%),radial-gradient(circle_at_50%_40%,rgba(var(--active-rgb),0.1),transparent_31%),radial-gradient(circle_at_24%_28%,rgba(255,255,255,0.36),transparent_30%),linear-gradient(180deg,#F7FAFC_0%,#EAF2F8_62%,rgba(246,249,251,0)_100%)] transition-colors duration-[1800ms]" />
         <div className="absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2 opacity-50 [background-image:linear-gradient(90deg,rgba(70,100,130,0.045)_1px,transparent_1px),linear-gradient(180deg,rgba(70,100,130,0.035)_1px,transparent_1px)] [background-size:120px_120px]" />
         <motion.div
           className="absolute left-1/2 top-[10%] -z-10 h-[18rem] w-[80vw] -translate-x-1/2 rounded-full bg-white/18 blur-3xl"
@@ -673,6 +655,7 @@ export default function LabExperience() {
               "--sphere-stroke": `rgba(${activeTheme.rgb},0.54)`,
               "--sphere-dot": `rgba(${activeTheme.rgb},0.78)`,
               "--sphere-orbit": `rgba(${activeTheme.rgb},0.82)`,
+              "--sphere-rim": `rgba(${activeTheme.rgb},0.28)`,
             }}
           />
           <motion.div
@@ -723,7 +706,7 @@ export default function LabExperience() {
         <p className="mt-6 max-w-2xl text-lg leading-8 text-[#526170]/82">
           Three areas where AI creates meaningful impact across modern healthcare.
         </p>
-        <PlatformArchitecture modules={modules} onActivateArea={setActiveArea} activeTheme={activeTheme} />
+        <PlatformArchitecture modules={modules} onActivateArea={setActiveArea} />
       </Section>
 
       <Section
