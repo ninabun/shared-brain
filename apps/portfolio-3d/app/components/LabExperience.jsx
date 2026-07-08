@@ -322,8 +322,8 @@ function HeroObject({ className = "", style = {} }) {
         />
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="translate-y-1 text-center text-[#1b2430]/82 drop-shadow-[0_1px_10px_rgba(255,255,255,0.76)]">
-            <div className="text-[clamp(1.05rem,3.1vw,2.2rem)] font-light uppercase tracking-[0.34em]">Healthcare</div>
-            <div className="mt-3 text-[clamp(1.05rem,3.1vw,2.2rem)] font-light uppercase tracking-[0.34em]">Reimagined</div>
+            <div className="text-[var(--sphere-text-size,clamp(1.05rem,3.1vw,2.2rem))] font-light uppercase tracking-[0.34em]">Healthcare</div>
+            <div className="mt-[var(--sphere-text-gap,0.75rem)] text-[var(--sphere-text-size,clamp(1.05rem,3.1vw,2.2rem))] font-light uppercase tracking-[0.34em]">Reimagined</div>
           </div>
         </div>
       </motion.div>
@@ -359,8 +359,8 @@ function HeroObject({ className = "", style = {} }) {
         {fieldDots.map((dot) => (
           <motion.span
             key={dot.className}
-            className={`absolute rounded-full bg-[#526170]/40 shadow-[0_0_18px_var(--sphere-shadow,rgba(80,190,225,0.16))] ${dot.className}`}
-            animate={{ opacity: [0.03, 0.08, 0.03], scale: [0.8, 1.15, 0.8] }}
+            className={`absolute rounded-full bg-[#466482]/35 shadow-[0_0_18px_var(--sphere-shadow,rgba(80,190,225,0.14))] ${dot.className}`}
+            animate={{ opacity: [0.035, 0.085, 0.035], scale: [0.8, 1.15, 0.8] }}
             transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: dot.delay }}
           />
         ))}
@@ -474,9 +474,28 @@ function ThinkingFramework() {
   );
 }
 
-function PlatformArchitecture({ modules, onActivateArea }) {
+function PlatformArchitecture({ modules, onActivateArea, activeTheme }) {
   return (
     <div className="relative mt-16">
+      <div className="pointer-events-none sticky top-24 z-20 -mb-32 ml-auto hidden h-32 w-32 translate-x-4 lg:flex xl:translate-x-12">
+        <HeroObject
+          className="h-32 w-32 opacity-95"
+          style={{
+            "--sphere-glow": `rgba(${activeTheme.rgb},0.32)`,
+            "--sphere-core": `rgba(${activeTheme.rgb},0.18)`,
+            "--sphere-edge": `rgba(${activeTheme.rgb},0.22)`,
+            "--sphere-shadow": `rgba(${activeTheme.rgb},0.24)`,
+            "--sphere-core-strong": `rgba(${activeTheme.rgb},0.3)`,
+            "--sphere-core-soft": `rgba(${activeTheme.rgb},0.12)`,
+            "--sphere-line": `rgba(${activeTheme.rgb},0.38)`,
+            "--sphere-stroke": `rgba(${activeTheme.rgb},0.48)`,
+            "--sphere-dot": `rgba(${activeTheme.rgb},0.7)`,
+            "--sphere-orbit": `rgba(${activeTheme.rgb},0.78)`,
+            "--sphere-text-size": "0.56rem",
+            "--sphere-text-gap": "0.28rem",
+          }}
+        />
+      </div>
       <motion.div
         className="pointer-events-none absolute left-[12%] right-[12%] top-16 hidden h-px bg-[linear-gradient(90deg,transparent,rgba(99,230,216,0.36)_18%,rgba(79,139,255,0.3)_50%,rgba(139,123,255,0.28)_82%,transparent)] lg:block"
         initial={{ scaleX: 0, opacity: 0 }}
@@ -523,9 +542,8 @@ function PlatformArchitecture({ modules, onActivateArea }) {
               transition={{ duration: areaIndex === 1 ? 5 : 6.5, repeat: Infinity, ease: "easeInOut", delay: areaIndex * 0.7 }}
             />
             <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-700 group-hover:opacity-100">
-              <span className="absolute left-[16%] top-[18%] h-1.5 w-1.5 rounded-full bg-[var(--area-color)] shadow-[0_0_18px_rgba(var(--area-rgb),0.75)]" />
-              <span className="absolute right-[18%] top-[44%] h-1 w-1 rounded-full bg-[var(--area-color)] shadow-[0_0_16px_rgba(var(--area-rgb),0.65)]" />
-              <span className="absolute bottom-[20%] left-[30%] h-1 w-1 rounded-full bg-[var(--area-color)] shadow-[0_0_16px_rgba(var(--area-rgb),0.65)]" />
+              <span className="absolute left-8 right-10 top-10 h-px bg-gradient-to-r from-transparent via-[var(--area-color)] to-transparent opacity-50" />
+              <span className="absolute bottom-10 left-10 right-16 h-px bg-gradient-to-r from-transparent via-[var(--area-color)] to-transparent opacity-35" />
             </div>
             <div className="relative z-10 flex flex-1 flex-col">
               <div className="mb-8 flex items-center justify-between gap-4">
@@ -595,11 +613,11 @@ export default function LabExperience() {
         style={{ scale: heroScale, opacity: heroOpacity }}
         className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-start overflow-hidden px-5 pb-8 pt-18 text-center sm:px-8 lg:px-12"
       >
-        <div className="absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2 bg-[radial-gradient(circle_at_50%_34%,rgba(255,255,255,0.98),transparent_24%),radial-gradient(circle_at_50%_40%,rgba(var(--active-rgb),0.18),transparent_28%),radial-gradient(circle_at_24%_28%,rgba(255,255,255,0.76),transparent_30%),linear-gradient(180deg,rgba(247,251,253,0.98)_0%,rgba(232,241,245,0.86)_58%,rgba(246,249,251,0)_100%)] transition-colors duration-[1800ms]" />
-        <div className="absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2 opacity-65 [background-image:linear-gradient(90deg,rgba(27,36,48,0.045)_1px,transparent_1px),linear-gradient(180deg,rgba(27,36,48,0.032)_1px,transparent_1px)] [background-size:120px_120px]" />
+        <div className="absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2 bg-[radial-gradient(circle_at_50%_34%,rgba(255,255,255,0.72),transparent_24%),radial-gradient(circle_at_50%_40%,rgba(var(--active-rgb),0.12),transparent_30%),radial-gradient(circle_at_24%_28%,rgba(255,255,255,0.42),transparent_30%),linear-gradient(180deg,#F7FAFC_0%,#EAF2F8_62%,rgba(246,249,251,0)_100%)] transition-colors duration-[1800ms]" />
+        <div className="absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2 opacity-50 [background-image:linear-gradient(90deg,rgba(70,100,130,0.045)_1px,transparent_1px),linear-gradient(180deg,rgba(70,100,130,0.035)_1px,transparent_1px)] [background-size:120px_120px]" />
         <motion.div
-          className="absolute left-1/2 top-[10%] -z-10 h-[18rem] w-[80vw] -translate-x-1/2 rounded-full bg-white/26 blur-3xl"
-          animate={{ x: ["-3%", "3%", "-3%"], opacity: [0.18, 0.34, 0.18] }}
+          className="absolute left-1/2 top-[10%] -z-10 h-[18rem] w-[80vw] -translate-x-1/2 rounded-full bg-white/18 blur-3xl"
+          animate={{ x: ["-3%", "3%", "-3%"], opacity: [0.12, 0.22, 0.12] }}
           transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
@@ -608,15 +626,15 @@ export default function LabExperience() {
           transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute left-1/2 top-[16%] -z-10 h-[42rem] w-[42rem] -translate-x-1/2 rounded-full bg-[rgba(var(--active-rgb),0.08)] blur-3xl transition-colors duration-[1800ms]"
-          animate={{ opacity: [0.32, 0.56, 0.32], scale: [0.96, 1.04, 0.96] }}
+          className="absolute left-1/2 top-[16%] -z-10 h-[42rem] w-[42rem] -translate-x-1/2 rounded-full bg-[rgba(var(--active-rgb),0.09)] blur-3xl transition-colors duration-[1800ms]"
+          animate={{ opacity: [0.18, 0.38, 0.18], scale: [0.96, 1.04, 0.96] }}
           transition={{ duration: 7.5, repeat: Infinity, ease: "easeInOut" }}
         />
         <div className="pointer-events-none absolute left-1/2 top-[18%] -z-10 h-[58%] w-screen -translate-x-1/2 overflow-hidden">
           {[0, 1, 2, 3, 4, 5].map((index) => (
             <motion.span
               key={index}
-              className="absolute h-1.5 w-1.5 rounded-full bg-[var(--active-color)] opacity-45 shadow-[0_0_22px_rgba(var(--active-rgb),0.54)] transition-colors duration-[1600ms]"
+              className="absolute h-1.5 w-1.5 rounded-full bg-[#466482] shadow-[0_0_22px_rgba(var(--active-rgb),0.16)] transition-colors duration-[1600ms]"
               style={{
                 left: `${18 + index * 12}%`,
                 top: `${18 + (index % 3) * 18}%`,
@@ -624,26 +642,26 @@ export default function LabExperience() {
               animate={{
                 x: [0, index % 2 ? -26 : 30, 0],
                 y: [0, index % 2 ? 18 : -22, 0],
-                opacity: [0.18, 0.62, 0.18],
+                opacity: [0.03, 0.1, 0.03],
                 scale: [0.76, 1.18, 0.76],
               }}
               transition={{ duration: 7 + index * 0.45, repeat: Infinity, ease: "easeInOut", delay: index * 0.4 }}
             />
           ))}
           <motion.span
-            className="absolute left-[12%] top-[36%] h-px w-[76%] rotate-[-8deg] bg-gradient-to-r from-transparent via-[var(--active-color)] to-transparent opacity-24 blur-[0.5px] transition-colors duration-[1600ms]"
-            animate={{ x: ["-10%", "10%", "-10%"], opacity: [0.1, 0.32, 0.1] }}
+            className="absolute left-[12%] top-[36%] h-px w-[76%] rotate-[-8deg] bg-gradient-to-r from-transparent via-[#466482] to-transparent opacity-10 blur-[0.5px] transition-colors duration-[1600ms]"
+            animate={{ x: ["-10%", "10%", "-10%"], opacity: [0.03, 0.08, 0.03] }}
             transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
           />
           <motion.span
-            className="absolute left-[18%] top-[54%] h-px w-[64%] rotate-[12deg] bg-gradient-to-r from-transparent via-[var(--active-color)] to-transparent opacity-20 blur-[0.5px] transition-colors duration-[1600ms]"
-            animate={{ x: ["8%", "-8%", "8%"], opacity: [0.08, 0.26, 0.08] }}
+            className="absolute left-[18%] top-[54%] h-px w-[64%] rotate-[12deg] bg-gradient-to-r from-transparent via-[#466482] to-transparent opacity-10 blur-[0.5px] transition-colors duration-[1600ms]"
+            animate={{ x: ["8%", "-8%", "8%"], opacity: [0.03, 0.075, 0.03] }}
             transition={{ duration: 10.5, repeat: Infinity, ease: "easeInOut" }}
           />
         </div>
         <div className="relative flex min-h-[calc(100vh-3.5rem)] w-full flex-col items-center justify-center gap-6 pt-4 sm:gap-7 sm:pt-6">
           <HeroObject
-            className="w-[min(62vw,285px)] sm:w-[min(38vw,340px)] lg:w-[min(34vw,380px)]"
+            className="w-[min(72vw,340px)] sm:w-[min(45vw,440px)] lg:w-[min(36vw,500px)]"
             style={{
               "--sphere-glow": `rgba(${activeTheme.rgb},0.36)`,
               "--sphere-core": `rgba(${activeTheme.rgb},0.26)`,
@@ -668,7 +686,7 @@ export default function LabExperience() {
             </p>
             <div className="mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[11px] uppercase tracking-[0.22em] text-[#526170]/68 sm:gap-x-4 sm:text-[12px]">
               {[
-                { label: "Patient Experience", area: "Care Experience" },
+                { label: "Care Experience", area: "Care Experience" },
                 { label: "Clinical Operations", area: "Clinical Operations" },
                 { label: "Healthcare Intelligence", area: "Healthcare Intelligence" },
               ].map((item, index) => (
@@ -683,7 +701,7 @@ export default function LabExperience() {
                     {item.label}
                     <span className="absolute -bottom-1 left-0 h-px w-0 bg-[var(--active-color)] transition-all duration-500 group-hover:w-full" />
                   </span>
-                  {index < 2 ? <span className="text-[#526170]/30">&bull;</span> : null}
+                  {index < 2 ? <span className="h-px w-5 bg-[#526170]/22" /> : null}
                 </a>
               ))}
             </div>
@@ -705,7 +723,7 @@ export default function LabExperience() {
         <p className="mt-6 max-w-2xl text-lg leading-8 text-[#526170]/82">
           Three areas where AI creates meaningful impact across modern healthcare.
         </p>
-        <PlatformArchitecture modules={modules} onActivateArea={setActiveArea} />
+        <PlatformArchitecture modules={modules} onActivateArea={setActiveArea} activeTheme={activeTheme} />
       </Section>
 
       <Section
