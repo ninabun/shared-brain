@@ -2,7 +2,7 @@
 
 import { Float, Line, PointMaterial, Points, Preload } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
@@ -18,11 +18,6 @@ type ViewportState = {
 };
 
 const HERO_IMAGE = "/images/hero-ai-healthcare.png";
-const WATER_FRAME_COUNT = 30;
-const WATER_FRAMES = Array.from(
-  { length: WATER_FRAME_COUNT },
-  (_, index) => `/images/hero-water-sequence/frame-${String(index + 1).padStart(3, "0")}.jpg`
-);
 
 function seededNoise(seed: number) {
   const value = Math.sin(seed * 12.9898) * 43758.5453;
@@ -37,7 +32,6 @@ function NeuralHealthcareField({
   isMobile: boolean;
 }) {
   const group = useRef<THREE.Group>(null);
-  const glass = useRef<THREE.Mesh>(null);
 
   const particles = useMemo(() => {
     const count = isMobile ? 180 : 520;
@@ -106,11 +100,6 @@ function NeuralHealthcareField({
       group.current.position.z = scrollDepth * 0.82;
       group.current.scale.setScalar((isMobile ? 0.82 : 1) + chapter * 0.18);
     }
-
-    if (glass.current) {
-      glass.current.rotation.z = elapsed * 0.025;
-      glass.current.rotation.y = Math.sin(elapsed * 0.17) * 0.18;
-    }
   });
 
   return (
@@ -147,22 +136,6 @@ function NeuralHealthcareField({
         </Float>
       ))}
 
-      <Float speed={0.85} rotationIntensity={0.14} floatIntensity={0.22}>
-        <mesh ref={glass} position={[1.4, 0.2, -0.5]}>
-          <icosahedronGeometry args={[1.35, 3]} />
-          <meshPhysicalMaterial
-            color="#dff8ff"
-            metalness={0.18}
-            roughness={0.16}
-            transmission={0.28}
-            thickness={0.6}
-            transparent
-            opacity={0.13}
-            wireframe
-          />
-        </mesh>
-      </Float>
-
       <mesh position={[1.15, -0.2, -1.4]} rotation={[0.2, -0.34, 0.08]}>
         <planeGeometry args={[4.8, 2.4, 1, 1]} />
         <meshBasicMaterial color="#bdefff" transparent opacity={0.024} blending={THREE.AdditiveBlending} />
@@ -189,20 +162,16 @@ function NeuralHealthcareField({
 export default function HeroBackground() {
   const pointer = useRef<PointerState>({ x: 0, y: 0 });
   const animatedImage = useRef<HTMLDivElement>(null);
-  const frameIndex = useRef(0);
-  const lastFrameUpdate = useRef(0);
-  const lastScrollY = useRef(0);
   const [viewport, setViewport] = useState<ViewportState>({
     isMobile: false,
     isTablet: false,
     isPortrait: false,
   });
-  const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll();
   const rawDepth = useTransform(scrollYProgress, [0, 0.55], [0, 96]);
   const depth = useSpring(rawDepth, { stiffness: 80, damping: 24, mass: 0.4 });
-  const imageOpacity = useTransform(scrollYProgress, [0, 0.18, 0.48], [0.34, 0.26, 0.14]);
-  const sceneOpacity = useTransform(scrollYProgress, [0, 0.55, 0.82], [0.84, 0.78, 0.32]);
+  const imageOpacity = useTransform(scrollYProgress, [0, 0.18, 0.48], [0.32, 0.26, 0.14]);
+  const sceneOpacity = useTransform(scrollYProgress, [0, 0.55, 0.82], [0.86, 0.72, 0.34]);
   const { isMobile, isTablet, isPortrait } = viewport;
   const backgroundPosition = isMobile ? (isPortrait ? "50% 36%" : "58% 46%") : isTablet ? "54% 44%" : "center";
   const backgroundSize = isMobile && isPortrait ? "auto 86svh" : "cover";
@@ -250,38 +219,6 @@ export default function HeroBackground() {
   }, []);
 
   useEffect(() => {
-    if (reduceMotion) {
-      return undefined;
-    }
-
-    lastScrollY.current = window.scrollY;
-
-    function handleScroll() {
-      const layer = animatedImage.current;
-      const now = performance.now();
-      const currentScrollY = window.scrollY;
-      const delta = currentScrollY - lastScrollY.current;
-
-      if (!layer || Math.abs(delta) < 2 || now - lastFrameUpdate.current < 34) {
-        return;
-      }
-
-      const direction = delta > 0 ? 1 : -1;
-      const step = Math.max(1, Math.min(5, Math.round(Math.abs(delta) / 42)));
-      frameIndex.current = (frameIndex.current + direction * step + WATER_FRAMES.length) % WATER_FRAMES.length;
-      layer.style.backgroundImage = `url('${WATER_FRAMES[frameIndex.current]}')`;
-      lastFrameUpdate.current = now;
-      lastScrollY.current = currentScrollY;
-    }
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [reduceMotion]);
-
-  useEffect(() => {
     const layer = animatedImage.current;
     if (!layer) {
       return undefined;
@@ -289,23 +226,13 @@ export default function HeroBackground() {
 
     layer.style.backgroundImage = `url('${HERO_IMAGE}')`;
 
-    if (reduceMotion) {
-      return undefined;
-    }
-
-    WATER_FRAMES.forEach((src) => {
-      const image = new Image();
-      image.src = src;
-    });
-    layer.style.backgroundImage = `url('${WATER_FRAMES[frameIndex.current]}')`;
-
     return undefined;
-  }, [reduceMotion]);
+  }, []);
 
   return (
     <motion.div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+      className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#f6f9fb]"
       style={{ opacity: sceneOpacity }}
     >
       <motion.div
@@ -319,12 +246,12 @@ export default function HeroBackground() {
           backgroundSize,
           backgroundRepeat: "no-repeat",
           filter: isMobile
-            ? "brightness(0.72) contrast(1.08) saturate(0.78)"
-            : "brightness(0.66) contrast(1.12) saturate(0.82)",
+            ? "brightness(1.08) contrast(0.92) saturate(0.54)"
+            : "brightness(1.02) contrast(0.98) saturate(0.58)",
         }}
       />
 
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_68%_36%,rgba(140,240,255,0.14),transparent_30%),radial-gradient(circle_at_34%_52%,rgba(150,110,255,0.12),transparent_34%),radial-gradient(circle_at_50%_30%,rgba(255,255,255,0.045),transparent_30%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_68%_36%,rgba(120,205,225,0.24),transparent_30%),radial-gradient(circle_at_34%_52%,rgba(105,130,170,0.14),transparent_34%),radial-gradient(circle_at_50%_30%,rgba(255,255,255,0.38),transparent_34%)]" />
 
       <Canvas
         className="absolute inset-0"
@@ -333,14 +260,14 @@ export default function HeroBackground() {
         gl={{ alpha: true, antialias: false, powerPreference: "high-performance" }}
       >
         <Suspense fallback={null}>
-          <fog attach="fog" args={["#04070d", 6.8, 15.5]} />
+          <fog attach="fog" args={["#f6f9fb", 6.8, 15.5]} />
           <NeuralHealthcareField pointer={pointer} isMobile={isMobile} />
           <Preload all />
         </Suspense>
       </Canvas>
 
-      <div className="absolute inset-0 bg-gradient-to-b from-[#04070d]/70 via-[#04070d]/46 to-[#04070d]/92" />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.026)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.018)_1px,transparent_1px)] bg-[size:112px_112px] opacity-18" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#f6f9fb]/76 via-[#f6f9fb]/46 to-[#f6f9fb]/82" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(27,36,48,0.035)_1px,transparent_1px),linear-gradient(180deg,rgba(27,36,48,0.026)_1px,transparent_1px)] bg-[size:112px_112px] opacity-30" />
     </motion.div>
   );
 }

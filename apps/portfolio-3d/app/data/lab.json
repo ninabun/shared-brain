@@ -28,8 +28,8 @@
   ],
   "modules": [
     {
-      "title": "Patient Experience",
-      "description": "Using immersive technology to improve communication, education and patient wellbeing.",
+      "title": "Care Experience",
+      "description": "Creating better healthcare experiences through immersive technologies, communication and education.",
       "projects": [
         {
           "name": "Projection Mapping",
@@ -39,14 +39,14 @@
           "ctas": ["Watch Concept"]
         },
         {
-          "name": "AI Music",
+          "name": "AI Music & Video",
           "problem": "Healthcare communication often needs a calmer emotional layer.",
           "solution": "AI-generated sound for patient engagement, education and ambience.",
           "tools": ["Suno"],
           "ctas": ["Watch Demo"]
         },
         {
-          "name": "AI Video",
+          "name": "AI Video Concept",
           "problem": "Complex health messages need clearer visual explanation.",
           "solution": "AI-assisted video concepts for storytelling and patient-facing education.",
           "tools": ["Higgsfield", "CapCut"],
@@ -69,8 +69,8 @@
       ]
     },
     {
-      "title": "Clinical Workflow",
-      "description": "Reducing repetitive workload through practical AI tools.",
+      "title": "Clinical Operations",
+      "description": "Reducing repetitive work through practical AI systems, automation and workflow design.",
       "projects": [
         {
           "name": "Roster Automation",
@@ -80,7 +80,7 @@
           "ctas": ["Watch Demo", "Case Study"]
         },
         {
-          "name": "Smart Ward Reception",
+          "name": "Smart Reception",
           "problem": "Visitor and bell inquiries interrupt clinical staff before needs are understood.",
           "solution": "A tablet-based inquiry layer that identifies needs before interrupting staff.",
           "tools": ["Tablet UI", "Workflow Design"],
@@ -104,7 +104,7 @@
     },
     {
       "title": "Healthcare Intelligence",
-      "description": "Helping healthcare teams access information and automation more effectively.",
+      "description": "Turning healthcare information into actionable intelligence, briefings and decision support.",
       "projects": [
         {
           "name": "Hermes AI Agent",
@@ -114,14 +114,14 @@
           "ctas": ["Today's AI Brief"]
         },
         {
-          "name": "n8n Workflow Automation",
+          "name": "n8n Workflow",
           "problem": "Administrative and communication processes often repeat across teams.",
           "solution": "Backend automation that connects routine signals to repeatable actions.",
           "tools": ["n8n", "Automation"],
           "ctas": ["View Workflow"]
         },
         {
-          "name": "Future Multi-Agent Platform",
+          "name": "Multi-Agent Healthcare Workflow",
           "problem": "Clinical, operational and educational tasks often need coordinated support.",
           "solution": "A future multi-agent layer for connected healthcare workflows.",
           "tools": ["Multi-agent", "Research"],
