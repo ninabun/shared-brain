@@ -1,0 +1,74 @@
+{
+  "site": {
+    "name": "Wing Yee AI Lab",
+    "person": "Wing Yee Lee",
+    "role": "Clinical AI Innovation Designer",
+    "identity": "Computer Scientist by training. Healthcare Professional by practice.",
+    "tagline": "Building AI-powered healthcare systems, workflow automation and immersive digital experiences."
+  },
+  "navigation": ["Home", "About", "Projects", "AI Lab", "Research", "Contact"],
+  "projects": [
+    {
+      "title": "Roster Automation",
+      "category": "Healthcare AI",
+      "statement": "Facilitates fair, user-friendly roster generation for clinical teams.",
+      "tools": ["Codex"],
+      "href": "#contact"
+    },
+    {
+      "title": "Hermes AI Agent",
+      "category": "AI Automation",
+      "statement": "Daily AI news generation powered by autonomous LLM workflows.",
+      "tools": ["LLM", "VPS"],
+      "href": "#contact"
+    },
+    {
+      "title": "Earth Observatory",
+      "category": "Immersive Web",
+      "statement": "A 3D scrollytelling web experience for planetary intelligence.",
+      "tools": ["Pinterest", "Higgsfield", "Google AI Studio", "Codex", "ChatGPT"],
+      "href": "#contact"
+    },
+    {
+      "title": "n8n Workflow",
+      "category": "AI Automation",
+      "statement": "Customer satisfaction workflow automation that connects signals to action.",
+      "tools": ["n8n", "Automation"],
+      "href": "#contact"
+    },
+    {
+      "title": "AI Music & Video",
+      "category": "Creative AI",
+      "statement": "AI songs and video concepts for emotional healthcare communication.",
+      "tools": ["Suno", "Higgsfield", "CapCut"],
+      "href": "#contact"
+    },
+    {
+      "title": "Projection Mapping",
+      "category": "Creative AI",
+      "statement": "Spatial storytelling from 3D design to live projection workflows.",
+      "tools": ["Blender", "TouchDesigner", "HeavyM", "AI Song", "AI Video"],
+      "href": "#contact"
+    }
+  ],
+  "ecosystem": [
+    "Clinical Knowledge",
+    "AI Agents",
+    "Workflow Automation",
+    "Immersive Experience",
+    "Creative AI Communication"
+  ],
+  "research": [
+    "Multimodal agent",
+    "Multi-agent applications",
+    "Healthcare AI",
+    "MCP",
+    "Projection mapping"
+  ],
+  "labSignals": [
+    "Clinical workflow intelligence",
+    "Human-centered automation",
+    "Agentic research systems",
+    "Immersive digital communication"
+  ]
+}

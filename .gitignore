@@ -8,6 +8,7 @@ dist/
 release/
 .env.local
 apps/portfolio-3d/*.log
+apps/portfolio-3d/.tmp-water*
 apps/portfolio-3d/out/
 firebase-debug.log
 firestore-debug.log

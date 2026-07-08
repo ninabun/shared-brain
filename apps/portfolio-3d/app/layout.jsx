@@ -2,7 +2,8 @@ import "./globals.css";
 
 export const metadata = {
   title: "Wing Yee AI Lab",
-  description: "Website redevelopment workspace.",
+  description:
+    "A premium personal AI lab website for Wing Yee Lee, Clinical AI Innovation Designer.",
 };
 
 export default function RootLayout({ children }) {
