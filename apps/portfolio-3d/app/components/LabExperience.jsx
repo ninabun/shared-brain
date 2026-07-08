@@ -24,6 +24,24 @@ const areaCtas = {
   "Clinical Operations": "View Clinical Solutions",
   "Healthcare Intelligence": "View Intelligence Solutions",
 };
+
+const areaThemes = {
+  "Care Experience": {
+    color: "#63E6D8",
+    rgb: "99,230,216",
+    atmosphere: "soft flowing glow",
+  },
+  "Clinical Operations": {
+    color: "#4F8BFF",
+    rgb: "79,139,255",
+    atmosphere: "structured workflow light",
+  },
+  "Healthcare Intelligence": {
+    color: "#8B7BFF",
+    rgb: "139,123,255",
+    atmosphere: "constellation intelligence glow",
+  },
+};
 const sketchPaths = [
   {
     label: "Roster flow",
@@ -102,21 +120,10 @@ function FlowRingLogo({ className = "", showText = false }) {
 function HeaderLogo() {
   return (
     <span
-      className="inline-flex items-center gap-2.5 rounded-full border border-white/62 bg-white/24 px-2.5 py-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_14px_40px_rgba(55,80,95,0.1)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl"
+      className="inline-flex items-center rounded-full border border-white/50 bg-white/34 px-4 py-2 text-[14px] font-semibold tracking-[-0.03em] text-[#1b2430] shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_14px_40px_rgba(8,18,28,0.14)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl transition duration-300 hover:bg-white/50 sm:text-[15px]"
       aria-label="Wing Yee AI Lab"
     >
-      <span className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-white/58 bg-[linear-gradient(145deg,rgba(255,255,255,0.38),rgba(105,124,136,0.2)_52%,rgba(43,57,68,0.18))] shadow-[inset_0_1px_0_rgba(255,255,255,0.82),inset_0_-12px_22px_rgba(34,48,58,0.18),0_16px_34px_rgba(55,80,95,0.2)]">
-        <span className="absolute inset-0 bg-[radial-gradient(circle_at_42%_28%,rgba(255,255,255,0.72),transparent_34%),radial-gradient(circle_at_50%_96%,rgba(255,255,255,0.52),transparent_28%)]" />
-        <img
-          src="/logo/ai-lab.png"
-          alt=""
-          className="relative z-10 h-8 w-8 rounded-full object-cover"
-          draggable="false"
-        />
-      </span>
-      <span className="hidden whitespace-nowrap text-[15px] font-semibold tracking-[-0.03em] text-[#1b2430] sm:inline">
-        Wing Yee AI Lab
-      </span>
+      Wing Yee AI Lab
     </span>
   );
 }
@@ -239,28 +246,64 @@ function DrawingStroke({ index }) {
   );
 }
 
-function HeroObject({ className = "" }) {
+function HeroObject({ className = "", style = {} }) {
+  const orbitDots = [
+    { className: "left-[13%] top-[34%] h-2.5 w-2.5", delay: 0 },
+    { className: "right-[18%] top-[24%] h-3 w-3", delay: 0.9 },
+    { className: "bottom-[20%] left-[28%] h-2 w-2", delay: 1.6 },
+    { className: "bottom-[30%] right-[14%] h-2.5 w-2.5", delay: 2.2 },
+  ];
+
   return (
     <motion.div
       className={`relative flex aspect-square items-center justify-center ${className}`}
+      style={style}
       initial={{ opacity: 0, scale: 0.94, y: 22 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
     >
       <motion.div
-        className="absolute inset-0 rounded-[42%_58%_48%_52%/50%_42%_58%_50%] bg-[radial-gradient(circle_at_34%_26%,rgba(255,255,255,0.95),transparent_28%),linear-gradient(135deg,rgba(255,255,255,0.84),rgba(203,231,239,0.38)_48%,rgba(184,196,255,0.32))] shadow-[0_52px_160px_rgba(66,117,145,0.18)] ring-1 ring-white/80 backdrop-blur-2xl"
-        animate={{ rotate: [0, -2.6, 2.2, 0], borderRadius: ["42% 58% 48% 52% / 50% 42% 58% 50%", "50% 50% 44% 56% / 46% 55% 45% 54%", "44% 56% 54% 46% / 54% 44% 56% 46%", "42% 58% 48% 52% / 50% 42% 58% 50%"] }}
-        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute inset-[-18%] rounded-full bg-[radial-gradient(circle,var(--sphere-glow,rgba(165,230,255,0.2)),transparent_58%)] blur-3xl"
+        animate={{ opacity: [0.36, 0.68, 0.36], scale: [0.94, 1.06, 0.94] }}
+        transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
       />
-      <div className="absolute inset-[11%] rounded-[2.2rem] bg-white/32 shadow-[inset_0_1px_0_rgba(255,255,255,0.94),inset_0_-22px_40px_rgba(70,125,176,0.08)] backdrop-blur-2xl" />
       <motion.div
-        className="relative flex h-[62%] w-[62%] items-center justify-center overflow-hidden rounded-[2rem] border border-white/66 bg-[linear-gradient(145deg,rgba(255,255,255,0.42),rgba(204,222,231,0.28)_52%,rgba(89,111,126,0.18))] shadow-[inset_0_1px_0_rgba(255,255,255,0.86),inset_10px_12px_24px_rgba(255,255,255,0.28),inset_-12px_-18px_32px_rgba(71,94,108,0.16),0_30px_100px_rgba(70,120,160,0.13)] ring-1 ring-[#1b2430]/10 backdrop-blur-2xl"
-        animate={{ y: [0, -10, 0], rotate: [0, 1.2, 0] }}
-        transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
+        className="relative h-full w-full overflow-hidden rounded-full border border-white/18 bg-[radial-gradient(circle_at_50%_50%,var(--sphere-core,rgba(220,250,255,0.34)),transparent_15%),radial-gradient(circle_at_34%_24%,rgba(255,255,255,0.46),transparent_22%),radial-gradient(circle_at_62%_66%,var(--sphere-edge,rgba(110,200,230,0.18)),transparent_36%),linear-gradient(145deg,rgba(255,255,255,0.18),rgba(60,83,106,0.1)_42%,rgba(7,15,28,0.26))] shadow-[inset_0_1px_0_rgba(255,255,255,0.42),inset_16px_20px_42px_rgba(255,255,255,0.1),inset_-22px_-30px_52px_rgba(2,10,18,0.34),0_30px_130px_var(--sphere-shadow,rgba(80,190,225,0.2))] ring-1 ring-cyan-100/14 backdrop-blur-2xl"
+        animate={{ rotate: [0, 4, 0], y: [0, -8, 0] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
       >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_34%_24%,rgba(255,255,255,0.5),transparent_36%),linear-gradient(180deg,rgba(255,255,255,0.18),transparent_54%)]" />
-        <div className="absolute inset-[16%] rounded-[1.35rem] bg-white/16 shadow-[inset_0_1px_0_rgba(255,255,255,0.52),inset_0_-12px_24px_rgba(71,94,108,0.08)] backdrop-blur-sm" />
-        <FlowRingLogo className="relative z-10 h-[78%] w-[78%] overflow-hidden rounded-full opacity-100 contrast-125" />
+        <div className="absolute inset-[9%] rounded-full border border-cyan-100/18" />
+        <div className="absolute inset-[18%] rounded-full border border-white/10" />
+        <div className="absolute left-[10%] right-[10%] top-1/2 h-px -rotate-12 bg-gradient-to-r from-transparent via-cyan-100/30 to-transparent" />
+        <div className="absolute left-[13%] right-[13%] top-[36%] h-px rotate-[22deg] bg-gradient-to-r from-transparent via-white/22 to-transparent" />
+        <div className="absolute left-[20%] right-[17%] top-[64%] h-px rotate-[8deg] bg-gradient-to-r from-transparent via-cyan-100/24 to-transparent" />
+        <svg className="absolute inset-[12%] h-[76%] w-[76%] opacity-38" viewBox="0 0 220 220" fill="none">
+          <path d="M38 110C72 52 150 52 184 110C152 166 70 166 38 110Z" stroke="rgba(205,244,255,0.46)" strokeWidth="1" />
+          <path d="M70 62C96 94 122 132 160 160" stroke="rgba(255,255,255,0.34)" strokeWidth="1" />
+          <path d="M158 58C124 90 98 132 62 166" stroke="rgba(160,224,255,0.32)" strokeWidth="1" />
+          {[52, 82, 112, 146, 174].map((cx, index) => (
+            <circle key={cx} cx={cx} cy={index % 2 ? 70 + index * 22 : 150 - index * 16} r="2.4" fill="rgba(235,252,255,0.72)" />
+          ))}
+        </svg>
+        <motion.div
+          className="absolute left-1/2 top-1/2 h-[22%] w-[22%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.92),var(--sphere-core-strong,rgba(177,236,255,0.52))_34%,var(--sphere-core-soft,rgba(88,178,220,0.12))_68%,transparent)] blur-[1px]"
+          animate={{ opacity: [0.65, 1, 0.65], scale: [0.86, 1.12, 0.86] }}
+          transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </motion.div>
+      <motion.div
+        className="absolute inset-[4%] rounded-full border border-cyan-100/22"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+      >
+        {orbitDots.map((dot) => (
+          <motion.span
+            key={dot.className}
+            className={`absolute rounded-full bg-cyan-50/78 shadow-[0_0_22px_rgba(180,240,255,0.72)] ${dot.className}`}
+            animate={{ opacity: [0.28, 0.9, 0.28], scale: [0.78, 1.12, 0.78] }}
+            transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut", delay: dot.delay }}
+          />
+        ))}
       </motion.div>
     </motion.div>
   );
@@ -275,12 +318,12 @@ function Header() {
         <a href="/" className="flex items-center">
           <HeaderLogo />
         </a>
-        <div className="hidden items-center gap-2.5 text-[13px] text-[#1b2430]/68 md:flex">
+        <div className="hidden items-center gap-2.5 text-[13px] text-[#1b2430]/70 md:flex">
           {navItems.map((item) => (
             <a
               key={item.label}
               href={item.href}
-              className="rounded-full border border-white/62 bg-white/36 px-4 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.86),inset_0_-10px_20px_rgba(85,110,125,0.06),0_12px_34px_rgba(55,80,95,0.12)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl transition duration-300 hover:-translate-y-0.5 hover:bg-white/52 hover:text-[#1b2430]"
+              className="rounded-full border border-white/48 bg-white/32 px-4 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_12px_34px_rgba(7,15,28,0.12)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl transition duration-300 hover:-translate-y-0.5 hover:bg-white/50 hover:text-[#1b2430]"
             >
               {item.label}
             </a>
@@ -288,7 +331,7 @@ function Header() {
         </div>
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/62 bg-white/38 text-[#1b2430] shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_12px_34px_rgba(55,80,95,0.12)] backdrop-blur-2xl md:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/48 bg-white/36 text-[#1b2430] shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_12px_34px_rgba(7,15,28,0.12)] backdrop-blur-2xl md:hidden"
           aria-label="Open navigation"
           onClick={() => setOpen((value) => !value)}
         >
@@ -375,7 +418,7 @@ function PlatformArchitecture({ modules }) {
   return (
     <div className="relative mt-16">
       <motion.div
-        className="pointer-events-none absolute left-[12%] right-[12%] top-16 hidden h-px bg-gradient-to-r from-transparent via-[#2f8396]/34 to-transparent lg:block"
+        className="pointer-events-none absolute left-[12%] right-[12%] top-16 hidden h-px bg-[linear-gradient(90deg,transparent,rgba(99,230,216,0.36)_18%,rgba(79,139,255,0.3)_50%,rgba(139,123,255,0.28)_82%,transparent)] lg:block"
         initial={{ scaleX: 0, opacity: 0 }}
         whileInView={{ scaleX: 1, opacity: 1 }}
         viewport={{ once: true, margin: "-20%" }}
@@ -383,8 +426,12 @@ function PlatformArchitecture({ modules }) {
         style={{ transformOrigin: "center" }}
       />
       <motion.div
-        className="pointer-events-none absolute left-1/2 top-16 hidden h-2 w-28 -translate-x-1/2 rounded-full bg-cyan-100/28 blur-xl lg:block"
-        animate={{ x: ["-44vw", "0vw", "44vw"], opacity: [0, 0.55, 0] }}
+        className="pointer-events-none absolute left-1/2 top-16 hidden h-2 w-28 -translate-x-1/2 rounded-full bg-[#63E6D8]/28 blur-xl lg:block"
+        animate={{
+          x: ["-44vw", "0vw", "44vw"],
+          opacity: [0, 0.55, 0],
+          backgroundColor: ["rgba(99,230,216,0.28)", "rgba(79,139,255,0.28)", "rgba(139,123,255,0.28)"],
+        }}
         transition={{ duration: 5.6, repeat: Infinity, ease: "easeInOut" }}
       />
       <div className="relative grid gap-6 lg:grid-cols-3">
@@ -392,25 +439,36 @@ function PlatformArchitecture({ modules }) {
         const Icon = iconMap[area.title] || Sparkles;
         const visibleProjects = area.projects.slice(0, 3);
         const cta = areaCtas[area.title] || "View Solutions";
+        const theme = areaThemes[area.title] || areaThemes["Care Experience"];
 
         return (
           <motion.div
             key={area.title}
-            className="group relative flex min-h-full flex-col overflow-hidden rounded-[2.1rem] border border-white/72 bg-[linear-gradient(145deg,rgba(255,255,255,0.7),rgba(225,238,244,0.58)_54%,rgba(192,211,220,0.38))] p-6 text-[#1b2430] shadow-[inset_0_1px_0_rgba(255,255,255,0.96),inset_8px_10px_24px_rgba(255,255,255,0.36),inset_-12px_-18px_34px_rgba(83,112,128,0.11),0_24px_80px_rgba(40,70,88,0.13)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl transition duration-700 hover:-translate-y-1 hover:bg-white/74 hover:shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_10px_12px_26px_rgba(255,255,255,0.42),inset_-14px_-20px_36px_rgba(83,112,128,0.1),0_34px_96px_rgba(40,100,120,0.17)] sm:p-7"
+            className="group relative flex min-h-full flex-col overflow-hidden rounded-[2.1rem] border border-[rgba(var(--area-rgb),0.2)] bg-[linear-gradient(145deg,rgba(255,255,255,0.7),rgba(225,238,244,0.58)_54%,rgba(192,211,220,0.38))] p-6 text-[#1b2430] shadow-[inset_0_1px_0_rgba(255,255,255,0.96),inset_8px_10px_24px_rgba(255,255,255,0.36),inset_-12px_-18px_34px_rgba(83,112,128,0.11),0_24px_80px_rgba(40,70,88,0.13)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl transition duration-700 hover:-translate-y-1 hover:border-[rgba(var(--area-rgb),0.38)] hover:bg-white/74 hover:shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_10px_12px_26px_rgba(255,255,255,0.42),inset_-14px_-20px_36px_rgba(83,112,128,0.1),0_34px_96px_rgba(var(--area-rgb),0.18)] sm:p-7"
+            style={{ "--area-color": theme.color, "--area-rgb": theme.rgb }}
             initial={{ opacity: 0, y: 28, scale: 0.98 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-14%" }}
             transition={{ duration: 0.9, delay: areaIndex * 0.08, ease: "easeInOut" }}
           >
-            <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent" />
+            <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[var(--area-color)] to-transparent opacity-50" />
             <div className="absolute inset-x-8 top-4 h-10 rounded-full bg-white/22 blur-xl" />
-            <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-cyan-100/28 blur-3xl transition duration-700 group-hover:bg-cyan-100/36" />
+            <motion.div
+              className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-[rgba(var(--area-rgb),0.16)] blur-3xl transition duration-700 group-hover:bg-[rgba(var(--area-rgb),0.24)]"
+              animate={{ opacity: [0.42, 0.7, 0.42], scale: areaIndex === 1 ? [1, 1.04, 1] : [0.96, 1.06, 0.96] }}
+              transition={{ duration: areaIndex === 1 ? 5 : 6.5, repeat: Infinity, ease: "easeInOut", delay: areaIndex * 0.7 }}
+            />
+            <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-700 group-hover:opacity-100">
+              <span className="absolute left-[16%] top-[18%] h-1.5 w-1.5 rounded-full bg-[var(--area-color)] shadow-[0_0_18px_rgba(var(--area-rgb),0.75)]" />
+              <span className="absolute right-[18%] top-[44%] h-1 w-1 rounded-full bg-[var(--area-color)] shadow-[0_0_16px_rgba(var(--area-rgb),0.65)]" />
+              <span className="absolute bottom-[20%] left-[30%] h-1 w-1 rounded-full bg-[var(--area-color)] shadow-[0_0_16px_rgba(var(--area-rgb),0.65)]" />
+            </div>
             <div className="relative z-10 flex flex-1 flex-col">
               <div className="mb-8 flex items-center justify-between gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#1b2430]/10 bg-white/76 text-[#2f8396] shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_16px_34px_rgba(55,80,95,0.1)]">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[rgba(var(--area-rgb),0.24)] bg-white/76 text-[var(--area-color)] shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_16px_34px_rgba(var(--area-rgb),0.1)]">
                   <Icon size={22} strokeWidth={1.75} />
                 </div>
-                <span className="h-px flex-1 bg-gradient-to-r from-[#2f8396]/20 to-transparent" />
+                <span className="h-px flex-1 bg-gradient-to-r from-[rgba(var(--area-rgb),0.32)] to-transparent" />
               </div>
               <h3 className="text-3xl font-semibold leading-[1.02] tracking-[-0.045em] text-[#1b2430]">{area.title}</h3>
               <p className="mt-5 min-h-20 text-[15px] leading-7 text-[#334155]/82">{area.description}</p>
@@ -420,9 +478,10 @@ function PlatformArchitecture({ modules }) {
                   {visibleProjects.map((project) => (
                     <div
                       key={project.name}
-                      className="relative overflow-hidden rounded-full border border-white/78 bg-white/38 px-5 py-3.5 text-[15px] font-medium text-[#526170] shadow-[inset_0_1px_0_rgba(255,255,255,0.96),inset_10px_10px_24px_rgba(255,255,255,0.28),inset_-12px_-16px_28px_rgba(82,105,116,0.1),0_16px_36px_rgba(58,84,98,0.12)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl transition duration-500 hover:-translate-y-0.5 hover:bg-white/54 hover:text-[#1b2430]"
+                      className="relative overflow-hidden rounded-full border border-white/78 bg-white/38 px-5 py-3.5 text-[15px] font-medium text-[#526170] shadow-[inset_0_1px_0_rgba(255,255,255,0.96),inset_10px_10px_24px_rgba(255,255,255,0.28),inset_-12px_-16px_28px_rgba(82,105,116,0.1),0_16px_36px_rgba(58,84,98,0.12)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl transition duration-500 hover:-translate-y-0.5 hover:border-[rgba(var(--area-rgb),0.26)] hover:bg-white/54 hover:text-[#1b2430] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.96),inset_10px_10px_24px_rgba(255,255,255,0.28),inset_-12px_-16px_28px_rgba(82,105,116,0.1),0_18px_42px_rgba(var(--area-rgb),0.14)]"
                     >
                       <span className="pointer-events-none absolute left-7 right-10 top-1.5 h-3 rounded-full bg-white/42 blur-sm" />
+                      <span className="pointer-events-none absolute bottom-0 left-8 right-12 h-px bg-gradient-to-r from-transparent via-[var(--area-color)] to-transparent opacity-0 transition duration-500 group-hover:opacity-35" />
                       {project.name}
                     </div>
                   ))}
@@ -430,7 +489,7 @@ function PlatformArchitecture({ modules }) {
               </div>
               <a
                 href="#contact"
-                className="mt-8 inline-flex w-fit items-center gap-2 rounded-full border border-[#1b2430]/10 bg-white/70 px-5 py-3 text-sm font-medium text-[#1b2430]/82 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_36px_rgba(27,36,48,0.08)] transition hover:-translate-y-0.5 hover:border-[#2f8396]/28 hover:text-[#1b2430]"
+                className="mt-8 inline-flex w-fit items-center gap-2 rounded-full border border-[#1b2430]/10 bg-white/70 px-5 py-3 text-sm font-medium text-[#1b2430]/82 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_36px_rgba(27,36,48,0.08)] transition hover:-translate-y-0.5 hover:border-[rgba(var(--area-rgb),0.34)] hover:text-[#1b2430] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_18px_42px_rgba(var(--area-rgb),0.13)]"
               >
                 {cta} <ArrowRight size={14} />
               </a>
@@ -448,6 +507,21 @@ export default function LabExperience() {
   const heroScale = useTransform(scrollYProgress, [0, 0.2], [1, 0.975]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.18], [1, 0.72]);
   const heroIntroY = useTransform(scrollYProgress, [0, 0.13], [0, -8]);
+  const sphereGlow = useTransform(
+    scrollYProgress,
+    [0, 0.18, 0.36, 0.54],
+    ["rgba(165,230,255,0.2)", "rgba(99,230,216,0.24)", "rgba(79,139,255,0.22)", "rgba(139,123,255,0.22)"]
+  );
+  const sphereCore = useTransform(
+    scrollYProgress,
+    [0, 0.18, 0.36, 0.54],
+    ["rgba(220,250,255,0.34)", "rgba(99,230,216,0.28)", "rgba(79,139,255,0.26)", "rgba(139,123,255,0.26)"]
+  );
+  const sphereShadow = useTransform(
+    scrollYProgress,
+    [0, 0.18, 0.36, 0.54],
+    ["rgba(80,190,225,0.2)", "rgba(99,230,216,0.18)", "rgba(79,139,255,0.17)", "rgba(139,123,255,0.17)"]
+  );
   const { modules, roadmap } = content;
   const futureRoadmap = roadmap.slice(3);
 
@@ -455,53 +529,65 @@ export default function LabExperience() {
     <main className="min-h-screen overflow-hidden bg-[#f6f9fb] text-[#1b2430]">
       <HeroBackground />
       <Header />
-      <div className="pointer-events-none fixed inset-x-0 top-0 z-20 h-24 bg-gradient-to-b from-[#f6f9fb]/72 via-[#f6f9fb]/36 to-transparent backdrop-blur-[1px]" />
+      <div className="pointer-events-none fixed inset-x-0 top-0 z-20 h-24 bg-gradient-to-b from-white/12 via-white/6 to-transparent backdrop-blur-[1px]" />
 
       <motion.section
         id="home"
         style={{ scale: heroScale, opacity: heroOpacity }}
-        className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-start px-5 pb-8 pt-18 text-center sm:px-8 lg:px-12"
+        className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-start overflow-hidden px-5 pb-8 pt-18 text-center sm:px-8 lg:px-12"
       >
-        <div className="relative flex min-h-[calc(100vh-3.5rem)] w-full flex-col items-center justify-center gap-7 sm:gap-8">
+        <div className="absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2 bg-[radial-gradient(circle_at_50%_38%,rgba(75,178,215,0.32),transparent_28%),radial-gradient(circle_at_50%_24%,rgba(175,220,255,0.16),transparent_18%),linear-gradient(180deg,rgba(3,8,16,0.9)_0%,rgba(7,17,28,0.82)_54%,rgba(10,22,34,0.7)_78%,rgba(246,249,251,0)_100%)]" />
+        <div className="absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2 bg-[linear-gradient(180deg,rgba(3,8,16,0.32),transparent_38%,rgba(246,249,251,0.18)_100%)]" />
+        <div className="relative flex min-h-[calc(100vh-3.5rem)] w-full flex-col items-center justify-center gap-6 pt-4 sm:gap-7 sm:pt-6">
+          <HeroObject
+            className="w-[min(76vw,350px)] sm:w-[min(58vw,430px)] lg:w-[min(43vw,480px)]"
+            style={{
+              "--sphere-glow": sphereGlow,
+              "--sphere-core": sphereCore,
+              "--sphere-edge": sphereCore,
+              "--sphere-shadow": sphereShadow,
+              "--sphere-core-strong": sphereCore,
+              "--sphere-core-soft": sphereShadow,
+            }}
+          />
           <motion.div
-            className="flex max-w-6xl -translate-y-3 flex-col items-center px-5 py-3 sm:-translate-y-5 sm:px-8"
+            className="flex max-w-5xl flex-col items-center px-5 py-3 sm:px-8"
             style={{ y: heroIntroY }}
             initial={{ opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h1 className="max-w-4xl text-[clamp(2.15rem,5.4vw,4.65rem)] font-semibold leading-[0.94] tracking-[-0.062em] text-[#1b2430]">
+            <h1 className="max-w-4xl text-[clamp(2.25rem,4.8vw,4.55rem)] font-semibold leading-[0.94] tracking-[-0.062em] text-[#f7fbff]">
               Healthcare.
               <br />
               Reimagined.
             </h1>
-            <p className="mt-7 max-w-2xl text-base leading-7 text-[#526170] sm:text-[1.28rem] sm:leading-8">
+            <p className="mt-5 max-w-2xl text-base leading-7 text-[#d7e4ec]/82 sm:mt-6 sm:text-[1.14rem] sm:leading-8">
               AI Solutions for Modern Care.
             </p>
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[12px] uppercase tracking-[0.2em] text-[#526170]/76 sm:gap-x-4">
-              {["Care Experience", "Clinical Operations", "Healthcare Intelligence"].map((item, index) => (
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[11px] uppercase tracking-[0.22em] text-[#d7e4ec]/58 sm:gap-x-4 sm:text-[12px]">
+              {["Patient Experience", "Clinical Operations", "Healthcare Intelligence"].map((item, index) => (
                 <a
                   key={item}
                   href="#platform"
-                  className="group inline-flex items-center gap-4 transition duration-300 hover:text-[#1b2430]"
+                  className="group inline-flex items-center gap-4 transition duration-300 hover:text-[#f7fbff]/88"
                 >
                   <span className="relative">
                     {item}
-                    <span className="absolute -bottom-1 left-0 h-px w-0 bg-[#2f8396]/55 transition-all duration-500 group-hover:w-full" />
+                    <span className="absolute -bottom-1 left-0 h-px w-0 bg-cyan-100/55 transition-all duration-500 group-hover:w-full" />
                   </span>
-                  {index < 2 ? <span className="text-[#526170]/32">&bull;</span> : null}
+                  {index < 2 ? <span className="text-[#d7e4ec]/28">&bull;</span> : null}
                 </a>
               ))}
             </div>
           </motion.div>
-          <HeroObject className="-mt-2 w-[min(34vw,132px)] opacity-84 sm:-mt-3" />
           <motion.a
             href="#platform"
             aria-label="Scroll to solutions"
-            className="absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-3 text-[#1b2430]/36"
+            className="absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-3 text-[#d7e4ec]/38"
             animate={{ y: [0, 9, 0], opacity: [0.42, 0.78, 0.42] }}
             transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
           >
-            <span className="h-9 w-px bg-gradient-to-b from-transparent via-[#1b2430]/36 to-transparent" />
+            <span className="h-9 w-px bg-gradient-to-b from-transparent via-cyan-100/42 to-transparent" />
             <span className="text-[13px] uppercase tracking-[0.24em]">Scroll</span>
           </motion.a>
         </div>
