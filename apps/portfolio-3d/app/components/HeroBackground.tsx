@@ -34,7 +34,7 @@ function NeuralHealthcareField({
   const group = useRef<THREE.Group>(null);
 
   const particles = useMemo(() => {
-    const count = isMobile ? 180 : 520;
+    const count = isMobile ? 120 : 360;
     const positions = new Float32Array(count * 3);
     for (let i = 0; i < count; i += 1) {
       const layer = seededNoise(i + 19) > 0.58 ? 1 : -1;
@@ -105,14 +105,13 @@ function NeuralHealthcareField({
   return (
     <group ref={group} position={[1.25, 0.1, 0]}>
       <Points positions={particles} stride={3} frustumCulled={false}>
-      <PointMaterial
+        <PointMaterial
           transparent
-          color="#dff8ff"
-          size={0.02}
+          color="#6f7f8c"
+          size={0.015}
           sizeAttenuation
           depthWrite={false}
-          opacity={0.66}
-          blending={THREE.AdditiveBlending}
+          opacity={0.055}
         />
       </Points>
 
@@ -120,10 +119,10 @@ function NeuralHealthcareField({
         <Line
           key={index}
           points={points}
-          color={index % 2 ? "#9befff" : "#d7c5ff"}
-          lineWidth={0.58}
+          color={index % 2 ? "#70818f" : "#7c8798"}
+          lineWidth={0.42}
           transparent
-          opacity={index % 2 ? 0.22 : 0.16}
+          opacity={index % 2 ? 0.055 : 0.038}
         />
       ))}
 
@@ -131,30 +130,30 @@ function NeuralHealthcareField({
         <Float key={index} speed={0.65 + index * 0.015} rotationIntensity={0.08} floatIntensity={0.18}>
           <mesh position={node}>
             <sphereGeometry args={[index % 4 === 0 ? 0.055 : 0.035, 16, 16]} />
-            <meshBasicMaterial color={index % 3 === 0 ? "#ffffff" : "#9befff"} transparent opacity={0.68} />
+            <meshBasicMaterial color={index % 3 === 0 ? "#526170" : "#6f7f8c"} transparent opacity={0.075} />
           </mesh>
         </Float>
       ))}
 
       <mesh position={[1.15, -0.2, -1.4]} rotation={[0.2, -0.34, 0.08]}>
         <planeGeometry args={[4.8, 2.4, 1, 1]} />
-        <meshBasicMaterial color="#bdefff" transparent opacity={0.024} blending={THREE.AdditiveBlending} />
+        <meshBasicMaterial color="#8193a0" transparent opacity={0.018} />
       </mesh>
 
       <mesh position={[-1.9, 0.7, -1.1]} rotation={[0.1, 0.42, -0.08]}>
         <planeGeometry args={[2.8, 1.35, 1, 1]} />
-        <meshBasicMaterial color="#ffffff" transparent opacity={0.02} blending={THREE.AdditiveBlending} />
+        <meshBasicMaterial color="#6f7f8c" transparent opacity={0.016} />
       </mesh>
 
       <mesh position={[2.35, -0.85, -0.9]} rotation={[-0.18, -0.35, 0.1]}>
         <planeGeometry args={[2.2, 1.1, 1, 1]} />
-        <meshBasicMaterial color="#8edfff" transparent opacity={0.022} blending={THREE.AdditiveBlending} />
+        <meshBasicMaterial color="#8193a0" transparent opacity={0.016} />
       </mesh>
 
-      <ambientLight intensity={0.78} />
-      <pointLight position={[2.8, 1.6, 2.7]} intensity={9.5} color="#dff8ff" />
-      <pointLight position={[-3.2, -1.8, 1.4]} intensity={6.5} color="#9b7cff" />
-      <spotLight position={[0.8, 3.2, 2.4]} angle={0.55} penumbra={0.8} intensity={6} color="#bdefff" />
+      <ambientLight intensity={0.55} />
+      <pointLight position={[2.8, 1.6, 2.7]} intensity={2.2} color="#dce8ee" />
+      <pointLight position={[-3.2, -1.8, 1.4]} intensity={1.6} color="#d9d6ee" />
+      <spotLight position={[0.8, 3.2, 2.4]} angle={0.55} penumbra={0.8} intensity={1.5} color="#dce8ee" />
     </group>
   );
 }
@@ -170,8 +169,8 @@ export default function HeroBackground() {
   const { scrollYProgress } = useScroll();
   const rawDepth = useTransform(scrollYProgress, [0, 0.55], [0, 96]);
   const depth = useSpring(rawDepth, { stiffness: 80, damping: 24, mass: 0.4 });
-  const imageOpacity = useTransform(scrollYProgress, [0, 0.18, 0.48], [0.32, 0.26, 0.14]);
-  const sceneOpacity = useTransform(scrollYProgress, [0, 0.55, 0.82], [0.86, 0.72, 0.34]);
+  const imageOpacity = useTransform(scrollYProgress, [0, 0.18, 0.48], [0.18, 0.14, 0.1]);
+  const sceneOpacity = useTransform(scrollYProgress, [0, 0.55, 0.82], [0.58, 0.5, 0.28]);
   const { isMobile, isTablet, isPortrait } = viewport;
   const backgroundPosition = isMobile ? (isPortrait ? "50% 36%" : "58% 46%") : isTablet ? "54% 44%" : "center";
   const backgroundSize = isMobile && isPortrait ? "auto 86svh" : "cover";
@@ -251,7 +250,7 @@ export default function HeroBackground() {
         }}
       />
 
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_68%_36%,rgba(120,205,225,0.24),transparent_30%),radial-gradient(circle_at_34%_52%,rgba(105,130,170,0.14),transparent_34%),radial-gradient(circle_at_50%_30%,rgba(255,255,255,0.38),transparent_34%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_68%_36%,rgba(120,140,150,0.05),transparent_30%),radial-gradient(circle_at_34%_52%,rgba(105,130,170,0.04),transparent_34%),radial-gradient(circle_at_50%_30%,rgba(255,255,255,0.26),transparent_34%)]" />
 
       <Canvas
         className="absolute inset-0"
@@ -266,8 +265,8 @@ export default function HeroBackground() {
         </Suspense>
       </Canvas>
 
-      <div className="absolute inset-0 bg-gradient-to-b from-[#f6f9fb]/76 via-[#f6f9fb]/46 to-[#f6f9fb]/82" />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(27,36,48,0.035)_1px,transparent_1px),linear-gradient(180deg,rgba(27,36,48,0.026)_1px,transparent_1px)] bg-[size:112px_112px] opacity-30" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#f6f9fb]/64 via-[#f6f9fb]/34 to-[#f6f9fb]/76" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(27,36,48,0.026)_1px,transparent_1px),linear-gradient(180deg,rgba(27,36,48,0.02)_1px,transparent_1px)] bg-[size:112px_112px] opacity-24" />
     </motion.div>
   );
 }

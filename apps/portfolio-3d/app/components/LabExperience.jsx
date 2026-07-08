@@ -253,6 +253,13 @@ function HeroObject({ className = "", style = {} }) {
     { className: "bottom-[20%] left-[28%] h-2 w-2", delay: 1.6 },
     { className: "bottom-[30%] right-[14%] h-2.5 w-2.5", delay: 2.2 },
   ];
+  const fieldDots = [
+    { className: "left-[5%] top-[46%] h-1 w-1", delay: 0 },
+    { className: "right-[7%] top-[38%] h-1.5 w-1.5", delay: 1.1 },
+    { className: "bottom-[8%] left-[42%] h-1 w-1", delay: 2.2 },
+    { className: "right-[24%] bottom-[13%] h-1 w-1", delay: 3.2 },
+    { className: "left-[24%] top-[12%] h-1.5 w-1.5", delay: 4.1 },
+  ];
 
   return (
     <motion.div
@@ -263,31 +270,54 @@ function HeroObject({ className = "", style = {} }) {
       transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
     >
       <motion.div
-        className="absolute inset-[-18%] rounded-full bg-[radial-gradient(circle,var(--sphere-glow,rgba(165,230,255,0.22)),transparent_58%)] blur-3xl transition-colors duration-[1800ms]"
-        animate={{ opacity: [0.36, 0.68, 0.36], scale: [0.94, 1.06, 0.94] }}
+        className="absolute inset-[-22%] rounded-full bg-[radial-gradient(circle,var(--sphere-glow,rgba(165,230,255,0.34)),transparent_60%)] blur-3xl transition-colors duration-[1600ms]"
+        animate={{ opacity: [0.5, 0.82, 0.5], scale: [0.94, 1.08, 0.94] }}
         transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="relative h-full w-full overflow-hidden rounded-full border border-white/70 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.54),transparent_20%),radial-gradient(circle_at_34%_22%,rgba(255,255,255,0.82),transparent_25%),radial-gradient(circle_at_66%_72%,var(--sphere-edge,rgba(110,200,230,0.16)),transparent_36%),linear-gradient(145deg,rgba(255,255,255,0.52),rgba(205,229,239,0.22)_44%,rgba(96,126,145,0.1))] shadow-[inset_0_1px_0_rgba(255,255,255,0.82),inset_18px_22px_44px_rgba(255,255,255,0.28),inset_-22px_-30px_52px_rgba(70,95,112,0.14),0_30px_130px_var(--sphere-shadow,rgba(80,190,225,0.18))] ring-1 ring-white/60 backdrop-blur-2xl transition-colors duration-[1800ms]"
-        animate={{ rotate: [0, 4, 0], y: [0, -8, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        className="relative h-full w-full overflow-hidden rounded-full border border-white/72 bg-[radial-gradient(circle_at_36%_23%,rgba(255,255,255,0.42),transparent_18%),radial-gradient(circle_at_68%_76%,var(--sphere-edge,rgba(110,200,230,0.14)),transparent_34%),linear-gradient(145deg,rgba(255,255,255,0.22),rgba(255,255,255,0.04)_38%,rgba(72,105,128,0.08)_70%,rgba(255,255,255,0.18))] shadow-[inset_0_1px_0_rgba(255,255,255,0.82),inset_16px_18px_42px_rgba(255,255,255,0.2),inset_-26px_-34px_58px_rgba(58,82,98,0.16),0_30px_130px_var(--sphere-shadow,rgba(80,190,225,0.22))] ring-1 ring-white/56 backdrop-blur-[3px] transition-colors duration-[1600ms]"
+        animate={{ rotate: [0, 3.5, 0], y: [0, -6, 0] }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
       >
-        <div className="absolute inset-[9%] rounded-full border border-white/48" />
-        <div className="absolute inset-[18%] rounded-full border border-[#1b2430]/8" />
+        <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_48%,rgba(255,255,255,0.06),transparent_42%)]" />
+        <div className="absolute inset-[4%] rounded-full border border-white/44 shadow-[inset_0_0_36px_rgba(255,255,255,0.24)]" />
+        <div className="absolute inset-[16%] rounded-full border border-[#1b2430]/8" />
+        <div className="absolute -left-[10%] top-[12%] h-[44%] w-[48%] rotate-[-28deg] rounded-full bg-white/22 blur-xl" />
+        <div className="absolute right-[8%] top-[16%] h-[2px] w-[34%] rotate-[24deg] rounded-full bg-white/70 blur-[1px]" />
+        <div className="absolute bottom-[15%] left-[24%] h-[1px] w-[46%] rotate-[-10deg] rounded-full bg-white/42 blur-[1px]" />
         <div className="absolute left-[10%] right-[10%] top-1/2 h-px -rotate-12 bg-gradient-to-r from-transparent via-[var(--sphere-line,rgba(78,155,190,0.22))] to-transparent" />
         <div className="absolute left-[13%] right-[13%] top-[36%] h-px rotate-[22deg] bg-gradient-to-r from-transparent via-white/58 to-transparent" />
         <div className="absolute left-[20%] right-[17%] top-[64%] h-px rotate-[8deg] bg-gradient-to-r from-transparent via-[var(--sphere-line,rgba(78,155,190,0.2))] to-transparent" />
-        <svg className="absolute inset-[12%] h-[76%] w-[76%] opacity-45" viewBox="0 0 220 220" fill="none">
+        <motion.svg
+          className="absolute inset-[12%] h-[76%] w-[76%] opacity-58"
+          viewBox="0 0 220 220"
+          fill="none"
+          animate={{ rotate: [0, -2.4, 0], scale: [1, 1.018, 1] }}
+          transition={{ duration: 8.5, repeat: Infinity, ease: "easeInOut" }}
+        >
           <path d="M38 110C72 52 150 52 184 110C152 166 70 166 38 110Z" stroke="var(--sphere-stroke,rgba(70,125,155,0.38))" strokeWidth="1" />
           <path d="M70 62C96 94 122 132 160 160" stroke="rgba(255,255,255,0.7)" strokeWidth="1" />
           <path d="M158 58C124 90 98 132 62 166" stroke="var(--sphere-stroke,rgba(70,125,155,0.32))" strokeWidth="1" />
           {[52, 82, 112, 146, 174].map((cx, index) => (
-            <circle key={cx} cx={cx} cy={index % 2 ? 70 + index * 22 : 150 - index * 16} r="2.4" fill="var(--sphere-dot,rgba(45,95,122,0.56))" />
+            <motion.circle
+              key={cx}
+              cx={cx}
+              cy={index % 2 ? 70 + index * 22 : 150 - index * 16}
+              r="2.8"
+              fill="var(--sphere-dot,rgba(45,95,122,0.72))"
+              animate={{ opacity: [0.45, 1, 0.45], scale: [0.82, 1.18, 0.82] }}
+              transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut", delay: index * 0.35 }}
+            />
           ))}
-        </svg>
+        </motion.svg>
         <motion.div
-          className="absolute left-1/2 top-1/2 h-[28%] w-[28%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.92),var(--sphere-core-strong,rgba(177,236,255,0.34))_34%,var(--sphere-core-soft,rgba(88,178,220,0.1))_68%,transparent)] blur-[1px]"
-          animate={{ opacity: [0.65, 1, 0.65], scale: [0.86, 1.12, 0.86] }}
+          className="absolute left-1/2 top-1/2 h-[88%] w-[88%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-transparent bg-[conic-gradient(from_0deg,transparent_0deg,transparent_252deg,var(--sphere-orbit,rgba(99,230,216,0.72))_282deg,transparent_316deg,transparent_360deg)] opacity-70 blur-[0.4px]"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div
+          className="absolute left-1/2 top-1/2 h-[18%] w-[18%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.34),var(--sphere-core-strong,rgba(177,236,255,0.18))_42%,transparent_72%)] blur-[1px]"
+          animate={{ opacity: [0.3, 0.62, 0.3], scale: [0.9, 1.16, 0.9] }}
           transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
         />
         <div className="absolute inset-0 flex items-center justify-center">
@@ -305,9 +335,33 @@ function HeroObject({ className = "", style = {} }) {
         {orbitDots.map((dot) => (
           <motion.span
             key={dot.className}
-            className={`absolute rounded-full bg-cyan-50/78 shadow-[0_0_22px_rgba(180,240,255,0.72)] ${dot.className}`}
-            animate={{ opacity: [0.28, 0.9, 0.28], scale: [0.78, 1.12, 0.78] }}
+            className={`absolute rounded-full bg-[var(--sphere-dot,rgba(180,240,255,0.82))] shadow-[0_0_24px_var(--sphere-shadow,rgba(180,240,255,0.72))] ${dot.className}`}
+            animate={{ opacity: [0.34, 1, 0.34], scale: [0.78, 1.2, 0.78] }}
             transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut", delay: dot.delay }}
+          />
+        ))}
+      </motion.div>
+      <motion.svg
+        className="pointer-events-none absolute inset-[-18%] h-[136%] w-[136%] opacity-[0.07]"
+        viewBox="0 0 300 300"
+        fill="none"
+        animate={{ rotate: [0, 2.2, 0], scale: [1, 1.015, 1] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <path d="M54 166L108 112L172 136L228 82" stroke="var(--sphere-stroke,rgba(40,68,82,0.55))" strokeWidth="0.8" />
+        <path d="M82 210L136 164L216 196" stroke="var(--sphere-stroke,rgba(40,68,82,0.42))" strokeWidth="0.8" />
+      </motion.svg>
+      <motion.div
+        className="absolute inset-[-20%] rounded-full"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 42, repeat: Infinity, ease: "linear" }}
+      >
+        {fieldDots.map((dot) => (
+          <motion.span
+            key={dot.className}
+            className={`absolute rounded-full bg-[#526170]/40 shadow-[0_0_18px_var(--sphere-shadow,rgba(80,190,225,0.16))] ${dot.className}`}
+            animate={{ opacity: [0.03, 0.08, 0.03], scale: [0.8, 1.15, 0.8] }}
+            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: dot.delay }}
           />
         ))}
       </motion.div>
@@ -450,7 +504,7 @@ function PlatformArchitecture({ modules, onActivateArea }) {
         return (
           <motion.div
             key={area.title}
-            className="group relative flex min-h-full flex-col overflow-hidden rounded-[2.1rem] border border-[rgba(var(--area-rgb),0.2)] bg-[linear-gradient(145deg,rgba(255,255,255,0.7),rgba(225,238,244,0.58)_54%,rgba(192,211,220,0.38))] p-6 text-[#1b2430] shadow-[inset_0_1px_0_rgba(255,255,255,0.96),inset_8px_10px_24px_rgba(255,255,255,0.36),inset_-12px_-18px_34px_rgba(83,112,128,0.11),0_24px_80px_rgba(40,70,88,0.13)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl transition duration-700 hover:-translate-y-1 hover:border-[rgba(var(--area-rgb),0.38)] hover:bg-white/74 hover:shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_10px_12px_26px_rgba(255,255,255,0.42),inset_-14px_-20px_36px_rgba(83,112,128,0.1),0_34px_96px_rgba(var(--area-rgb),0.18)] sm:p-7"
+            className="group relative flex min-h-full flex-col overflow-hidden rounded-[2.1rem] border border-[rgba(var(--area-rgb),0.2)] bg-[linear-gradient(145deg,rgba(255,255,255,0.7),rgba(225,238,244,0.58)_54%,rgba(192,211,220,0.38))] p-6 text-[#1b2430] shadow-[inset_0_1px_0_rgba(255,255,255,0.96),inset_8px_10px_24px_rgba(255,255,255,0.36),inset_-12px_-18px_34px_rgba(83,112,128,0.11),0_24px_80px_rgba(40,70,88,0.13)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl transition duration-700 hover:-translate-y-2 hover:border-[rgba(var(--area-rgb),0.55)] hover:bg-white/78 hover:shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_10px_12px_26px_rgba(255,255,255,0.46),inset_-14px_-20px_36px_rgba(83,112,128,0.1),0_38px_110px_rgba(var(--area-rgb),0.26)] sm:p-7"
             style={{ "--area-color": theme.color, "--area-rgb": theme.rgb }}
             onHoverStart={() => onActivateArea?.(area.title)}
             onFocus={() => onActivateArea?.(area.title)}
@@ -461,7 +515,8 @@ function PlatformArchitecture({ modules, onActivateArea }) {
             transition={{ duration: 0.9, delay: areaIndex * 0.08, ease: "easeInOut" }}
           >
             <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[var(--area-color)] to-transparent opacity-50" />
-            <div className="absolute inset-x-8 top-4 h-10 rounded-full bg-white/22 blur-xl" />
+            <div className="absolute inset-x-8 top-4 h-10 rounded-full bg-white/22 blur-xl transition duration-700 group-hover:bg-[rgba(var(--area-rgb),0.16)]" />
+            <div className="absolute inset-x-10 top-2 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-0 transition duration-700 group-hover:opacity-90" />
             <motion.div
               className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-[rgba(var(--area-rgb),0.16)] blur-3xl transition duration-700 group-hover:bg-[rgba(var(--area-rgb),0.24)]"
               animate={{ opacity: [0.42, 0.7, 0.42], scale: areaIndex === 1 ? [1, 1.04, 1] : [0.96, 1.06, 0.96] }}
@@ -474,12 +529,12 @@ function PlatformArchitecture({ modules, onActivateArea }) {
             </div>
             <div className="relative z-10 flex flex-1 flex-col">
               <div className="mb-8 flex items-center justify-between gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[rgba(var(--area-rgb),0.24)] bg-white/76 text-[var(--area-color)] shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_16px_34px_rgba(var(--area-rgb),0.1)]">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[rgba(var(--area-rgb),0.24)] bg-white/76 text-[var(--area-color)] shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_16px_34px_rgba(var(--area-rgb),0.1)] transition duration-500 group-hover:border-[rgba(var(--area-rgb),0.46)] group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_0_34px_rgba(var(--area-rgb),0.24)]">
                   <Icon size={22} strokeWidth={1.75} />
                 </div>
                 <span className="h-px flex-1 bg-gradient-to-r from-[rgba(var(--area-rgb),0.32)] to-transparent" />
               </div>
-              <h3 className="text-3xl font-semibold leading-[1.02] tracking-[-0.045em] text-[#1b2430]">{area.title}</h3>
+              <h3 className="text-3xl font-semibold leading-[1.02] tracking-[-0.045em] text-[#1b2430] transition duration-500 group-hover:text-[var(--area-color)]">{area.title}</h3>
               <p className="mt-5 min-h-20 text-[15px] leading-7 text-[#334155]/82">{area.description}</p>
               <div className="mt-8 border-t border-[#1b2430]/10 pt-6">
                 <p className="text-[13px] font-medium uppercase tracking-[0.2em] text-[#526170]/72">Projects</p>
@@ -499,7 +554,8 @@ function PlatformArchitecture({ modules, onActivateArea }) {
               </div>
               <a
                 href="#contact"
-                className="mt-8 inline-flex w-fit items-center gap-2 rounded-full border border-[#1b2430]/10 bg-white/70 px-5 py-3 text-sm font-medium text-[#1b2430]/82 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_36px_rgba(27,36,48,0.08)] transition hover:-translate-y-0.5 hover:border-[rgba(var(--area-rgb),0.34)] hover:text-[#1b2430] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_18px_42px_rgba(var(--area-rgb),0.13)]"
+                className="mt-8 inline-flex w-fit items-center gap-2 rounded-full border border-[#1b2430]/10 bg-white/70 px-5 py-3 text-sm font-medium text-[#1b2430]/82 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_36px_rgba(27,36,48,0.08)] transition hover:-translate-y-0.5 hover:border-[rgba(var(--area-rgb),0.5)] hover:text-[var(--area-color)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_18px_42px_rgba(var(--area-rgb),0.2)]"
+                onMouseEnter={() => onActivateArea?.(area.title)}
               >
                 {cta} <ArrowRight size={14} />
               </a>
@@ -542,23 +598,63 @@ export default function LabExperience() {
         <div className="absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2 bg-[radial-gradient(circle_at_50%_34%,rgba(255,255,255,0.98),transparent_24%),radial-gradient(circle_at_50%_40%,rgba(var(--active-rgb),0.18),transparent_28%),radial-gradient(circle_at_24%_28%,rgba(255,255,255,0.76),transparent_30%),linear-gradient(180deg,rgba(247,251,253,0.98)_0%,rgba(232,241,245,0.86)_58%,rgba(246,249,251,0)_100%)] transition-colors duration-[1800ms]" />
         <div className="absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2 opacity-65 [background-image:linear-gradient(90deg,rgba(27,36,48,0.045)_1px,transparent_1px),linear-gradient(180deg,rgba(27,36,48,0.032)_1px,transparent_1px)] [background-size:120px_120px]" />
         <motion.div
+          className="absolute left-1/2 top-[10%] -z-10 h-[18rem] w-[80vw] -translate-x-1/2 rounded-full bg-white/26 blur-3xl"
+          animate={{ x: ["-3%", "3%", "-3%"], opacity: [0.18, 0.34, 0.18] }}
+          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute left-[12%] top-[22%] -z-10 h-px w-[76%] rotate-[-6deg] bg-gradient-to-r from-transparent via-[#526170]/[0.055] to-transparent"
+          animate={{ x: ["-4%", "5%", "-4%"], opacity: [0.025, 0.075, 0.025] }}
+          transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
           className="absolute left-1/2 top-[16%] -z-10 h-[42rem] w-[42rem] -translate-x-1/2 rounded-full bg-[rgba(var(--active-rgb),0.08)] blur-3xl transition-colors duration-[1800ms]"
           animate={{ opacity: [0.32, 0.56, 0.32], scale: [0.96, 1.04, 0.96] }}
           transition={{ duration: 7.5, repeat: Infinity, ease: "easeInOut" }}
         />
+        <div className="pointer-events-none absolute left-1/2 top-[18%] -z-10 h-[58%] w-screen -translate-x-1/2 overflow-hidden">
+          {[0, 1, 2, 3, 4, 5].map((index) => (
+            <motion.span
+              key={index}
+              className="absolute h-1.5 w-1.5 rounded-full bg-[var(--active-color)] opacity-45 shadow-[0_0_22px_rgba(var(--active-rgb),0.54)] transition-colors duration-[1600ms]"
+              style={{
+                left: `${18 + index * 12}%`,
+                top: `${18 + (index % 3) * 18}%`,
+              }}
+              animate={{
+                x: [0, index % 2 ? -26 : 30, 0],
+                y: [0, index % 2 ? 18 : -22, 0],
+                opacity: [0.18, 0.62, 0.18],
+                scale: [0.76, 1.18, 0.76],
+              }}
+              transition={{ duration: 7 + index * 0.45, repeat: Infinity, ease: "easeInOut", delay: index * 0.4 }}
+            />
+          ))}
+          <motion.span
+            className="absolute left-[12%] top-[36%] h-px w-[76%] rotate-[-8deg] bg-gradient-to-r from-transparent via-[var(--active-color)] to-transparent opacity-24 blur-[0.5px] transition-colors duration-[1600ms]"
+            animate={{ x: ["-10%", "10%", "-10%"], opacity: [0.1, 0.32, 0.1] }}
+            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.span
+            className="absolute left-[18%] top-[54%] h-px w-[64%] rotate-[12deg] bg-gradient-to-r from-transparent via-[var(--active-color)] to-transparent opacity-20 blur-[0.5px] transition-colors duration-[1600ms]"
+            animate={{ x: ["8%", "-8%", "8%"], opacity: [0.08, 0.26, 0.08] }}
+            transition={{ duration: 10.5, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
         <div className="relative flex min-h-[calc(100vh-3.5rem)] w-full flex-col items-center justify-center gap-6 pt-4 sm:gap-7 sm:pt-6">
           <HeroObject
-            className="w-[min(70vw,350px)] sm:w-[min(50vw,430px)] lg:w-[min(48vw,520px)]"
+            className="w-[min(62vw,285px)] sm:w-[min(38vw,340px)] lg:w-[min(34vw,380px)]"
             style={{
-              "--sphere-glow": `rgba(${activeTheme.rgb},0.2)`,
-              "--sphere-core": `rgba(${activeTheme.rgb},0.18)`,
-              "--sphere-edge": `rgba(${activeTheme.rgb},0.16)`,
-              "--sphere-shadow": `rgba(${activeTheme.rgb},0.18)`,
-              "--sphere-core-strong": `rgba(${activeTheme.rgb},0.28)`,
-              "--sphere-core-soft": `rgba(${activeTheme.rgb},0.1)`,
-              "--sphere-line": `rgba(${activeTheme.rgb},0.24)`,
-              "--sphere-stroke": `rgba(${activeTheme.rgb},0.34)`,
-              "--sphere-dot": `rgba(${activeTheme.rgb},0.58)`,
+              "--sphere-glow": `rgba(${activeTheme.rgb},0.36)`,
+              "--sphere-core": `rgba(${activeTheme.rgb},0.26)`,
+              "--sphere-edge": `rgba(${activeTheme.rgb},0.26)`,
+              "--sphere-shadow": `rgba(${activeTheme.rgb},0.32)`,
+              "--sphere-core-strong": `rgba(${activeTheme.rgb},0.42)`,
+              "--sphere-core-soft": `rgba(${activeTheme.rgb},0.18)`,
+              "--sphere-line": `rgba(${activeTheme.rgb},0.42)`,
+              "--sphere-stroke": `rgba(${activeTheme.rgb},0.54)`,
+              "--sphere-dot": `rgba(${activeTheme.rgb},0.78)`,
+              "--sphere-orbit": `rgba(${activeTheme.rgb},0.82)`,
             }}
           />
           <motion.div
@@ -567,12 +663,7 @@ export default function LabExperience() {
             initial={{ opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h1 className="max-w-4xl text-[clamp(2.25rem,4.8vw,4.55rem)] font-semibold leading-[0.94] tracking-[-0.062em] text-[#1b2430]">
-              Healthcare.
-              <br />
-              Reimagined.
-            </h1>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-[#526170]/86 sm:mt-6 sm:text-[1.14rem] sm:leading-8">
+            <p className="max-w-2xl text-base leading-7 text-[#526170]/90 sm:text-[1.18rem] sm:leading-8">
               AI Solutions for Modern Care.
             </p>
             <div className="mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[11px] uppercase tracking-[0.22em] text-[#526170]/68 sm:gap-x-4 sm:text-[12px]">
