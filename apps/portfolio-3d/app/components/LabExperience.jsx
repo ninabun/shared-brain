@@ -221,10 +221,10 @@ function DrawingStroke({ index }) {
   );
 }
 
-function HeroObject() {
+function HeroObject({ className = "" }) {
   return (
     <motion.div
-      className="relative flex aspect-square w-[min(76vw,430px)] items-center justify-center"
+      className={`relative flex aspect-square w-[min(76vw,430px)] items-center justify-center ${className}`}
       initial={{ opacity: 0, scale: 0.94, y: 22 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
@@ -296,7 +296,7 @@ function Section({ id, eyebrow, title, children, className = "" }) {
   return (
     <motion.section
       id={id}
-      className={`relative z-10 mx-auto min-h-[72vh] w-full max-w-7xl px-5 py-20 text-white sm:px-8 sm:py-28 lg:px-12 ${className}`}
+      className={`relative z-10 mx-auto min-h-[72vh] w-full max-w-7xl px-5 py-24 text-white sm:px-8 sm:py-32 lg:px-12 ${className}`}
       initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-18%" }}
@@ -304,7 +304,7 @@ function Section({ id, eyebrow, title, children, className = "" }) {
     >
       {eyebrow ? <p className="mb-5 text-[13px] uppercase tracking-[0.28em] text-cyan-100/38">{eyebrow}</p> : null}
       {title ? (
-        <h2 className="max-w-4xl text-3xl font-semibold leading-[1.05] tracking-[-0.045em] text-white/88 sm:text-5xl lg:text-6xl">
+        <h2 className="max-w-4xl text-3xl font-semibold leading-[1.06] tracking-[-0.045em] text-white/88 sm:text-5xl">
           {title}
         </h2>
       ) : null}
@@ -314,38 +314,33 @@ function Section({ id, eyebrow, title, children, className = "" }) {
 }
 
 function ProjectGlassCard({ project, area, index }) {
-  const Icon = iconMap[area.title] || BrainCircuit;
-
   return (
     <motion.article
-      className="group relative min-h-[390px] overflow-hidden rounded-[1.55rem] border border-white/[0.105] bg-[linear-gradient(145deg,rgba(255,255,255,0.105),rgba(255,255,255,0.035)_45%,rgba(0,0,0,0.08))] p-6 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16),inset_0_-18px_38px_rgba(0,0,0,0.22),0_24px_0_rgba(0,0,0,0.08),0_42px_115px_rgba(0,0,0,0.28)] backdrop-blur-2xl transition duration-700 hover:border-cyan-100/28 hover:bg-white/[0.08] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.24),inset_0_-18px_38px_rgba(0,0,0,0.2),0_30px_0_rgba(0,0,0,0.07),0_58px_140px_rgba(80,220,255,0.12)] sm:p-7"
-      initial={{ opacity: 0, y: 26, scale: 0.98, filter: "blur(12px)" }}
+      className="group relative min-h-[310px] overflow-hidden rounded-[1.65rem] border border-white/[0.08] bg-white/[0.045] p-7 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.13),inset_0_-18px_34px_rgba(0,0,0,0.18),0_20px_0_rgba(0,0,0,0.06),0_36px_110px_rgba(0,0,0,0.22)] backdrop-blur-2xl transition duration-700 hover:border-cyan-100/20 hover:bg-white/[0.062] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),inset_0_-18px_34px_rgba(0,0,0,0.16),0_25px_0_rgba(0,0,0,0.055),0_48px_130px_rgba(80,220,255,0.08)]"
+      initial={{ opacity: 0, y: 24, scale: 0.985, filter: "blur(10px)" }}
       whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-      whileHover={{ y: -8, scale: 1.015, rotateX: 1.2 }}
+      whileHover={{ y: -7, scale: 1.01, rotateX: 1 }}
       whileTap={{ y: 2, scale: 0.992, rotateX: -0.8 }}
       viewport={{ once: true, margin: "-14%" }}
-      transition={{ duration: 1.05, delay: index * 0.06, ease: "easeInOut" }}
+      transition={{ duration: 0.95, delay: index * 0.05, ease: "easeInOut" }}
       style={{ transformPerspective: 900, transformStyle: "preserve-3d" }}
     >
-      <div className="absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_18%,rgba(143,232,255,0.11),transparent_28%),radial-gradient(circle_at_22%_78%,rgba(157,116,255,0.09),transparent_30%)] opacity-75" />
-      <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-cyan-200/8 blur-3xl transition duration-700 group-hover:bg-cyan-200/14" />
+      <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/22 to-transparent" />
+      <div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-cyan-200/6 blur-3xl transition duration-700 group-hover:bg-cyan-200/10" />
       <div className="relative z-10 flex h-full flex-col justify-between">
         <div>
-          <div className="mb-9 flex h-11 w-11 items-center justify-center rounded-2xl border border-white/12 bg-white/[0.07] text-cyan-100/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_18px_60px_rgba(120,230,255,0.06)]">
-            <Icon size={21} />
+          <p className="mb-5 text-[13px] uppercase tracking-[0.24em] text-cyan-100/42">{area.title}</p>
+          <h3 className="text-[26px] font-semibold leading-[1.05] tracking-[-0.045em] text-white/92">{project.name}</h3>
+          <p className="mt-7 max-w-md text-base leading-7 text-[#CBD5E1]/76">{project.value}</p>
+          <div className="mt-7 border-t border-white/10 pt-5">
+            <p className="text-[13px] uppercase tracking-[0.2em] text-[#94A3B8]/58">Outcome</p>
+            <p className="mt-2 text-[15px] leading-7 text-[#CBD5E1]/64">{project.outcome}</p>
           </div>
-          <p className="mb-4 text-[13px] uppercase tracking-[0.24em] text-cyan-100/38">{area.title}</p>
-          <h3 className="text-2xl font-semibold leading-[1.05] tracking-[-0.04em] text-white/90">{project.name}</h3>
-          <p className="mt-5 text-[13px] uppercase tracking-[0.18em] text-[#94A3B8]/64">Problem</p>
-          <p className="mt-2 max-w-sm text-[15px] leading-7 text-[#CBD5E1]/66">{project.problem}</p>
-          <p className="mt-5 text-[13px] uppercase tracking-[0.18em] text-[#94A3B8]/64">Value</p>
-          <p className="mt-2 max-w-sm text-[15px] leading-7 text-[#CBD5E1]/74">{project.value}</p>
         </div>
         <div>
-          <div className="mb-6 flex flex-wrap gap-2">
+          <div className="mb-5 mt-8 flex flex-wrap gap-2">
             {project.tools.slice(0, 3).map((tool) => (
-              <span key={tool} className="rounded-full border border-white/10 bg-black/10 px-3 py-1 text-[13px] text-[#94A3B8]/72">
+              <span key={tool} className="rounded-full border border-white/8 bg-black/10 px-3 py-1 text-[12px] text-[#94A3B8]/66">
                 {tool}
               </span>
             ))}
@@ -358,7 +353,7 @@ function ProjectGlassCard({ project, area, index }) {
                 className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[13px] font-medium transition ${
                   cta === "Coming Soon"
                     ? "border-white/10 bg-white/[0.035] text-white/36"
-                    : "border-white/12 bg-white/[0.075] text-[#CBD5E1]/82 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] group-hover:border-cyan-100/28 group-hover:text-white"
+                    : "border-white/12 bg-white/[0.075] text-[#CBD5E1]/82 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_12px_28px_rgba(0,0,0,0.16)] hover:-translate-y-0.5 hover:border-cyan-100/28 hover:text-white active:translate-y-0.5"
                 }`}
               >
                 {cta}
@@ -376,19 +371,31 @@ function ThinkingFramework() {
   const steps = content.thinking;
 
   return (
-    <div className="mt-14 grid gap-4 md:grid-cols-5">
+    <div className="relative mt-16 max-w-3xl">
+      <motion.div
+        className="absolute bottom-10 left-[1.15rem] top-7 w-px bg-gradient-to-b from-cyan-100/0 via-cyan-100/28 to-cyan-100/0"
+        initial={{ scaleY: 0, opacity: 0 }}
+        whileInView={{ scaleY: 1, opacity: 1 }}
+        viewport={{ once: true, margin: "-18%" }}
+        transition={{ duration: 1.2, ease: "easeInOut" }}
+        style={{ transformOrigin: "top" }}
+      />
       {steps.map((step, index) => (
         <motion.div
           key={step.title}
-          className="relative rounded-[1.35rem] border border-white/[0.085] bg-white/[0.045] p-5 shadow-[0_18px_70px_rgba(0,0,0,0.18)] backdrop-blur-2xl"
-          initial={{ opacity: 0, y: 20, scale: 0.96 }}
+          className="relative grid grid-cols-[2.4rem_1fr] gap-5 pb-10 last:pb-0"
+          initial={{ opacity: 0, y: 20, scale: 0.98 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: "-18%" }}
-          transition={{ duration: 0.75, delay: index * 0.1, ease: "easeInOut" }}
+          transition={{ duration: 0.65, delay: index * 0.1, ease: "easeInOut" }}
         >
-          <span className="text-[13px] text-cyan-100/38">0{index + 1}</span>
-          <h3 className="mt-10 text-[22px] font-semibold tracking-[-0.035em] text-[#F8FAFC]/90">{step.title}</h3>
-          <p className="mt-4 text-[15px] leading-7 text-[#CBD5E1]/72">{step.body}</p>
+          <div className="relative z-10 mt-1 flex h-9 w-9 items-center justify-center rounded-full border border-cyan-100/18 bg-[#08101c] text-[13px] text-cyan-100/62 shadow-[0_0_30px_rgba(155,239,255,0.08)]">
+            {index + 1}
+          </div>
+          <div>
+            <h3 className="text-2xl font-semibold tracking-[-0.04em] text-[#F8FAFC]/90">{step.title}</h3>
+            <p className="mt-3 max-w-xl text-base leading-7 text-[#CBD5E1]/70">{step.body}</p>
+          </div>
         </motion.div>
       ))}
     </div>
@@ -396,23 +403,27 @@ function ThinkingFramework() {
 }
 
 function ImpactAreas({ areas }) {
+  const [openAreas, setOpenAreas] = useState({});
+
   return (
-    <div className="mt-16 space-y-14">
+    <div className="mt-16 space-y-16">
       {areas.map((area, areaIndex) => {
         const Icon = iconMap[area.title] || Sparkles;
+        const isOpen = Boolean(openAreas[area.title]);
+        const visibleProjects = isOpen ? area.projects : area.projects.slice(0, 3);
 
         return (
           <motion.div
             key={area.title}
-            className="relative overflow-hidden rounded-[2rem] border border-white/[0.085] bg-white/[0.035] p-5 shadow-[0_42px_140px_rgba(0,0,0,0.22)] backdrop-blur-2xl sm:p-7"
+            className="relative overflow-hidden rounded-[2rem] border border-white/[0.075] bg-white/[0.03] p-5 shadow-[0_42px_140px_rgba(0,0,0,0.2)] backdrop-blur-2xl sm:p-8"
             initial={{ opacity: 0, y: 28, scale: 0.98 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-14%" }}
             transition={{ duration: 0.9, delay: areaIndex * 0.08, ease: "easeInOut" }}
           >
             <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/24 to-transparent" />
-            <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-cyan-100/7 blur-3xl" />
-            <div className="relative z-10 mb-8 grid gap-6 lg:grid-cols-[0.62fr_1fr] lg:items-end">
+            <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-cyan-100/5 blur-3xl" />
+            <div className="relative z-10 mb-10 grid gap-8 lg:grid-cols-[0.58fr_1fr] lg:items-end">
               <div>
                 <div className="mb-8 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/12 bg-white/[0.06] text-cyan-100/68">
                   <Icon size={22} />
@@ -422,13 +433,22 @@ function ImpactAreas({ areas }) {
                   {area.title}
                 </h3>
               </div>
-              <p className="max-w-2xl text-base leading-8 text-[#CBD5E1]/68">{area.description}</p>
+              <p className="max-w-2xl text-base leading-8 text-[#CBD5E1]/70">{area.description}</p>
             </div>
             <div className="relative z-10 grid gap-5 md:grid-cols-2">
-              {area.projects.map((project, index) => (
+              {visibleProjects.map((project, index) => (
                 <ProjectGlassCard key={project.name} project={project} area={area} index={index} />
               ))}
             </div>
+            {area.projects.length > 3 ? (
+              <button
+                type="button"
+                className="relative z-10 mt-7 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.055] px-5 py-3 text-sm font-medium text-[#CBD5E1]/78 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_16px_40px_rgba(0,0,0,0.16)] transition hover:-translate-y-0.5 hover:border-cyan-100/24 hover:text-white active:translate-y-0.5"
+                onClick={() => setOpenAreas((current) => ({ ...current, [area.title]: !isOpen }))}
+              >
+                {isOpen ? "Show Less" : "View More"} <ArrowRight size={14} className={isOpen ? "-rotate-90 transition" : "rotate-90 transition"} />
+              </button>
+            ) : null}
           </motion.div>
         );
       })}
@@ -492,28 +512,25 @@ export default function LabExperience() {
         style={{ scale: heroScale, opacity: heroOpacity }}
         className="relative z-10 mx-auto flex min-h-[118vh] max-w-7xl flex-col items-center justify-start px-5 pb-12 pt-24 text-center sm:px-8 lg:px-12"
       >
-        <div className="sticky top-20 flex min-h-[calc(100vh-5rem)] w-full flex-col items-center justify-center">
-          <HeroObject />
+        <div className="sticky top-20 flex min-h-[calc(100vh-5rem)] w-full flex-col items-center justify-center gap-10">
           <motion.div
-            className="mt-8 flex max-w-4xl flex-col items-center rounded-[2rem] bg-[#04070d]/38 px-5 py-7 shadow-[0_30px_120px_rgba(0,0,0,0.32)] backdrop-blur-md sm:px-8"
+            className="flex max-w-5xl flex-col items-center rounded-[2rem] bg-[#04070d]/28 px-5 py-7 shadow-[0_30px_120px_rgba(0,0,0,0.24)] backdrop-blur-sm sm:px-8"
             style={{ opacity: heroIntroOpacity, y: heroIntroY }}
           >
-            <h1 className="max-w-4xl text-[clamp(3.2rem,8.2vw,6.8rem)] font-semibold leading-[0.94] tracking-[-0.07em] text-[#F8FAFC]">
-              Bringing Practical AI into Everyday Healthcare.
+            <h1 className="max-w-5xl text-[clamp(3.6rem,9vw,7.7rem)] font-semibold leading-[0.92] tracking-[-0.075em] text-[#F8FAFC]">
+              Bringing Practical AI into Everyday Healthcare
             </h1>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-[#CBD5E1] sm:text-2xl sm:leading-9">
-              Designing AI-powered experiences for patients, clinicians, and healthcare operations.
-            </p>
-            <p className="mt-4 max-w-xl text-[15px] leading-7 text-[#94A3B8] sm:text-base">
-              From clinical workflow problems to usable AI solutions.
+            <p className="mt-7 max-w-2xl text-xl leading-8 text-[#CBD5E1] sm:text-3xl sm:leading-10">
+              From Clinical Problems to AI Solutions.
             </p>
             <a
               href="#how"
-              className="mt-8 inline-flex items-center gap-3 rounded-full bg-white px-6 py-3 text-sm font-medium text-black shadow-[0_18px_60px_rgba(155,239,255,0.14)] transition hover:bg-cyan-100"
+              className="mt-9 inline-flex items-center gap-3 rounded-full bg-white px-6 py-3 text-sm font-medium text-black shadow-[0_18px_60px_rgba(155,239,255,0.14)] transition hover:-translate-y-0.5 hover:bg-cyan-100 active:translate-y-0.5"
             >
               Enter the Lab <ArrowRight size={16} />
             </a>
           </motion.div>
+          <HeroObject className="w-[min(54vw,280px)] opacity-85" />
         </div>
       </motion.section>
 
@@ -531,11 +548,10 @@ export default function LabExperience() {
 
       <Section id="about" eyebrow="About" title="Built between care, code and product design.">
         <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_0.8fr]">
-          <p className="max-w-3xl text-lg leading-8 tracking-[-0.02em] text-white/60 sm:text-2xl sm:leading-9">
-            Wing Yee works at the intersection of clinical practice, computer science, AI, and product design. Her work
-            focuses on translating healthcare workflow problems into practical AI-powered systems, automation workflows,
-            and immersive experiences.
-          </p>
+          <div className="max-w-3xl space-y-5 text-lg leading-8 tracking-[-0.02em] text-white/60 sm:text-2xl sm:leading-9">
+            <p>Wing Yee works between clinical practice, computer science, AI and product design.</p>
+            <p>She turns healthcare workflow problems into practical systems, automation and immersive experiences.</p>
+          </div>
           <div className="grid gap-3 text-sm text-white/62">
             {["Patient experience", "Clinical workflow improvement", "Healthcare intelligence", "Immersive communication"].map(
               (item) => (
@@ -548,15 +564,10 @@ export default function LabExperience() {
         </div>
       </Section>
 
-      <Section id="mission" eyebrow="Mission" title="Technology should give healthcare professionals more time to care.">
-        <p className="mt-8 max-w-2xl text-base leading-8 text-white/56 sm:text-lg">
-          Wing Yee AI Lab builds practical tools and experiences that reduce repetitive work, improve communication, and
-          make AI useful in real healthcare environments.
-        </p>
-      </Section>
+      <Section id="mission" eyebrow="Mission" title="Technology should give healthcare professionals more time to care." className="min-h-[48vh]" />
 
-      <Section id="research" eyebrow="Research Preview" title="Currently Exploring">
-        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      <Section id="research" eyebrow="What's Next" title="Future directions inside the lab.">
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {research.map((item, index) => (
             <motion.div
               key={item}
@@ -567,7 +578,8 @@ export default function LabExperience() {
               transition={{ duration: 0.55, delay: index * 0.05 }}
             >
               <span className="text-[13px] text-cyan-100/35">0{index + 1}</span>
-              <p className="mt-12 text-base tracking-[-0.025em] text-white/62">{item}</p>
+              <p className="mt-10 text-base tracking-[-0.025em] text-white/68">{item}</p>
+              <p className="mt-5 text-[13px] uppercase tracking-[0.2em] text-cyan-100/35">Coming Soon</p>
             </motion.div>
           ))}
         </div>
@@ -575,7 +587,7 @@ export default function LabExperience() {
           href="#contact"
           className="mt-10 inline-flex w-fit items-center gap-3 rounded-full border border-white/10 bg-white/[0.055] px-5 py-3 text-[15px] font-medium text-[#CBD5E1] transition hover:border-cyan-100/30 hover:text-white"
         >
-          View Research <ArrowRight size={15} />
+          View What's Next <ArrowRight size={15} />
         </a>
       </Section>
 

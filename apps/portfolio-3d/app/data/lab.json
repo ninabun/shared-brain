@@ -34,29 +34,29 @@
       "projects": [
         {
           "name": "Projection Mapping",
-          "problem": "Traditional presentations can feel flat for education, relaxation and patient-facing communication.",
-          "value": "Creates an immersive visual experience for patient education, relaxation and presentation.",
+          "value": "Immersive visual experience for patient education, relaxation and presentation.",
+          "outcome": "Replaces flat presentations with spatial storytelling.",
           "tools": ["Blender", "TouchDesigner", "HeavyM"],
-          "ctas": ["Watch Concept", "Explore Project"]
+          "ctas": ["Watch Concept"]
         },
         {
           "name": "AI Music & Video",
-          "problem": "Healthcare messages often need a more emotional and accessible format.",
-          "value": "Uses AI-generated media for patient engagement, education and storytelling.",
+          "value": "AI-generated media for patient engagement, education and storytelling.",
+          "outcome": "Makes healthcare messages easier to feel and remember.",
           "tools": ["Suno", "Higgsfield", "CapCut"],
           "ctas": ["Watch Demo"]
         },
         {
           "name": "Immersive Web Prototype",
-          "problem": "Complex ideas need clearer spatial and visual explanation.",
-          "value": "A responsive 3D scrollytelling experiment for healthcare communication and presentation.",
+          "value": "A responsive 3D scrollytelling experiment for healthcare communication.",
+          "outcome": "Turns complex ideas into spatial product stories.",
           "tools": ["WebGL", "Codex", "Google AI Studio"],
-          "ctas": ["Explore Project"]
+          "ctas": ["Explore Experience"]
         },
         {
           "name": "Yoga Room / Patient Relaxation Visual Experience",
-          "problem": "Care environments need calmer digital experiences that support wellbeing.",
-          "value": "A future immersive relaxation layer for patient comfort and emotional care.",
+          "value": "A future immersive relaxation layer for patient comfort.",
+          "outcome": "Supports calmer care environments.",
           "tools": ["Concept", "Projection", "AI Media"],
           "ctas": ["Coming Soon"]
         }
@@ -68,29 +68,29 @@
       "projects": [
         {
           "name": "Roster Automation",
-          "problem": "Roster planning is time-consuming and difficult to balance fairly.",
-          "value": "AI-assisted roster generation designed to improve fairness, usability and planning efficiency.",
+          "value": "AI-assisted roster generation for fairness, usability and planning efficiency.",
+          "outcome": "Reduces repeated planning work for clinical teams.",
           "tools": ["Codex"],
           "ctas": ["Watch Demo", "Case Study"]
         },
         {
           "name": "Smart Ward Reception",
-          "problem": "Visitor and bell inquiries interrupt clinical staff before the need is understood.",
-          "value": "A tablet-based inquiry system that helps identify visitor needs before interrupting clinical staff.",
+          "value": "A tablet-based inquiry system that identifies visitor needs earlier.",
+          "outcome": "Reduces unnecessary interruptions to clinical staff.",
           "tools": ["Tablet UI", "Workflow Design"],
           "ctas": ["Explore Project"]
         },
         {
           "name": "AI Feedback Assistant",
-          "problem": "Feedback handling can be repetitive, slow and inconsistent.",
-          "value": "Classifies feedback sentiment, drafts replies and keeps human approval before sending.",
+          "value": "Classifies feedback, drafts replies and keeps human approval before sending.",
+          "outcome": "Makes feedback handling faster and more consistent.",
           "tools": ["AI Agent", "Automation"],
           "ctas": ["View Workflow"]
         },
         {
           "name": "Nursing Workflow Assistant",
-          "problem": "Nursing teams need practical support for repeated information and coordination tasks.",
-          "value": "A future AI workflow assistant for clinical task support and ward efficiency.",
+          "value": "A future AI assistant for repeated clinical information and coordination tasks.",
+          "outcome": "Supports ward efficiency without adding complexity.",
           "tools": ["Concept", "AI Workflow"],
           "ctas": ["Coming Soon"]
         }
@@ -102,29 +102,29 @@
       "projects": [
         {
           "name": "Hermes AI Agent",
-          "problem": "AI developments move too quickly to follow manually.",
           "value": "A daily AI intelligence pipeline that summarizes fast-changing AI updates.",
+          "outcome": "Keeps knowledge flow current without manual tracking.",
           "tools": ["LLM", "VPS"],
-          "ctas": ["View AI Brief"]
+          "ctas": ["Today's AI Brief"]
         },
         {
           "name": "n8n Workflow",
-          "problem": "Administrative and communication processes often repeat across teams.",
-          "value": "Backend workflow automation for repetitive administrative or communication processes.",
+          "value": "Backend workflow automation for repetitive administrative processes.",
+          "outcome": "Connects routine signals to repeatable actions.",
           "tools": ["n8n", "Automation"],
           "ctas": ["View Workflow"]
         },
         {
           "name": "Multimodal Agent",
-          "problem": "Healthcare information is not only text; it can include images, voice and context.",
-          "value": "Exploring multimodal agents for richer clinical and educational workflows.",
+          "value": "Exploring agents that understand text, image, voice and context.",
+          "outcome": "Prepares richer clinical and educational workflows.",
           "tools": ["Research", "AI Agents"],
           "ctas": ["Coming Soon"]
         },
         {
           "name": "Multi-agent Healthcare Workflow",
-          "problem": "Clinical, operational and educational tasks often need coordinated support.",
-          "value": "Exploring how multiple AI agents can support healthcare workflow tasks together.",
+          "value": "Exploring coordinated agents for clinical, operational and educational tasks.",
+          "outcome": "Connects separate healthcare tasks into one support system.",
           "tools": ["Research", "Multi-agent"],
           "ctas": ["Coming Soon"]
         }
@@ -132,10 +132,9 @@
     }
   ],
   "research": [
-    "Multimodal agents",
-    "Multi-agent healthcare workflows",
-    "Healthcare AI systems",
-    "Projection mapping for patient experience",
-    "AI-powered clinical workflow automation"
+    "Multi-Agent Systems",
+    "Healthcare AI",
+    "Projection Mapping",
+    "Interactive Experience"
   ]
 }
