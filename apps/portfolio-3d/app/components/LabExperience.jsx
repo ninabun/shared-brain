@@ -7,10 +7,10 @@ import content from "../data/lab.json";
 import HeroBackground from "./HeroBackground";
 
 const navItems = [
-  { label: "Think", href: "#how" },
-  { label: "Impact", href: "#impact" },
+  { label: "Solutions", href: "#platform" },
+  { label: "Vision", href: "#mission" },
+  { label: "Research", href: "#roadmap" },
   { label: "About", href: "#about" },
-  { label: "Mission", href: "#mission" },
 ];
 
 const iconMap = {
@@ -256,9 +256,9 @@ function Header() {
           <PersonalSymbol className="h-5 w-5" />
           Wing Yee AI Lab
         </a>
-        <div className="hidden items-center gap-7 text-sm text-white/54 md:flex">
+        <div className="hidden items-center gap-5 text-[13px] text-white/62 md:flex">
           {navItems.map((item) => (
-            <a key={item.label} href={item.href} className="transition hover:text-white">
+            <a key={item.label} href={item.href} className="transition duration-300 hover:text-white/88">
               {item.label}
             </a>
           ))}
@@ -296,15 +296,15 @@ function Section({ id, eyebrow, title, children, className = "" }) {
   return (
     <motion.section
       id={id}
-      className={`relative z-10 mx-auto min-h-[72vh] w-full max-w-7xl px-5 py-24 text-white sm:px-8 sm:py-32 lg:px-12 ${className}`}
+      className={`relative z-10 mx-auto min-h-[52vh] w-full max-w-7xl px-5 py-20 text-white sm:px-8 sm:py-28 lg:px-12 ${className}`}
       initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-18%" }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
     >
-      {eyebrow ? <p className="mb-5 text-[13px] uppercase tracking-[0.28em] text-cyan-100/38">{eyebrow}</p> : null}
+      {eyebrow ? <p className="mb-5 text-[13px] uppercase tracking-[0.26em] text-cyan-100/58">{eyebrow}</p> : null}
       {title ? (
-        <h2 className="max-w-4xl text-3xl font-semibold leading-[1.06] tracking-[-0.045em] text-white/88 sm:text-5xl">
+        <h2 className="max-w-4xl text-4xl font-semibold leading-[1.04] tracking-[-0.045em] text-[#F8FAFC] sm:text-5xl">
           {title}
         </h2>
       ) : null}
@@ -316,7 +316,7 @@ function Section({ id, eyebrow, title, children, className = "" }) {
 function ProjectGlassCard({ project, area, index }) {
   return (
     <motion.article
-      className="group relative min-h-[310px] overflow-hidden rounded-[1.65rem] border border-white/[0.08] bg-white/[0.045] p-7 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.13),inset_0_-18px_34px_rgba(0,0,0,0.18),0_20px_0_rgba(0,0,0,0.06),0_36px_110px_rgba(0,0,0,0.22)] backdrop-blur-2xl transition duration-700 hover:border-cyan-100/20 hover:bg-white/[0.062] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),inset_0_-18px_34px_rgba(0,0,0,0.16),0_25px_0_rgba(0,0,0,0.055),0_48px_130px_rgba(80,220,255,0.08)]"
+      className="group relative min-h-[270px] overflow-hidden rounded-[1.35rem] border border-white/[0.1] bg-[linear-gradient(145deg,rgba(255,255,255,0.08),rgba(255,255,255,0.035)_54%,rgba(0,0,0,0.08))] p-5 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16),inset_0_-16px_30px_rgba(0,0,0,0.2),0_14px_0_rgba(0,0,0,0.06),0_30px_90px_rgba(0,0,0,0.28)] backdrop-blur-2xl transition duration-700 hover:border-cyan-100/26 hover:bg-white/[0.07] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.22),inset_0_-16px_30px_rgba(0,0,0,0.18),0_18px_0_rgba(0,0,0,0.055),0_44px_120px_rgba(80,220,255,0.12)]"
       initial={{ opacity: 0, y: 24, scale: 0.985, filter: "blur(10px)" }}
       whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
       whileHover={{ y: -7, scale: 1.01, rotateX: 1 }}
@@ -325,22 +325,23 @@ function ProjectGlassCard({ project, area, index }) {
       transition={{ duration: 0.95, delay: index * 0.05, ease: "easeInOut" }}
       style={{ transformPerspective: 900, transformStyle: "preserve-3d" }}
     >
-      <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/22 to-transparent" />
-      <div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-cyan-200/6 blur-3xl transition duration-700 group-hover:bg-cyan-200/10" />
+      <div className="absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+      <div className="absolute -right-20 -top-20 h-44 w-44 rounded-full bg-cyan-200/7 blur-3xl transition duration-700 group-hover:bg-cyan-200/12" />
       <div className="relative z-10 flex h-full flex-col justify-between">
         <div>
-          <p className="mb-5 text-[13px] uppercase tracking-[0.24em] text-cyan-100/42">{area.title}</p>
-          <h3 className="text-[26px] font-semibold leading-[1.05] tracking-[-0.045em] text-white/92">{project.name}</h3>
-          <p className="mt-7 max-w-md text-base leading-7 text-[#CBD5E1]/76">{project.value}</p>
-          <div className="mt-7 border-t border-white/10 pt-5">
-            <p className="text-[13px] uppercase tracking-[0.2em] text-[#94A3B8]/58">Outcome</p>
-            <p className="mt-2 text-[15px] leading-7 text-[#CBD5E1]/64">{project.outcome}</p>
+          <p className="mb-4 text-[13px] uppercase tracking-[0.22em] text-cyan-100/58">{area.title}</p>
+          <h3 className="text-[22px] font-semibold leading-[1.08] tracking-[-0.04em] text-[#F8FAFC]">{project.name}</h3>
+          <p className="mt-5 text-[13px] uppercase tracking-[0.18em] text-[#94A3B8]/78">Problem</p>
+          <p className="mt-2 max-w-md text-[15px] leading-7 text-[#CBD5E1]/78">{project.problem}</p>
+          <div className="mt-5 border-t border-white/10 pt-4">
+            <p className="text-[13px] uppercase tracking-[0.18em] text-[#94A3B8]/78">Solution</p>
+            <p className="mt-2 text-[14px] leading-6 text-[#CBD5E1]/80">{project.solution}</p>
           </div>
         </div>
         <div>
-          <div className="mb-5 mt-8 flex flex-wrap gap-2">
+          <div className="mb-5 mt-6 flex flex-wrap gap-2">
             {project.tools.slice(0, 3).map((tool) => (
-              <span key={tool} className="rounded-full border border-white/8 bg-black/10 px-3 py-1 text-[12px] text-[#94A3B8]/66">
+              <span key={tool} className="rounded-full border border-white/10 bg-black/10 px-3 py-1 text-[13px] text-[#94A3B8]/78">
                 {tool}
               </span>
             ))}
@@ -351,13 +352,13 @@ function ProjectGlassCard({ project, area, index }) {
                 key={cta}
                 href="#contact"
                 className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[13px] font-medium transition ${
-                  cta === "Coming Soon"
-                    ? "border-white/10 bg-white/[0.035] text-white/36"
+                  cta === "Future Direction"
+                    ? "border-white/10 bg-white/[0.035] text-white/56"
                     : "border-white/12 bg-white/[0.075] text-[#CBD5E1]/82 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_12px_28px_rgba(0,0,0,0.16)] hover:-translate-y-0.5 hover:border-cyan-100/28 hover:text-white active:translate-y-0.5"
                 }`}
               >
                 {cta}
-                {cta === "Coming Soon" ? null : <ArrowRight size={13} />}
+                {cta === "Future Direction" ? null : <ArrowRight size={13} />}
               </a>
             ))}
           </div>
@@ -402,40 +403,38 @@ function ThinkingFramework() {
   );
 }
 
-function ImpactAreas({ areas }) {
+function PlatformArchitecture({ modules }) {
   const [openAreas, setOpenAreas] = useState({});
 
   return (
-    <div className="mt-16 space-y-16">
-      {areas.map((area, areaIndex) => {
+    <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+      {modules.map((area, areaIndex) => {
         const Icon = iconMap[area.title] || Sparkles;
         const isOpen = Boolean(openAreas[area.title]);
-        const visibleProjects = isOpen ? area.projects : area.projects.slice(0, 3);
+        const visibleProjects = isOpen ? area.projects : area.projects.slice(0, 2);
 
         return (
           <motion.div
             key={area.title}
-            className="relative overflow-hidden rounded-[2rem] border border-white/[0.075] bg-white/[0.03] p-5 shadow-[0_42px_140px_rgba(0,0,0,0.2)] backdrop-blur-2xl sm:p-8"
+            className="relative flex min-h-full flex-col overflow-hidden rounded-[2rem] border border-white/[0.09] bg-white/[0.035] p-5 shadow-[0_32px_120px_rgba(0,0,0,0.24)] backdrop-blur-2xl sm:p-6"
             initial={{ opacity: 0, y: 28, scale: 0.98 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-14%" }}
             transition={{ duration: 0.9, delay: areaIndex * 0.08, ease: "easeInOut" }}
           >
-            <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/24 to-transparent" />
-            <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-cyan-100/5 blur-3xl" />
-            <div className="relative z-10 mb-10 grid gap-8 lg:grid-cols-[0.58fr_1fr] lg:items-end">
-              <div>
-                <div className="mb-8 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/12 bg-white/[0.06] text-cyan-100/68">
-                  <Icon size={22} />
+            <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/28 to-transparent" />
+            <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-cyan-100/6 blur-3xl" />
+            <div className="relative z-10 mb-7">
+              <div className="mb-7 flex items-center justify-between gap-4">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/12 bg-white/[0.06] text-cyan-100/76">
+                  <Icon size={21} />
                 </div>
-                <p className="text-[13px] uppercase tracking-[0.28em] text-cyan-100/36">Impact Area 0{areaIndex + 1}</p>
-                <h3 className="mt-4 text-3xl font-semibold leading-[1.02] tracking-[-0.045em] text-white/90 sm:text-5xl">
-                  {area.title}
-                </h3>
+                <p className="text-[13px] uppercase tracking-[0.22em] text-cyan-100/58">Module 0{areaIndex + 1}</p>
               </div>
-              <p className="max-w-2xl text-base leading-8 text-[#CBD5E1]/70">{area.description}</p>
+              <h3 className="text-3xl font-semibold leading-[1.02] tracking-[-0.045em] text-[#F8FAFC]">{area.title}</h3>
+              <p className="mt-5 text-[15px] leading-7 text-[#CBD5E1]/78">{area.description}</p>
             </div>
-            <div className="relative z-10 grid gap-5 md:grid-cols-2">
+            <div className="relative z-10 grid flex-1 gap-4">
               {visibleProjects.map((project, index) => (
                 <ProjectGlassCard key={project.name} project={project} area={area} index={index} />
               ))}
@@ -443,10 +442,10 @@ function ImpactAreas({ areas }) {
             {area.projects.length > 3 ? (
               <button
                 type="button"
-                className="relative z-10 mt-7 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.055] px-5 py-3 text-sm font-medium text-[#CBD5E1]/78 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_16px_40px_rgba(0,0,0,0.16)] transition hover:-translate-y-0.5 hover:border-cyan-100/24 hover:text-white active:translate-y-0.5"
+                className="relative z-10 mt-6 inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.055] px-5 py-3 text-sm font-medium text-[#CBD5E1]/86 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_16px_40px_rgba(0,0,0,0.16)] transition hover:-translate-y-0.5 hover:border-cyan-100/24 hover:text-white active:translate-y-0.5"
                 onClick={() => setOpenAreas((current) => ({ ...current, [area.title]: !isOpen }))}
               >
-                {isOpen ? "Show Less" : "View More"} <ArrowRight size={14} className={isOpen ? "-rotate-90 transition" : "rotate-90 transition"} />
+                {isOpen ? "Show Less" : "View Module"} <ArrowRight size={14} className={isOpen ? "-rotate-90 transition" : "rotate-90 transition"} />
               </button>
             ) : null}
           </motion.div>
@@ -467,7 +466,7 @@ function SignatureFooter() {
     >
       <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
         <div>
-          <p className="text-xs uppercase tracking-[0.34em] text-black/42">Personal Mark</p>
+          <p className="text-[13px] uppercase tracking-[0.34em] text-black/50">Personal Mark</p>
           <h2 className="mt-5 max-w-3xl text-5xl font-semibold leading-[0.96] tracking-[-0.055em] text-black sm:text-7xl">
             Clinical care, code and AI systems.
           </h2>
@@ -487,7 +486,7 @@ function SignatureFooter() {
           >
             <PersonalSymbol className="h-[70%] w-[70%]" />
           </motion.div>
-          <p className="text-xs uppercase tracking-[0.28em] text-black/35">Wing Yee AI Lab</p>
+          <p className="text-[13px] uppercase tracking-[0.28em] text-black/46">Wing Yee AI Lab</p>
         </div>
       </div>
     </motion.footer>
@@ -496,11 +495,10 @@ function SignatureFooter() {
 
 export default function LabExperience() {
   const { scrollYProgress } = useScroll();
-  const heroScale = useTransform(scrollYProgress, [0, 0.2], [1, 0.965]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.18], [1, 0.58]);
-  const heroIntroOpacity = useTransform(scrollYProgress, [0, 0.055, 0.13], [0, 0.72, 1]);
-  const heroIntroY = useTransform(scrollYProgress, [0, 0.13], [26, 0]);
-  const { impactAreas, research } = content;
+  const heroScale = useTransform(scrollYProgress, [0, 0.2], [1, 0.975]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.18], [1, 0.72]);
+  const heroIntroY = useTransform(scrollYProgress, [0, 0.13], [0, -8]);
+  const { modules, roadmap } = content;
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#04070d] text-white">
@@ -510,47 +508,80 @@ export default function LabExperience() {
       <motion.section
         id="home"
         style={{ scale: heroScale, opacity: heroOpacity }}
-        className="relative z-10 mx-auto flex min-h-[118vh] max-w-7xl flex-col items-center justify-start px-5 pb-12 pt-24 text-center sm:px-8 lg:px-12"
+        className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-start px-5 pb-10 pt-16 text-center sm:px-8 lg:px-12"
       >
-        <div className="sticky top-20 flex min-h-[calc(100vh-5rem)] w-full flex-col items-center justify-center gap-10">
+        <div className="relative flex min-h-[calc(100vh-4rem)] w-full flex-col items-center justify-center gap-14">
           <motion.div
-            className="flex max-w-5xl flex-col items-center rounded-[2rem] bg-[#04070d]/28 px-5 py-7 shadow-[0_30px_120px_rgba(0,0,0,0.24)] backdrop-blur-sm sm:px-8"
-            style={{ opacity: heroIntroOpacity, y: heroIntroY }}
+            className="flex max-w-6xl -translate-y-7 flex-col items-center px-5 py-5 sm:-translate-y-9 sm:px-8"
+            style={{ y: heroIntroY }}
+            initial={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
           >
-            <h1 className="max-w-5xl text-[clamp(3.6rem,9vw,7.7rem)] font-semibold leading-[0.92] tracking-[-0.075em] text-[#F8FAFC]">
-              Bringing Practical AI into Everyday Healthcare
+            <p className="mb-9 text-[13px] uppercase tracking-[0.36em] text-cyan-100/62">Wing Yee AI Lab</p>
+            <h1 className="max-w-5xl text-[clamp(3.25rem,8.4vw,7.15rem)] font-semibold leading-[0.9] tracking-[-0.075em] text-[#F8FAFC]">
+              Healthcare.
+              <br />
+              Reimagined.
             </h1>
-            <p className="mt-7 max-w-2xl text-xl leading-8 text-[#CBD5E1] sm:text-3xl sm:leading-10">
-              From Clinical Problems to AI Solutions.
+            <p className="mt-12 max-w-2xl text-lg leading-8 text-[#CBD5E1] sm:text-[1.65rem] sm:leading-9">
+              AI Solutions for Modern Care.
             </p>
-            <a
-              href="#how"
-              className="mt-9 inline-flex items-center gap-3 rounded-full bg-white px-6 py-3 text-sm font-medium text-black shadow-[0_18px_60px_rgba(155,239,255,0.14)] transition hover:-translate-y-0.5 hover:bg-cyan-100 active:translate-y-0.5"
-            >
-              Enter the Lab <ArrowRight size={16} />
-            </a>
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-x-4 gap-y-3 text-[13px] uppercase tracking-[0.22em] text-white/56 sm:gap-x-5">
+              {["Patient Experience", "Clinical Workflow", "Healthcare Intelligence"].map((item, index) => (
+                <a
+                  key={item}
+                  href="#platform"
+                  className="group inline-flex items-center gap-4 transition duration-300 hover:text-white/88"
+                >
+                  <span className="relative">
+                    {item}
+                    <span className="absolute -bottom-1 left-0 h-px w-0 bg-cyan-100/55 transition-all duration-500 group-hover:w-full" />
+                  </span>
+                  {index < 2 ? <span className="text-white/28">&bull;</span> : null}
+                </a>
+              ))}
+            </div>
           </motion.div>
-          <HeroObject className="w-[min(54vw,280px)] opacity-85" />
+          <HeroObject className="-mt-6 w-[min(54vw,224px)] opacity-86 sm:-mt-8" />
+          <motion.a
+            href="#platform"
+            aria-label="Scroll to solutions"
+            className="absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-3 text-white/42"
+            animate={{ y: [0, 9, 0], opacity: [0.42, 0.78, 0.42] }}
+            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <span className="h-9 w-px bg-gradient-to-b from-transparent via-white/55 to-transparent" />
+            <span className="text-[13px] uppercase tracking-[0.24em]">Scroll</span>
+          </motion.a>
         </div>
       </motion.section>
+
+      <Section id="platform" eyebrow="Platform Architecture" title="One assistant. Three healthcare modules.">
+        <div className="mt-10 flex flex-wrap items-center gap-3 text-[15px] text-[#CBD5E1]/82">
+          <span className="rounded-full border border-white/12 bg-white/[0.06] px-5 py-3 text-[#F8FAFC]">AI Ward Assistant</span>
+          <ArrowRight size={16} className="text-cyan-100/58" />
+          {modules.map((module) => (
+            <span key={module.title} className="rounded-full border border-white/10 bg-white/[0.04] px-5 py-3">
+              {module.title}
+            </span>
+          ))}
+        </div>
+        <PlatformArchitecture modules={modules} />
+      </Section>
 
       <Section
         id="how"
         eyebrow="How I Think"
-        title="A practical framework for turning workflow problems into usable AI systems."
+        title="The product development framework behind AI Ward Assistant."
       >
         <ThinkingFramework />
-      </Section>
-
-      <Section id="impact" eyebrow="Impact Areas" title="Practical AI across healthcare scenes.">
-        <ImpactAreas areas={impactAreas} />
       </Section>
 
       <Section id="about" eyebrow="About" title="Built between care, code and product design.">
         <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_0.8fr]">
           <div className="max-w-3xl space-y-5 text-lg leading-8 tracking-[-0.02em] text-white/60 sm:text-2xl sm:leading-9">
-            <p>Wing Yee works between clinical practice, computer science, AI and product design.</p>
-            <p>She turns healthcare workflow problems into practical systems, automation and immersive experiences.</p>
+            <p>Wing Yee builds AI-powered healthcare products by combining clinical experience, computer science and product design.</p>
+            <p>The goal is to transform everyday healthcare workflows into practical AI systems.</p>
           </div>
           <div className="grid gap-3 text-sm text-white/62">
             {["Patient experience", "Clinical workflow improvement", "Healthcare intelligence", "Immersive communication"].map(
@@ -564,11 +595,15 @@ export default function LabExperience() {
         </div>
       </Section>
 
-      <Section id="mission" eyebrow="Mission" title="Technology should give healthcare professionals more time to care." className="min-h-[48vh]" />
+      <Section id="mission" eyebrow="Mission" title="Technology should give healthcare professionals more time to care.">
+        <p className="mt-8 max-w-2xl text-lg leading-8 text-[#CBD5E1]/82">
+          AI should reduce repetitive work, improve communication, and create better healthcare experiences.
+        </p>
+      </Section>
 
-      <Section id="research" eyebrow="What's Next" title="Future directions inside the lab.">
+      <Section id="roadmap" eyebrow="Roadmap" title="Future versions of AI Ward Assistant.">
         <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {research.map((item, index) => (
+          {roadmap.map((item, index) => (
             <motion.div
               key={item}
               className="min-h-36 rounded-[1.35rem] border border-white/[0.085] bg-white/[0.045] p-5 shadow-[0_18px_60px_rgba(120,230,255,0.025)] backdrop-blur-xl"
@@ -577,9 +612,11 @@ export default function LabExperience() {
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: index * 0.05 }}
             >
-              <span className="text-[13px] text-cyan-100/35">0{index + 1}</span>
+              <span className="text-[13px] text-cyan-100/52">0{index + 1}</span>
               <p className="mt-10 text-base tracking-[-0.025em] text-white/68">{item}</p>
-              <p className="mt-5 text-[13px] uppercase tracking-[0.2em] text-cyan-100/35">Coming Soon</p>
+              <p className="mt-5 text-[13px] uppercase tracking-[0.2em] text-cyan-100/52">
+                {index === 0 ? "Current Modules" : "Future Version"}
+              </p>
             </motion.div>
           ))}
         </div>
@@ -587,7 +624,7 @@ export default function LabExperience() {
           href="#contact"
           className="mt-10 inline-flex w-fit items-center gap-3 rounded-full border border-white/10 bg-white/[0.055] px-5 py-3 text-[15px] font-medium text-[#CBD5E1] transition hover:border-cyan-100/30 hover:text-white"
         >
-          View What's Next <ArrowRight size={15} />
+          View Roadmap <ArrowRight size={15} />
         </a>
       </Section>
 

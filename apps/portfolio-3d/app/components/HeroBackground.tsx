@@ -201,8 +201,8 @@ export default function HeroBackground() {
   const { scrollYProgress } = useScroll();
   const rawDepth = useTransform(scrollYProgress, [0, 0.55], [0, 96]);
   const depth = useSpring(rawDepth, { stiffness: 80, damping: 24, mass: 0.4 });
-  const imageOpacity = useTransform(scrollYProgress, [0, 0.18, 0.48], [0.48, 0.34, 0.16]);
-  const sceneOpacity = useTransform(scrollYProgress, [0, 0.55, 0.82], [1, 0.9, 0.34]);
+  const imageOpacity = useTransform(scrollYProgress, [0, 0.18, 0.48], [0.34, 0.26, 0.14]);
+  const sceneOpacity = useTransform(scrollYProgress, [0, 0.55, 0.82], [0.84, 0.78, 0.32]);
   const { isMobile, isTablet, isPortrait } = viewport;
   const backgroundPosition = isMobile ? (isPortrait ? "50% 36%" : "58% 46%") : isTablet ? "54% 44%" : "center";
   const backgroundSize = isMobile && isPortrait ? "auto 86svh" : "cover";
@@ -324,7 +324,7 @@ export default function HeroBackground() {
         }}
       />
 
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_68%_36%,rgba(140,240,255,0.22),transparent_30%),radial-gradient(circle_at_34%_52%,rgba(150,110,255,0.18),transparent_34%),radial-gradient(circle_at_50%_30%,rgba(255,255,255,0.08),transparent_30%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_68%_36%,rgba(140,240,255,0.14),transparent_30%),radial-gradient(circle_at_34%_52%,rgba(150,110,255,0.12),transparent_34%),radial-gradient(circle_at_50%_30%,rgba(255,255,255,0.045),transparent_30%)]" />
 
       <Canvas
         className="absolute inset-0"
@@ -339,8 +339,8 @@ export default function HeroBackground() {
         </Suspense>
       </Canvas>
 
-      <div className="absolute inset-0 bg-gradient-to-b from-[#04070d]/58 via-[#04070d]/34 to-[#04070d]/90" />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:112px_112px] opacity-25" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#04070d]/70 via-[#04070d]/46 to-[#04070d]/92" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.026)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.018)_1px,transparent_1px)] bg-[size:112px_112px] opacity-18" />
     </motion.div>
   );
 }
