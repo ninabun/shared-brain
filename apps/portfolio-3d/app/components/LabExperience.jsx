@@ -1,8 +1,11 @@
 "use client";
 
+import { Environment, Line, MeshTransmissionMaterial } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Activity, ArrowRight, BrainCircuit, Menu, Sparkles, X } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import * as THREE from "three";
 import content from "../data/lab.json";
 import HeroBackground from "./HeroBackground";
 
@@ -246,7 +249,117 @@ function DrawingStroke({ index }) {
   );
 }
 
-function HeroObject({ className = "", style = {} }) {
+function CrystalCoreScene({ activeColor = "#8B7BFF" }) {
+  const sphere = useRef(null);
+  const network = useRef(null);
+  const orbit = useRef(null);
+  const color = useMemo(() => new THREE.Color(activeColor), [activeColor]);
+  const networkPaths = useMemo(
+    () => [
+      [
+        new THREE.Vector3(-0.62, 0.28, 0.06),
+        new THREE.Vector3(-0.22, 0.52, -0.08),
+        new THREE.Vector3(0.28, 0.36, 0.1),
+        new THREE.Vector3(0.64, 0.58, -0.04),
+      ],
+      [
+        new THREE.Vector3(-0.78, -0.1, -0.02),
+        new THREE.Vector3(-0.34, 0.08, 0.12),
+        new THREE.Vector3(0.1, -0.12, -0.12),
+        new THREE.Vector3(0.52, 0.02, 0.06),
+      ],
+      [
+        new THREE.Vector3(-0.42, -0.54, 0.08),
+        new THREE.Vector3(-0.08, -0.28, -0.1),
+        new THREE.Vector3(0.36, -0.44, 0.1),
+        new THREE.Vector3(0.72, -0.22, -0.02),
+      ],
+    ],
+    []
+  );
+  const nodes = useMemo(() => networkPaths.flat(), [networkPaths]);
+
+  useFrame(({ clock }) => {
+    const elapsed = clock.getElapsedTime();
+    if (sphere.current) {
+      sphere.current.rotation.y = elapsed * 0.12;
+      sphere.current.rotation.x = Math.sin(elapsed * 0.28) * 0.035;
+    }
+    if (network.current) {
+      network.current.rotation.y = -elapsed * 0.08;
+      network.current.rotation.z = Math.sin(elapsed * 0.22) * 0.03;
+    }
+    if (orbit.current) {
+      orbit.current.rotation.z = elapsed * 0.22;
+      orbit.current.rotation.y = elapsed * 0.08;
+    }
+  });
+
+  return (
+    <>
+      <color attach="background" args={["transparent"]} />
+      <ambientLight intensity={0.58} />
+      <directionalLight position={[3, 4, 4]} intensity={2.2} color="#ffffff" />
+      <pointLight position={[-2.8, -1.8, 2.2]} intensity={1.5} color={activeColor} />
+      <pointLight position={[1.9, -2.3, 1.4]} intensity={0.9} color="#dff5ff" />
+      <Environment preset="studio" />
+
+      <group ref={sphere}>
+        <mesh>
+          <sphereGeometry args={[1.22, 96, 96]} />
+          <MeshTransmissionMaterial
+            transmission={1}
+            thickness={0.72}
+            roughness={0.02}
+            ior={1.5}
+            chromaticAberration={0.035}
+            anisotropicBlur={0.08}
+            distortion={0.1}
+            distortionScale={0.22}
+            temporalDistortion={0.045}
+            attenuationColor="#e8f7ff"
+            attenuationDistance={1.9}
+            clearcoat={1}
+            background={new THREE.Color("#eaf2f8")}
+            samples={8}
+            resolution={512}
+          />
+        </mesh>
+        <mesh scale={1.012}>
+          <sphereGeometry args={[1.22, 96, 96]} />
+          <meshBasicMaterial color={activeColor} transparent opacity={0.075} side={THREE.BackSide} />
+        </mesh>
+        <mesh scale={[1.19, 1.19, 1.19]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[1.02, 0.006, 10, 160]} />
+          <meshBasicMaterial color="#ffffff" transparent opacity={0.45} />
+        </mesh>
+      </group>
+
+      <group ref={network} scale={0.78}>
+        {networkPaths.map((points, index) => (
+          <Line key={index} points={points} color={activeColor} lineWidth={0.72} transparent opacity={0.52} />
+        ))}
+        {nodes.map((node, index) => (
+          <mesh key={`${node.x}-${node.y}-${index}`} position={node}>
+            <sphereGeometry args={[index % 3 === 0 ? 0.035 : 0.024, 18, 18]} />
+            <meshBasicMaterial color={color} transparent opacity={0.86} />
+          </mesh>
+        ))}
+      </group>
+
+      <group ref={orbit}>
+        {[0, 1, 2].map((index) => (
+          <mesh key={index} rotation={[Math.PI / 2 + index * 0.18, index * 0.52, index * 0.34]}>
+            <torusGeometry args={[1.34 + index * 0.04, 0.0035, 8, 180]} />
+            <meshBasicMaterial color={index === 1 ? activeColor : "#ffffff"} transparent opacity={index === 1 ? 0.22 : 0.16} />
+          </mesh>
+        ))}
+      </group>
+    </>
+  );
+}
+
+function HeroObject({ className = "", style = {}, activeColor = "#8B7BFF" }) {
   const orbitDots = [
     { className: "left-[13%] top-[34%] h-2.5 w-2.5", delay: 0 },
     { className: "right-[18%] top-[24%] h-3 w-3", delay: 0.9 },
@@ -275,52 +388,19 @@ function HeroObject({ className = "", style = {} }) {
         transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="relative h-full w-full overflow-hidden rounded-full border border-white/58 bg-[radial-gradient(circle_at_32%_20%,rgba(255,255,255,0.18),transparent_13%),radial-gradient(circle_at_72%_74%,var(--sphere-edge,rgba(110,200,230,0.1)),transparent_28%),linear-gradient(145deg,rgba(255,255,255,0.08),rgba(255,255,255,0.015)_42%,rgba(70,100,130,0.055)_74%,rgba(255,255,255,0.08))] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.44),inset_18px_22px_42px_rgba(255,255,255,0.08),inset_-28px_-36px_62px_rgba(45,75,95,0.18),0_28px_110px_var(--sphere-shadow,rgba(80,190,225,0.14))] ring-1 ring-white/42 backdrop-blur-[1.5px] transition-colors duration-[1600ms]"
-        animate={{ rotate: [0, 3.5, 0], y: [0, -6, 0] }}
+        className="relative h-full w-full"
+        animate={{ y: [0, -6, 0] }}
         transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
       >
-        <div className="absolute inset-[2%] rounded-full border border-white/38 shadow-[inset_0_0_28px_rgba(255,255,255,0.18)]" />
-        <div className="absolute inset-[12%] rounded-full border border-[#466482]/10" />
-        <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_50%,transparent_0%,transparent_48%,rgba(255,255,255,0.16)_70%,rgba(255,255,255,0.34)_100%)]" />
-        <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_50%,transparent_0%,transparent_62%,var(--sphere-rim,rgba(99,230,216,0.22))_82%,transparent_100%)] mix-blend-multiply" />
-        <div className="absolute -left-[12%] top-[10%] h-[38%] w-[46%] rotate-[-28deg] rounded-full border border-white/30 bg-transparent blur-[1px]" />
-        <div className="absolute right-[8%] top-[16%] h-[2px] w-[34%] rotate-[24deg] rounded-full bg-white/58 blur-[1px]" />
-        <div className="absolute bottom-[15%] left-[24%] h-[1px] w-[46%] rotate-[-10deg] rounded-full bg-white/32 blur-[1px]" />
-        <div className="absolute left-[10%] right-[10%] top-1/2 h-px -rotate-12 bg-gradient-to-r from-transparent via-[var(--sphere-line,rgba(78,155,190,0.22))] to-transparent" />
-        <div className="absolute left-[13%] right-[13%] top-[36%] h-px rotate-[22deg] bg-gradient-to-r from-transparent via-white/58 to-transparent" />
-        <div className="absolute left-[20%] right-[17%] top-[64%] h-px rotate-[8deg] bg-gradient-to-r from-transparent via-[var(--sphere-line,rgba(78,155,190,0.2))] to-transparent" />
-        <motion.svg
-          className="absolute inset-[12%] h-[76%] w-[76%] opacity-58"
-          viewBox="0 0 220 220"
-          fill="none"
-          animate={{ rotate: [0, -2.4, 0], scale: [1, 1.018, 1] }}
-          transition={{ duration: 8.5, repeat: Infinity, ease: "easeInOut" }}
+        <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_80%,var(--sphere-shadow,rgba(80,190,225,0.16)),transparent_34%)] blur-2xl" />
+        <Canvas
+          className="absolute inset-0"
+          camera={{ position: [0, 0, 4.7], fov: 35 }}
+          dpr={[1, 1.6]}
+          gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
         >
-          <path d="M38 110C72 52 150 52 184 110C152 166 70 166 38 110Z" stroke="var(--sphere-stroke,rgba(70,125,155,0.38))" strokeWidth="1" />
-          <path d="M70 62C96 94 122 132 160 160" stroke="rgba(255,255,255,0.7)" strokeWidth="1" />
-          <path d="M158 58C124 90 98 132 62 166" stroke="var(--sphere-stroke,rgba(70,125,155,0.32))" strokeWidth="1" />
-          {[52, 82, 112, 146, 174].map((cx, index) => (
-            <motion.circle
-              key={cx}
-              cx={cx}
-              cy={index % 2 ? 70 + index * 22 : 150 - index * 16}
-              r="2.8"
-              fill="var(--sphere-dot,rgba(45,95,122,0.72))"
-              animate={{ opacity: [0.45, 1, 0.45], scale: [0.82, 1.18, 0.82] }}
-              transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut", delay: index * 0.35 }}
-            />
-          ))}
-        </motion.svg>
-        <motion.div
-          className="absolute left-1/2 top-1/2 h-[88%] w-[88%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-transparent bg-[conic-gradient(from_0deg,transparent_0deg,transparent_252deg,var(--sphere-orbit,rgba(99,230,216,0.72))_282deg,transparent_316deg,transparent_360deg)] opacity-70 blur-[0.4px]"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-        />
-        <motion.div
-          className="absolute left-1/2 top-1/2 h-[12%] w-[12%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,var(--sphere-core-strong,rgba(177,236,255,0.12)),transparent_70%)] blur-[1px]"
-          animate={{ opacity: [0.12, 0.28, 0.12], scale: [0.9, 1.16, 0.9] }}
-          transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
-        />
+          <CrystalCoreScene activeColor={activeColor} />
+        </Canvas>
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="translate-y-1 text-center text-[#1b2430]/82 drop-shadow-[0_1px_10px_rgba(255,255,255,0.76)]">
             <div className="text-[var(--sphere-text-size,clamp(1.05rem,3.1vw,2.2rem))] font-light uppercase tracking-[0.34em]">Healthcare</div>
@@ -644,6 +724,7 @@ export default function LabExperience() {
         <div className="relative flex min-h-[calc(100vh-3.5rem)] w-full flex-col items-center justify-center gap-6 pt-4 sm:gap-7 sm:pt-6">
           <HeroObject
             className="w-[min(72vw,340px)] sm:w-[min(45vw,440px)] lg:w-[min(36vw,500px)]"
+            activeColor={activeTheme.color}
             style={{
               "--sphere-glow": `rgba(${activeTheme.rgb},0.36)`,
               "--sphere-core": `rgba(${activeTheme.rgb},0.26)`,
