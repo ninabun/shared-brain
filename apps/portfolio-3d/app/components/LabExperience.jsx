@@ -4,7 +4,7 @@ import { Environment, Line, MeshTransmissionMaterial } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Activity, ArrowRight, BrainCircuit, Menu, Sparkles, X } from "lucide-react";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import content from "../data/lab.json";
 import HeroBackground from "./HeroBackground";
@@ -247,6 +247,169 @@ function DrawingStroke({ index }) {
       ))}
     </svg>
   );
+}
+
+function hexToRgb(hex) {
+  const normalized = hex.replace("#", "");
+  const value = parseInt(normalized.length === 3 ? normalized.split("").map((char) => char + char).join("") : normalized, 16);
+  return {
+    r: (value >> 16) & 255,
+    g: (value >> 8) & 255,
+    b: value & 255,
+  };
+}
+
+function LivingHeroField({ activeColor = "#8B7BFF" }) {
+  const canvasRef = useRef(null);
+  const colorRef = useRef(hexToRgb(activeColor));
+  const targetColorRef = useRef(hexToRgb(activeColor));
+
+  useEffect(() => {
+    targetColorRef.current = hexToRgb(activeColor);
+  }, [activeColor]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return undefined;
+
+    const context = canvas.getContext("2d", { alpha: true });
+    if (!context) return undefined;
+
+    let frame = 0;
+    let width = 0;
+    let height = 0;
+    let dpr = 1;
+    const particles = [];
+    const strands = [];
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      width = canvas.clientWidth;
+      height = canvas.clientHeight;
+      canvas.width = Math.max(1, Math.floor(width * dpr));
+      canvas.height = Math.max(1, Math.floor(height * dpr));
+      context.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const particleCount = width < 760 ? 42 : 78;
+      particles.length = 0;
+      for (let index = 0; index < particleCount; index += 1) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          z: 0.35 + Math.random() * 0.9,
+          vx: (Math.random() - 0.5) * 0.09,
+          vy: (Math.random() - 0.5) * 0.055,
+          phase: Math.random() * Math.PI * 2,
+        });
+      }
+
+      strands.length = 0;
+      for (let index = 0; index < 6; index += 1) {
+        strands.push({
+          y: height * (0.18 + index * 0.11),
+          phase: Math.random() * Math.PI * 2,
+          speed: 0.0012 + Math.random() * 0.001,
+          tilt: -0.18 + Math.random() * 0.36,
+        });
+      }
+    }
+
+    function draw() {
+      frame = requestAnimationFrame(draw);
+      const current = colorRef.current;
+      const target = targetColorRef.current;
+      current.r += (target.r - current.r) * 0.025;
+      current.g += (target.g - current.g) * 0.025;
+      current.b += (target.b - current.b) * 0.025;
+
+      context.clearRect(0, 0, width, height);
+      const time = performance.now();
+      const active = `${Math.round(current.r)}, ${Math.round(current.g)}, ${Math.round(current.b)}`;
+
+      const fog = context.createRadialGradient(width * 0.5, height * 0.36, 0, width * 0.5, height * 0.36, width * 0.45);
+      fog.addColorStop(0, `rgba(${active}, 0.055)`);
+      fog.addColorStop(0.46, "rgba(120, 180, 220, 0.035)");
+      fog.addColorStop(1, "rgba(120, 180, 220, 0)");
+      context.fillStyle = fog;
+      context.fillRect(0, 0, width, height);
+
+      strands.forEach((strand, strandIndex) => {
+        context.beginPath();
+        for (let x = -40; x <= width + 40; x += 26) {
+          const progress = x / Math.max(width, 1);
+          const wave =
+            Math.sin(progress * Math.PI * 2.2 + strand.phase + time * strand.speed) * 16 +
+            Math.cos(progress * Math.PI * 3.4 + strandIndex) * 7;
+          const y = strand.y + wave + (x - width / 2) * strand.tilt * 0.08;
+          if (x === -40) context.moveTo(x, y);
+          else context.lineTo(x, y);
+        }
+        context.strokeStyle = `rgba(80, 110, 140, ${0.035 + strandIndex * 0.004})`;
+        context.lineWidth = 1;
+        context.stroke();
+
+        context.beginPath();
+        for (let x = -40; x <= width + 40; x += 34) {
+          const progress = x / Math.max(width, 1);
+          const wave = Math.sin(progress * Math.PI * 2.1 + strand.phase + time * strand.speed + 1.2) * 12;
+          const y = strand.y + wave + (x - width / 2) * strand.tilt * 0.06 + 18;
+          if (x === -40) context.moveTo(x, y);
+          else context.lineTo(x, y);
+        }
+        context.strokeStyle = `rgba(${active}, 0.035)`;
+        context.stroke();
+      });
+
+      particles.forEach((particle, index) => {
+        particle.x += particle.vx * particle.z + Math.sin(time * 0.00028 + particle.phase) * 0.025;
+        particle.y += particle.vy * particle.z + Math.cos(time * 0.00022 + particle.phase) * 0.018;
+        if (particle.x < -20) particle.x = width + 20;
+        if (particle.x > width + 20) particle.x = -20;
+        if (particle.y < -20) particle.y = height + 20;
+        if (particle.y > height + 20) particle.y = -20;
+
+        for (let nextIndex = index + 1; nextIndex < particles.length; nextIndex += 1) {
+          const other = particles[nextIndex];
+          const dx = particle.x - other.x;
+          const dy = particle.y - other.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance < 120) {
+            const alpha = (1 - distance / 120) * 0.06;
+            context.beginPath();
+            context.moveTo(particle.x, particle.y);
+            context.lineTo(other.x, other.y);
+            context.strokeStyle = `rgba(80, 110, 140, ${alpha})`;
+            context.lineWidth = 0.7;
+            context.stroke();
+          }
+        }
+
+        const pulse = 0.55 + Math.sin(time * 0.0012 + particle.phase) * 0.45;
+        context.beginPath();
+        context.arc(particle.x, particle.y, (1.1 + particle.z * 1.4) * dpr, 0, Math.PI * 2);
+        context.fillStyle = `rgba(80, 110, 140, ${0.035 + pulse * 0.055})`;
+        context.fill();
+
+        if (index % 9 === 0) {
+          context.beginPath();
+          context.arc(particle.x, particle.y, 5 + pulse * 4, 0, Math.PI * 2);
+          context.fillStyle = `rgba(${active}, ${0.018 + pulse * 0.035})`;
+          context.fill();
+        }
+      });
+    }
+
+    resize();
+    window.addEventListener("resize", resize, { passive: true });
+    frame = requestAnimationFrame(draw);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true" />;
 }
 
 function CrystalCoreScene({ activeColor = "#8B7BFF" }) {
@@ -675,8 +838,11 @@ export default function LabExperience() {
         style={{ scale: heroScale, opacity: heroOpacity }}
         className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-start overflow-hidden px-5 pb-8 pt-18 text-center sm:px-8 lg:px-12"
       >
-        <div className="absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2 bg-[radial-gradient(circle_at_50%_34%,rgba(226,237,245,0.68),transparent_25%),radial-gradient(circle_at_50%_40%,rgba(var(--active-rgb),0.1),transparent_31%),radial-gradient(circle_at_24%_28%,rgba(255,255,255,0.36),transparent_30%),linear-gradient(180deg,#F7FAFC_0%,#EAF2F8_62%,rgba(246,249,251,0)_100%)] transition-colors duration-[1800ms]" />
+        <div className="absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2 bg-[radial-gradient(circle_at_50%_34%,rgba(226,237,245,0.68),transparent_25%),radial-gradient(circle_at_50%_40%,rgba(var(--active-rgb),0.1),transparent_31%),radial-gradient(circle_at_24%_28%,rgba(255,255,255,0.36),transparent_30%),linear-gradient(180deg,#F7FAFC_0%,#EEF4F8_54%,#E6EEF5_100%)] transition-colors duration-[1800ms]" />
         <div className="absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2 opacity-50 [background-image:linear-gradient(90deg,rgba(70,100,130,0.045)_1px,transparent_1px),linear-gradient(180deg,rgba(70,100,130,0.035)_1px,transparent_1px)] [background-size:120px_120px]" />
+        <div className="absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2">
+          <LivingHeroField activeColor={activeTheme.color} />
+        </div>
         <motion.div
           className="absolute left-1/2 top-[10%] -z-10 h-[18rem] w-[80vw] -translate-x-1/2 rounded-full bg-white/18 blur-3xl"
           animate={{ x: ["-3%", "3%", "-3%"], opacity: [0.12, 0.22, 0.12] }}
