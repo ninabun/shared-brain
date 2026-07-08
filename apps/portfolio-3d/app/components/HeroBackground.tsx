@@ -40,13 +40,13 @@ function NeuralHealthcareField({
   const glass = useRef<THREE.Mesh>(null);
 
   const particles = useMemo(() => {
-    const count = isMobile ? 180 : 360;
+    const count = isMobile ? 180 : 520;
     const positions = new Float32Array(count * 3);
     for (let i = 0; i < count; i += 1) {
       const layer = seededNoise(i + 19) > 0.58 ? 1 : -1;
-      const x = (seededNoise(i + 2) - 0.5) * 10.5;
-      const y = (seededNoise(i + 47) - 0.5) * 4.8;
-      const z = (seededNoise(i + 91) - 0.5) * 4.2 + layer * 0.65;
+      const x = (seededNoise(i + 2) - 0.5) * 12.5;
+      const y = (seededNoise(i + 47) - 0.5) * 5.6;
+      const z = (seededNoise(i + 91) - 0.5) * 8.4 + layer * 0.65;
       positions[i * 3] = x;
       positions[i * 3 + 1] = y;
       positions[i * 3 + 2] = z;
@@ -56,7 +56,7 @@ function NeuralHealthcareField({
 
   const neuralPaths = useMemo(
     () =>
-      Array.from({ length: isMobile ? 5 : 8 }, (_, pathIndex) => {
+      Array.from({ length: isMobile ? 5 : 11 }, (_, pathIndex) => {
         const offset = pathIndex * 0.64;
         const yOffset = (pathIndex - 3.5) * 0.26;
         return Array.from({ length: 42 }, (_, pointIndex) => {
@@ -73,7 +73,7 @@ function NeuralHealthcareField({
 
   const networkNodes = useMemo(
     () =>
-      Array.from({ length: isMobile ? 11 : 18 }, (_, index) => {
+      Array.from({ length: isMobile ? 11 : 26 }, (_, index) => {
         const lane = index % 6;
         const depth = index % 3;
         return new THREE.Vector3(
@@ -90,20 +90,20 @@ function NeuralHealthcareField({
     const scrollDepth =
       typeof window === "undefined" ? 0 : Math.min(window.scrollY / Math.max(window.innerHeight, 1), 5);
     const chapter = Math.min(scrollDepth / 4, 1);
-    const targetX = pointer.current.x * (isMobile ? 0.16 : 0.42);
-    const targetY = pointer.current.y * (isMobile ? 0.12 : 0.28);
+    const targetX = pointer.current.x * (isMobile ? 0.1 : 0.22);
+    const targetY = pointer.current.y * (isMobile ? 0.08 : 0.16);
 
     camera.position.x += (targetX - camera.position.x) * 0.035;
     camera.position.y += (targetY + chapter * 0.55 - camera.position.y) * 0.035;
     camera.position.z +=
-      ((isMobile ? 8.8 : 7.4) + scrollDepth * 0.58 + Math.sin(elapsed * 0.18) * 0.22 - camera.position.z) *
+      ((isMobile ? 8.4 : 7.8) - scrollDepth * 0.72 + Math.sin(elapsed * 0.18) * 0.2 - camera.position.z) *
       0.04;
 
     if (group.current) {
       group.current.rotation.y = elapsed * 0.035 + pointer.current.x * 0.035 + chapter * 0.38;
       group.current.rotation.x = Math.sin(elapsed * 0.14) * 0.05 - pointer.current.y * 0.025 - chapter * 0.12;
       group.current.position.x = (isMobile ? 0.2 : 1.25) - chapter * (isMobile ? 0.72 : 1.75);
-      group.current.position.z = scrollDepth * 0.36;
+      group.current.position.z = scrollDepth * 0.82;
       group.current.scale.setScalar((isMobile ? 0.82 : 1) + chapter * 0.18);
     }
 
@@ -116,13 +116,13 @@ function NeuralHealthcareField({
   return (
     <group ref={group} position={[1.25, 0.1, 0]}>
       <Points positions={particles} stride={3} frustumCulled={false}>
-        <PointMaterial
+      <PointMaterial
           transparent
           color="#dff8ff"
-          size={0.018}
+          size={0.02}
           sizeAttenuation
           depthWrite={false}
-          opacity={0.62}
+          opacity={0.66}
           blending={THREE.AdditiveBlending}
         />
       </Points>
@@ -131,10 +131,10 @@ function NeuralHealthcareField({
         <Line
           key={index}
           points={points}
-          color={index % 2 ? "#9befff" : "#f3fbff"}
+          color={index % 2 ? "#9befff" : "#d7c5ff"}
           lineWidth={0.58}
           transparent
-          opacity={index % 2 ? 0.19 : 0.13}
+          opacity={index % 2 ? 0.22 : 0.16}
         />
       ))}
 
@@ -142,7 +142,7 @@ function NeuralHealthcareField({
         <Float key={index} speed={0.65 + index * 0.015} rotationIntensity={0.08} floatIntensity={0.18}>
           <mesh position={node}>
             <sphereGeometry args={[index % 4 === 0 ? 0.055 : 0.035, 16, 16]} />
-            <meshBasicMaterial color={index % 3 === 0 ? "#f4fbff" : "#9befff"} transparent opacity={0.72} />
+            <meshBasicMaterial color={index % 3 === 0 ? "#ffffff" : "#9befff"} transparent opacity={0.68} />
           </mesh>
         </Float>
       ))}
@@ -157,7 +157,7 @@ function NeuralHealthcareField({
             transmission={0.28}
             thickness={0.6}
             transparent
-            opacity={0.1}
+            opacity={0.13}
             wireframe
           />
         </mesh>
@@ -165,23 +165,23 @@ function NeuralHealthcareField({
 
       <mesh position={[1.15, -0.2, -1.4]} rotation={[0.2, -0.34, 0.08]}>
         <planeGeometry args={[4.8, 2.4, 1, 1]} />
-        <meshBasicMaterial color="#bdefff" transparent opacity={0.035} blending={THREE.AdditiveBlending} />
+        <meshBasicMaterial color="#bdefff" transparent opacity={0.024} blending={THREE.AdditiveBlending} />
       </mesh>
 
       <mesh position={[-1.9, 0.7, -1.1]} rotation={[0.1, 0.42, -0.08]}>
         <planeGeometry args={[2.8, 1.35, 1, 1]} />
-        <meshBasicMaterial color="#f4fbff" transparent opacity={0.026} blending={THREE.AdditiveBlending} />
+        <meshBasicMaterial color="#ffffff" transparent opacity={0.02} blending={THREE.AdditiveBlending} />
       </mesh>
 
       <mesh position={[2.35, -0.85, -0.9]} rotation={[-0.18, -0.35, 0.1]}>
         <planeGeometry args={[2.2, 1.1, 1, 1]} />
-        <meshBasicMaterial color="#8edfff" transparent opacity={0.032} blending={THREE.AdditiveBlending} />
+        <meshBasicMaterial color="#8edfff" transparent opacity={0.022} blending={THREE.AdditiveBlending} />
       </mesh>
 
-      <ambientLight intensity={0.72} />
-      <pointLight position={[2.8, 1.6, 2.7]} intensity={10.5} color="#dff8ff" />
-      <pointLight position={[-3.2, -1.8, 1.4]} intensity={5.5} color="#7aa8ff" />
-      <spotLight position={[0.8, 3.2, 2.4]} angle={0.55} penumbra={0.8} intensity={6.5} color="#bdefff" />
+      <ambientLight intensity={0.78} />
+      <pointLight position={[2.8, 1.6, 2.7]} intensity={9.5} color="#dff8ff" />
+      <pointLight position={[-3.2, -1.8, 1.4]} intensity={6.5} color="#9b7cff" />
+      <spotLight position={[0.8, 3.2, 2.4]} angle={0.55} penumbra={0.8} intensity={6} color="#bdefff" />
     </group>
   );
 }
@@ -201,8 +201,8 @@ export default function HeroBackground() {
   const { scrollYProgress } = useScroll();
   const rawDepth = useTransform(scrollYProgress, [0, 0.55], [0, 96]);
   const depth = useSpring(rawDepth, { stiffness: 80, damping: 24, mass: 0.4 });
-  const imageOpacity = useTransform(scrollYProgress, [0, 0.18, 0.48], [1, 0.82, 0.46]);
-  const sceneOpacity = useTransform(scrollYProgress, [0, 0.55, 0.82], [1, 0.86, 0.28]);
+  const imageOpacity = useTransform(scrollYProgress, [0, 0.18, 0.48], [0.48, 0.34, 0.16]);
+  const sceneOpacity = useTransform(scrollYProgress, [0, 0.55, 0.82], [1, 0.9, 0.34]);
   const { isMobile, isTablet, isPortrait } = viewport;
   const backgroundPosition = isMobile ? (isPortrait ? "50% 36%" : "58% 46%") : isTablet ? "54% 44%" : "center";
   const backgroundSize = isMobile && isPortrait ? "auto 86svh" : "cover";
@@ -319,12 +319,12 @@ export default function HeroBackground() {
           backgroundSize,
           backgroundRepeat: "no-repeat",
           filter: isMobile
-            ? "brightness(1.58) contrast(1.1) saturate(1.12)"
-            : "brightness(1.32) contrast(1.08) saturate(1.08)",
+            ? "brightness(0.72) contrast(1.08) saturate(0.78)"
+            : "brightness(0.66) contrast(1.12) saturate(0.82)",
         }}
       />
 
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_36%,rgba(190,242,255,0.16),transparent_30%),radial-gradient(circle_at_35%_52%,rgba(100,160,255,0.07),transparent_36%)] md:bg-[radial-gradient(circle_at_70%_36%,rgba(190,242,255,0.12),transparent_30%),radial-gradient(circle_at_35%_52%,rgba(100,160,255,0.06),transparent_36%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_68%_36%,rgba(140,240,255,0.22),transparent_30%),radial-gradient(circle_at_34%_52%,rgba(150,110,255,0.18),transparent_34%),radial-gradient(circle_at_50%_30%,rgba(255,255,255,0.08),transparent_30%)]" />
 
       <Canvas
         className="absolute inset-0"
@@ -333,15 +333,14 @@ export default function HeroBackground() {
         gl={{ alpha: true, antialias: false, powerPreference: "high-performance" }}
       >
         <Suspense fallback={null}>
-          <fog attach="fog" args={["#04060a", 6.2, 13.5]} />
+          <fog attach="fog" args={["#04070d", 6.8, 15.5]} />
           <NeuralHealthcareField pointer={pointer} isMobile={isMobile} />
           <Preload all />
         </Suspense>
       </Canvas>
 
-      <div className="absolute inset-0 bg-gradient-to-r from-[#04060a]/28 via-[#04060a]/10 to-transparent md:from-[#04060a]/42 md:via-[#04060a]/18" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#04060a]/42 via-transparent to-transparent md:from-[#04060a]/54" />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:96px_96px] opacity-8" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#04070d]/58 via-[#04070d]/34 to-[#04070d]/90" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:112px_112px] opacity-25" />
     </motion.div>
   );
 }
