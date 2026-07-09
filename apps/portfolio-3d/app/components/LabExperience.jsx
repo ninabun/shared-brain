@@ -7,7 +7,13 @@ import content from "../data/lab.json";
 
 const HERO_CRYSTAL_FRAME_COUNT = 300;
 const HERO_CRYSTAL_FRAME_PATH = "/animations/healthcare-crystal-loop/frames/frame-";
-const HERO_CRYSTAL_LOOP_MS = 15000;
+const HERO_CRYSTAL_LOOP_MS = 25000;
+const HERO_CRYSTAL_THEME_MS = 5000;
+const HERO_CRYSTAL_THEMES = [
+  { color: "#63E6D8", rgb: "99,230,216" },
+  { color: "#4F8BFF", rgb: "79,139,255" },
+  { color: "#8B7BFF", rgb: "139,123,255" },
+];
 
 const navItems = [
   { label: "Solutions", href: "#platform" },
@@ -321,6 +327,7 @@ function Section({ id, eyebrow, title, children, className = "" }) {
 
 function HeroCrystalLoop() {
   const [frame, setFrame] = useState(1);
+  const [themeIndex, setThemeIndex] = useState(0);
 
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -341,20 +348,42 @@ function HeroCrystalLoop() {
     return () => cancelAnimationFrame(animationFrame);
   }, []);
 
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) return undefined;
+
+    const themeTimer = window.setInterval(() => {
+      setThemeIndex((current) => (current + 1) % HERO_CRYSTAL_THEMES.length);
+    }, HERO_CRYSTAL_THEME_MS);
+
+    return () => window.clearInterval(themeTimer);
+  }, []);
+
   const src = `${HERO_CRYSTAL_FRAME_PATH}${String(frame).padStart(3, "0")}.png`;
+  const theme = HERO_CRYSTAL_THEMES[themeIndex];
 
   return (
     <motion.div
-      className="pointer-events-none relative aspect-square w-[min(72vw,340px)] sm:w-[min(46vw,440px)] lg:w-[min(37vw,500px)]"
+      className="pointer-events-none relative aspect-square w-[min(78vw,380px)] sm:w-[min(50vw,490px)] lg:w-[min(40vw,560px)]"
+      style={{ "--crystal-color": theme.color, "--crystal-rgb": theme.rgb }}
       initial={{ opacity: 0, scale: 0.94, y: 18 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1] }}
     >
+      <motion.div
+        className="absolute inset-[8%] rounded-full bg-[rgba(var(--crystal-rgb),0.13)] blur-3xl"
+        animate={{ opacity: [0.38, 0.7, 0.38], scale: [0.96, 1.04, 0.96] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <div className="absolute inset-[7%] rounded-full border border-[rgba(var(--crystal-rgb),0.22)] shadow-[0_0_52px_rgba(var(--crystal-rgb),0.2),inset_0_0_38px_rgba(var(--crystal-rgb),0.1)] transition-[border-color,box-shadow] duration-[1500ms]" />
       <img
         src={src}
         alt="Healthcare Reimagined crystal sphere animation"
         draggable="false"
-        className="h-full w-full object-contain"
+        className="relative z-10 h-full w-full object-contain transition-[filter] duration-[1500ms]"
+        style={{
+          filter: `drop-shadow(0 0 22px rgba(${theme.rgb},0.32)) drop-shadow(0 18px 54px rgba(${theme.rgb},0.16))`,
+        }}
       />
     </motion.div>
   );
@@ -521,10 +550,10 @@ export default function LabExperience() {
           animate={{ x: ["-4%", "5%", "-4%"], opacity: [0.025, 0.075, 0.025] }}
           transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
         />
-        <div className="relative z-10 flex min-h-[calc(100vh-3.5rem)] w-full flex-col items-center justify-center gap-8 pt-4 sm:gap-10 sm:pt-6">
+        <div className="relative z-10 flex min-h-[calc(100vh-3.5rem)] w-full flex-col items-center justify-center gap-4 pt-4 sm:gap-5 sm:pt-6">
           <HeroCrystalLoop />
           <motion.div
-            className="flex max-w-5xl flex-col items-center px-5 py-3 sm:px-8"
+            className="flex max-w-5xl flex-col items-center px-5 py-1 sm:px-8"
             style={{ y: heroIntroY }}
             initial={{ opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
