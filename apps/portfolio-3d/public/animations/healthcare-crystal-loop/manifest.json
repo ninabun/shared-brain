@@ -1,0 +1,11 @@
+{
+  "name": "Healthcare Reimagined Crystal Sphere Loop",
+  "width": 2048,
+  "height": 2048,
+  "fps": 60,
+  "durationSeconds": 5,
+  "frameCount": 300,
+  "alpha": true,
+  "transparentBackground": true,
+  "frames": "frames/frame-001.png ... frames/frame-300.png"
+}

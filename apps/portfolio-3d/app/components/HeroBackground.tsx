@@ -107,11 +107,11 @@ function NeuralHealthcareField({
       <Points positions={particles} stride={3} frustumCulled={false}>
         <PointMaterial
           transparent
-          color="#6f7f8c"
-          size={0.015}
+          color="#b4e1ff"
+          size={0.016}
           sizeAttenuation
           depthWrite={false}
-          opacity={0.055}
+          opacity={0.12}
         />
       </Points>
 
@@ -119,10 +119,10 @@ function NeuralHealthcareField({
         <Line
           key={index}
           points={points}
-          color={index % 2 ? "#70818f" : "#7c8798"}
-          lineWidth={0.42}
+          color={index % 2 ? "#78aac8" : "#b4e1ff"}
+          lineWidth={0.36}
           transparent
-          opacity={index % 2 ? 0.055 : 0.038}
+          opacity={index % 2 ? 0.15 : 0.1}
         />
       ))}
 
@@ -130,24 +130,30 @@ function NeuralHealthcareField({
         <Float key={index} speed={0.65 + index * 0.015} rotationIntensity={0.08} floatIntensity={0.18}>
           <mesh position={node}>
             <sphereGeometry args={[index % 4 === 0 ? 0.055 : 0.035, 16, 16]} />
-            <meshBasicMaterial color={index % 3 === 0 ? "#526170" : "#6f7f8c"} transparent opacity={0.075} />
+            <meshBasicMaterial
+              color={index % 3 === 0 ? "#ffffff" : "#b4e1ff"}
+              transparent
+              opacity={index % 3 === 0 ? 0.34 : 0.22}
+              depthWrite={false}
+              blending={THREE.AdditiveBlending}
+            />
           </mesh>
         </Float>
       ))}
 
       <mesh position={[1.15, -0.2, -1.4]} rotation={[0.2, -0.34, 0.08]}>
         <planeGeometry args={[4.8, 2.4, 1, 1]} />
-        <meshBasicMaterial color="#8193a0" transparent opacity={0.018} />
+        <meshBasicMaterial color="#b4e1ff" transparent opacity={0.026} />
       </mesh>
 
       <mesh position={[-1.9, 0.7, -1.1]} rotation={[0.1, 0.42, -0.08]}>
         <planeGeometry args={[2.8, 1.35, 1, 1]} />
-        <meshBasicMaterial color="#6f7f8c" transparent opacity={0.016} />
+        <meshBasicMaterial color="#b4e1ff" transparent opacity={0.022} />
       </mesh>
 
       <mesh position={[2.35, -0.85, -0.9]} rotation={[-0.18, -0.35, 0.1]}>
         <planeGeometry args={[2.2, 1.1, 1, 1]} />
-        <meshBasicMaterial color="#8193a0" transparent opacity={0.016} />
+        <meshBasicMaterial color="#b4e1ff" transparent opacity={0.02} />
       </mesh>
 
       <ambientLight intensity={0.55} />
@@ -250,8 +256,6 @@ export default function HeroBackground() {
         }}
       />
 
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_68%_36%,rgba(120,140,150,0.05),transparent_30%),radial-gradient(circle_at_34%_52%,rgba(105,130,170,0.04),transparent_34%),radial-gradient(circle_at_50%_30%,rgba(255,255,255,0.26),transparent_34%)]" />
-
       <Canvas
         className="absolute inset-0"
         camera={{ position: [0, 0, isMobile ? 8.8 : 7.4], fov: isMobile ? 50 : 45 }}
@@ -259,13 +263,11 @@ export default function HeroBackground() {
         gl={{ alpha: true, antialias: false, powerPreference: "high-performance" }}
       >
         <Suspense fallback={null}>
-          <fog attach="fog" args={["#f6f9fb", 6.8, 15.5]} />
           <NeuralHealthcareField pointer={pointer} isMobile={isMobile} />
           <Preload all />
         </Suspense>
       </Canvas>
 
-      <div className="absolute inset-0 bg-gradient-to-b from-[#f6f9fb]/64 via-[#f6f9fb]/34 to-[#f6f9fb]/76" />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(27,36,48,0.026)_1px,transparent_1px),linear-gradient(180deg,rgba(27,36,48,0.02)_1px,transparent_1px)] bg-[size:112px_112px] opacity-24" />
     </motion.div>
   );

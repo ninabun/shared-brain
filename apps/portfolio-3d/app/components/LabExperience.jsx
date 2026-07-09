@@ -1,13 +1,13 @@
 "use client";
 
-import { Environment, Line, MeshTransmissionMaterial } from "@react-three/drei";
-import { Canvas, useFrame } from "@react-three/fiber";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Activity, ArrowRight, BrainCircuit, Menu, Sparkles, X } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
-import * as THREE from "three";
+import { useEffect, useState } from "react";
 import content from "../data/lab.json";
-import HeroBackground from "./HeroBackground";
+
+const HERO_CRYSTAL_FRAME_COUNT = 300;
+const HERO_CRYSTAL_FRAME_PATH = "/animations/healthcare-crystal-loop/frames/frame-";
+const HERO_CRYSTAL_LOOP_MS = 15000;
 
 const navItems = [
   { label: "Solutions", href: "#platform" },
@@ -249,370 +249,6 @@ function DrawingStroke({ index }) {
   );
 }
 
-function hexToRgb(hex) {
-  const normalized = hex.replace("#", "");
-  const value = parseInt(normalized.length === 3 ? normalized.split("").map((char) => char + char).join("") : normalized, 16);
-  return {
-    r: (value >> 16) & 255,
-    g: (value >> 8) & 255,
-    b: value & 255,
-  };
-}
-
-function LivingHeroField({ activeColor = "#8B7BFF" }) {
-  const canvasRef = useRef(null);
-  const colorRef = useRef(hexToRgb(activeColor));
-  const targetColorRef = useRef(hexToRgb(activeColor));
-
-  useEffect(() => {
-    targetColorRef.current = hexToRgb(activeColor);
-  }, [activeColor]);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return undefined;
-
-    const context = canvas.getContext("2d", { alpha: true });
-    if (!context) return undefined;
-
-    let frame = 0;
-    let width = 0;
-    let height = 0;
-    let dpr = 1;
-    const particles = [];
-    const strands = [];
-
-    function resize() {
-      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-      width = canvas.clientWidth;
-      height = canvas.clientHeight;
-      canvas.width = Math.max(1, Math.floor(width * dpr));
-      canvas.height = Math.max(1, Math.floor(height * dpr));
-      context.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      const particleCount = width < 760 ? 42 : 78;
-      particles.length = 0;
-      for (let index = 0; index < particleCount; index += 1) {
-        particles.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          z: 0.35 + Math.random() * 0.9,
-          vx: (Math.random() - 0.5) * 0.09,
-          vy: (Math.random() - 0.5) * 0.055,
-          phase: Math.random() * Math.PI * 2,
-        });
-      }
-
-      strands.length = 0;
-      for (let index = 0; index < 6; index += 1) {
-        strands.push({
-          y: height * (0.18 + index * 0.11),
-          phase: Math.random() * Math.PI * 2,
-          speed: 0.0012 + Math.random() * 0.001,
-          tilt: -0.18 + Math.random() * 0.36,
-        });
-      }
-    }
-
-    function draw() {
-      frame = requestAnimationFrame(draw);
-      const current = colorRef.current;
-      const target = targetColorRef.current;
-      current.r += (target.r - current.r) * 0.025;
-      current.g += (target.g - current.g) * 0.025;
-      current.b += (target.b - current.b) * 0.025;
-
-      context.clearRect(0, 0, width, height);
-      const time = performance.now();
-      const active = `${Math.round(current.r)}, ${Math.round(current.g)}, ${Math.round(current.b)}`;
-
-      const fog = context.createRadialGradient(width * 0.5, height * 0.36, 0, width * 0.5, height * 0.36, width * 0.45);
-      fog.addColorStop(0, `rgba(${active}, 0.055)`);
-      fog.addColorStop(0.46, "rgba(120, 180, 220, 0.035)");
-      fog.addColorStop(1, "rgba(120, 180, 220, 0)");
-      context.fillStyle = fog;
-      context.fillRect(0, 0, width, height);
-
-      strands.forEach((strand, strandIndex) => {
-        context.beginPath();
-        for (let x = -40; x <= width + 40; x += 26) {
-          const progress = x / Math.max(width, 1);
-          const wave =
-            Math.sin(progress * Math.PI * 2.2 + strand.phase + time * strand.speed) * 16 +
-            Math.cos(progress * Math.PI * 3.4 + strandIndex) * 7;
-          const y = strand.y + wave + (x - width / 2) * strand.tilt * 0.08;
-          if (x === -40) context.moveTo(x, y);
-          else context.lineTo(x, y);
-        }
-        context.strokeStyle = `rgba(80, 110, 140, ${0.035 + strandIndex * 0.004})`;
-        context.lineWidth = 1;
-        context.stroke();
-
-        context.beginPath();
-        for (let x = -40; x <= width + 40; x += 34) {
-          const progress = x / Math.max(width, 1);
-          const wave = Math.sin(progress * Math.PI * 2.1 + strand.phase + time * strand.speed + 1.2) * 12;
-          const y = strand.y + wave + (x - width / 2) * strand.tilt * 0.06 + 18;
-          if (x === -40) context.moveTo(x, y);
-          else context.lineTo(x, y);
-        }
-        context.strokeStyle = `rgba(${active}, 0.035)`;
-        context.stroke();
-      });
-
-      particles.forEach((particle, index) => {
-        particle.x += particle.vx * particle.z + Math.sin(time * 0.00028 + particle.phase) * 0.025;
-        particle.y += particle.vy * particle.z + Math.cos(time * 0.00022 + particle.phase) * 0.018;
-        if (particle.x < -20) particle.x = width + 20;
-        if (particle.x > width + 20) particle.x = -20;
-        if (particle.y < -20) particle.y = height + 20;
-        if (particle.y > height + 20) particle.y = -20;
-
-        for (let nextIndex = index + 1; nextIndex < particles.length; nextIndex += 1) {
-          const other = particles[nextIndex];
-          const dx = particle.x - other.x;
-          const dy = particle.y - other.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          if (distance < 120) {
-            const alpha = (1 - distance / 120) * 0.06;
-            context.beginPath();
-            context.moveTo(particle.x, particle.y);
-            context.lineTo(other.x, other.y);
-            context.strokeStyle = `rgba(80, 110, 140, ${alpha})`;
-            context.lineWidth = 0.7;
-            context.stroke();
-          }
-        }
-
-        const pulse = 0.55 + Math.sin(time * 0.0012 + particle.phase) * 0.45;
-        context.beginPath();
-        context.arc(particle.x, particle.y, (1.1 + particle.z * 1.4) * dpr, 0, Math.PI * 2);
-        context.fillStyle = `rgba(80, 110, 140, ${0.035 + pulse * 0.055})`;
-        context.fill();
-
-        if (index % 9 === 0) {
-          context.beginPath();
-          context.arc(particle.x, particle.y, 5 + pulse * 4, 0, Math.PI * 2);
-          context.fillStyle = `rgba(${active}, ${0.018 + pulse * 0.035})`;
-          context.fill();
-        }
-      });
-    }
-
-    resize();
-    window.addEventListener("resize", resize, { passive: true });
-    frame = requestAnimationFrame(draw);
-
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("resize", resize);
-    };
-  }, []);
-
-  return <canvas ref={canvasRef} className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true" />;
-}
-
-function CrystalCoreScene({ activeColor = "#8B7BFF" }) {
-  const sphere = useRef(null);
-  const network = useRef(null);
-  const orbit = useRef(null);
-  const color = useMemo(() => new THREE.Color(activeColor), [activeColor]);
-  const networkPaths = useMemo(
-    () => [
-      [
-        new THREE.Vector3(-0.62, 0.28, 0.06),
-        new THREE.Vector3(-0.22, 0.52, -0.08),
-        new THREE.Vector3(0.28, 0.36, 0.1),
-        new THREE.Vector3(0.64, 0.58, -0.04),
-      ],
-      [
-        new THREE.Vector3(-0.78, -0.1, -0.02),
-        new THREE.Vector3(-0.34, 0.08, 0.12),
-        new THREE.Vector3(0.1, -0.12, -0.12),
-        new THREE.Vector3(0.52, 0.02, 0.06),
-      ],
-      [
-        new THREE.Vector3(-0.42, -0.54, 0.08),
-        new THREE.Vector3(-0.08, -0.28, -0.1),
-        new THREE.Vector3(0.36, -0.44, 0.1),
-        new THREE.Vector3(0.72, -0.22, -0.02),
-      ],
-    ],
-    []
-  );
-  const nodes = useMemo(() => networkPaths.flat(), [networkPaths]);
-
-  useFrame(({ clock }) => {
-    const elapsed = clock.getElapsedTime();
-    if (sphere.current) {
-      sphere.current.rotation.y = elapsed * 0.12;
-      sphere.current.rotation.x = Math.sin(elapsed * 0.28) * 0.035;
-    }
-    if (network.current) {
-      network.current.rotation.y = -elapsed * 0.08;
-      network.current.rotation.z = Math.sin(elapsed * 0.22) * 0.03;
-    }
-    if (orbit.current) {
-      orbit.current.rotation.z = elapsed * 0.22;
-      orbit.current.rotation.y = elapsed * 0.08;
-    }
-  });
-
-  return (
-    <>
-      <color attach="background" args={["transparent"]} />
-      <ambientLight intensity={0.58} />
-      <directionalLight position={[3, 4, 4]} intensity={2.2} color="#ffffff" />
-      <pointLight position={[-2.8, -1.8, 2.2]} intensity={1.5} color={activeColor} />
-      <pointLight position={[1.9, -2.3, 1.4]} intensity={0.9} color="#dff5ff" />
-      <Environment preset="studio" />
-
-      <group ref={sphere}>
-        <mesh>
-          <sphereGeometry args={[1.22, 96, 96]} />
-          <MeshTransmissionMaterial
-            transmission={1}
-            thickness={0.72}
-            roughness={0.02}
-            ior={1.5}
-            chromaticAberration={0.035}
-            anisotropicBlur={0.08}
-            distortion={0.1}
-            distortionScale={0.22}
-            temporalDistortion={0.045}
-            attenuationColor="#e8f7ff"
-            attenuationDistance={1.9}
-            clearcoat={1}
-            background={new THREE.Color("#eaf2f8")}
-            samples={8}
-            resolution={512}
-          />
-        </mesh>
-        <mesh scale={1.012}>
-          <sphereGeometry args={[1.22, 96, 96]} />
-          <meshBasicMaterial color={activeColor} transparent opacity={0.075} side={THREE.BackSide} />
-        </mesh>
-        <mesh scale={[1.19, 1.19, 1.19]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[1.02, 0.006, 10, 160]} />
-          <meshBasicMaterial color="#ffffff" transparent opacity={0.45} />
-        </mesh>
-      </group>
-
-      <group ref={network} scale={0.78}>
-        {networkPaths.map((points, index) => (
-          <Line key={index} points={points} color={activeColor} lineWidth={0.72} transparent opacity={0.52} />
-        ))}
-        {nodes.map((node, index) => (
-          <mesh key={`${node.x}-${node.y}-${index}`} position={node}>
-            <sphereGeometry args={[index % 3 === 0 ? 0.035 : 0.024, 18, 18]} />
-            <meshBasicMaterial color={color} transparent opacity={0.86} />
-          </mesh>
-        ))}
-      </group>
-
-      <group ref={orbit}>
-        {[0, 1, 2].map((index) => (
-          <mesh key={index} rotation={[Math.PI / 2 + index * 0.18, index * 0.52, index * 0.34]}>
-            <torusGeometry args={[1.34 + index * 0.04, 0.0035, 8, 180]} />
-            <meshBasicMaterial color={index === 1 ? activeColor : "#ffffff"} transparent opacity={index === 1 ? 0.22 : 0.16} />
-          </mesh>
-        ))}
-      </group>
-    </>
-  );
-}
-
-function HeroObject({ className = "", style = {}, activeColor = "#8B7BFF" }) {
-  const orbitDots = [
-    { className: "left-[13%] top-[34%] h-2.5 w-2.5", delay: 0 },
-    { className: "right-[18%] top-[24%] h-3 w-3", delay: 0.9 },
-    { className: "bottom-[20%] left-[28%] h-2 w-2", delay: 1.6 },
-    { className: "bottom-[30%] right-[14%] h-2.5 w-2.5", delay: 2.2 },
-  ];
-  const fieldDots = [
-    { className: "left-[5%] top-[46%] h-1 w-1", delay: 0 },
-    { className: "right-[7%] top-[38%] h-1.5 w-1.5", delay: 1.1 },
-    { className: "bottom-[8%] left-[42%] h-1 w-1", delay: 2.2 },
-    { className: "right-[24%] bottom-[13%] h-1 w-1", delay: 3.2 },
-    { className: "left-[24%] top-[12%] h-1.5 w-1.5", delay: 4.1 },
-  ];
-
-  return (
-    <motion.div
-      className={`relative flex aspect-square items-center justify-center ${className}`}
-      style={style}
-      initial={{ opacity: 0, scale: 0.94, y: 22 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-    >
-      <motion.div
-        className="absolute inset-[-18%] rounded-full bg-[radial-gradient(circle,var(--sphere-glow,rgba(165,230,255,0.18)),transparent_64%)] blur-3xl transition-colors duration-[1600ms]"
-        animate={{ opacity: [0.28, 0.54, 0.28], scale: [0.94, 1.08, 0.94] }}
-        transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="relative h-full w-full"
-        animate={{ y: [0, -6, 0] }}
-        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_80%,var(--sphere-shadow,rgba(80,190,225,0.16)),transparent_34%)] blur-2xl" />
-        <Canvas
-          className="absolute inset-0"
-          camera={{ position: [0, 0, 4.7], fov: 35 }}
-          dpr={[1, 1.6]}
-          gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
-        >
-          <CrystalCoreScene activeColor={activeColor} />
-        </Canvas>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="translate-y-1 text-center text-[#1b2430]/82 drop-shadow-[0_1px_10px_rgba(255,255,255,0.76)]">
-            <div className="text-[var(--sphere-text-size,clamp(1.05rem,3.1vw,2.2rem))] font-light uppercase tracking-[0.34em]">Healthcare</div>
-            <div className="mt-[var(--sphere-text-gap,0.75rem)] text-[var(--sphere-text-size,clamp(1.05rem,3.1vw,2.2rem))] font-light uppercase tracking-[0.34em]">Reimagined</div>
-          </div>
-        </div>
-      </motion.div>
-      <motion.div
-        className="absolute inset-[4%] rounded-full border border-cyan-100/22"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
-      >
-        {orbitDots.map((dot) => (
-          <motion.span
-            key={dot.className}
-            className={`absolute rounded-full bg-[var(--sphere-dot,rgba(180,240,255,0.82))] shadow-[0_0_24px_var(--sphere-shadow,rgba(180,240,255,0.72))] ${dot.className}`}
-            animate={{ opacity: [0.34, 1, 0.34], scale: [0.78, 1.2, 0.78] }}
-            transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut", delay: dot.delay }}
-          />
-        ))}
-      </motion.div>
-      <motion.svg
-        className="pointer-events-none absolute inset-[-18%] h-[136%] w-[136%] opacity-[0.07]"
-        viewBox="0 0 300 300"
-        fill="none"
-        animate={{ rotate: [0, 2.2, 0], scale: [1, 1.015, 1] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <path d="M54 166L108 112L172 136L228 82" stroke="var(--sphere-stroke,rgba(40,68,82,0.55))" strokeWidth="0.8" />
-        <path d="M82 210L136 164L216 196" stroke="var(--sphere-stroke,rgba(40,68,82,0.42))" strokeWidth="0.8" />
-      </motion.svg>
-      <motion.div
-        className="absolute inset-[-20%] rounded-full"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 42, repeat: Infinity, ease: "linear" }}
-      >
-        {fieldDots.map((dot) => (
-          <motion.span
-            key={dot.className}
-            className={`absolute rounded-full bg-[#466482]/35 shadow-[0_0_18px_var(--sphere-shadow,rgba(80,190,225,0.14))] ${dot.className}`}
-            animate={{ opacity: [0.035, 0.085, 0.035], scale: [0.8, 1.15, 0.8] }}
-            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: dot.delay }}
-          />
-        ))}
-      </motion.div>
-    </motion.div>
-  );
-}
-
 function Header() {
   const [open, setOpen] = useState(false);
 
@@ -683,6 +319,47 @@ function Section({ id, eyebrow, title, children, className = "" }) {
   );
 }
 
+function HeroCrystalLoop() {
+  const [frame, setFrame] = useState(1);
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) return undefined;
+
+    let animationFrame;
+    const startedAt = performance.now();
+    const frameDuration = HERO_CRYSTAL_LOOP_MS / HERO_CRYSTAL_FRAME_COUNT;
+
+    function tick(now) {
+      const elapsed = (now - startedAt) % HERO_CRYSTAL_LOOP_MS;
+      const nextFrame = Math.floor(elapsed / frameDuration) + 1;
+      setFrame(nextFrame > HERO_CRYSTAL_FRAME_COUNT ? 1 : nextFrame);
+      animationFrame = requestAnimationFrame(tick);
+    }
+
+    animationFrame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(animationFrame);
+  }, []);
+
+  const src = `${HERO_CRYSTAL_FRAME_PATH}${String(frame).padStart(3, "0")}.png`;
+
+  return (
+    <motion.div
+      className="pointer-events-none relative aspect-square w-[min(72vw,340px)] sm:w-[min(46vw,440px)] lg:w-[min(37vw,500px)]"
+      initial={{ opacity: 0, scale: 0.94, y: 18 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <img
+        src={src}
+        alt="Healthcare Reimagined crystal sphere animation"
+        draggable="false"
+        className="h-full w-full object-contain"
+      />
+    </motion.div>
+  );
+}
+
 function ThinkingFramework() {
   const steps = content.thinking;
 
@@ -748,7 +425,7 @@ function PlatformArchitecture({ modules, onActivateArea }) {
         return (
           <motion.div
             key={area.title}
-            className="group relative flex min-h-full flex-col overflow-hidden rounded-[2.1rem] border border-[rgba(var(--area-rgb),0.2)] bg-[linear-gradient(145deg,rgba(255,255,255,0.7),rgba(225,238,244,0.58)_54%,rgba(192,211,220,0.38))] p-6 text-[#1b2430] shadow-[inset_0_1px_0_rgba(255,255,255,0.96),inset_8px_10px_24px_rgba(255,255,255,0.36),inset_-12px_-18px_34px_rgba(83,112,128,0.11),0_24px_80px_rgba(40,70,88,0.13)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl transition duration-700 hover:-translate-y-2 hover:border-[rgba(var(--area-rgb),0.55)] hover:bg-white/78 hover:shadow-[inset_0_1px_0_rgba(255,255,255,1),inset_10px_12px_26px_rgba(255,255,255,0.46),inset_-14px_-20px_36px_rgba(83,112,128,0.1),0_38px_110px_rgba(var(--area-rgb),0.26)] sm:p-7"
+            className="group relative flex min-h-full flex-col overflow-hidden rounded-[2.1rem] border border-[rgba(var(--area-rgb),0.2)] bg-[linear-gradient(145deg,rgba(255,255,255,0.44),rgba(230,241,246,0.34)_54%,rgba(190,210,222,0.2))] p-6 text-[#1b2430] shadow-[inset_0_1px_0_rgba(255,255,255,0.86),inset_8px_10px_24px_rgba(255,255,255,0.22),inset_-12px_-18px_34px_rgba(83,112,128,0.09),0_24px_80px_rgba(40,70,88,0.11)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl transition duration-700 hover:-translate-y-2 hover:border-[rgba(var(--area-rgb),0.55)] hover:bg-white/52 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.92),inset_10px_12px_26px_rgba(255,255,255,0.3),inset_-14px_-20px_36px_rgba(83,112,128,0.1),0_38px_110px_rgba(var(--area-rgb),0.24)] sm:p-7"
             style={{ "--area-color": theme.color, "--area-rgb": theme.rgb }}
             onHoverStart={() => onActivateArea?.(area.title)}
             onFocus={() => onActivateArea?.(area.title)}
@@ -829,82 +506,23 @@ export default function LabExperience() {
         "--active-rgb": activeTheme.rgb,
       }}
     >
-      <HeroBackground />
       <Header />
       <div className="pointer-events-none fixed inset-x-0 top-0 z-20 h-24 bg-gradient-to-b from-white/12 via-white/6 to-transparent backdrop-blur-[1px]" />
 
       <motion.section
         id="home"
         style={{ scale: heroScale, opacity: heroOpacity }}
-        className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-start overflow-hidden px-5 pb-8 pt-18 text-center sm:px-8 lg:px-12"
+        className="relative z-10 isolate mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-start overflow-hidden px-5 pb-8 pt-18 text-center sm:px-8 lg:px-12"
       >
-        <div className="absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2 bg-[radial-gradient(circle_at_50%_34%,rgba(226,237,245,0.68),transparent_25%),radial-gradient(circle_at_50%_40%,rgba(var(--active-rgb),0.1),transparent_31%),radial-gradient(circle_at_24%_28%,rgba(255,255,255,0.36),transparent_30%),linear-gradient(180deg,#F7FAFC_0%,#EEF4F8_54%,#E6EEF5_100%)] transition-colors duration-[1800ms]" />
-        <div className="absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2 opacity-50 [background-image:linear-gradient(90deg,rgba(70,100,130,0.045)_1px,transparent_1px),linear-gradient(180deg,rgba(70,100,130,0.035)_1px,transparent_1px)] [background-size:120px_120px]" />
-        <div className="absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2">
-          <LivingHeroField activeColor={activeTheme.color} />
-        </div>
+        <div className="absolute left-1/2 top-0 z-0 h-full w-screen -translate-x-1/2 bg-[radial-gradient(circle_at_50%_38%,rgba(120,170,210,0.12),transparent_34%),radial-gradient(circle_at_50%_42%,rgba(var(--active-rgb),0.08),transparent_36%),linear-gradient(180deg,#F7FAFC_0%,#EEF4F8_54%,#E6EEF5_100%)] transition-colors duration-[1800ms]" />
+        <div className="absolute left-1/2 top-0 z-[2] h-full w-screen -translate-x-1/2 opacity-35 [background-image:linear-gradient(90deg,rgba(120,170,200,0.045)_1px,transparent_1px),linear-gradient(180deg,rgba(120,170,200,0.035)_1px,transparent_1px)] [background-size:132px_132px]" />
         <motion.div
-          className="absolute left-1/2 top-[10%] -z-10 h-[18rem] w-[80vw] -translate-x-1/2 rounded-full bg-white/18 blur-3xl"
-          animate={{ x: ["-3%", "3%", "-3%"], opacity: [0.12, 0.22, 0.12] }}
-          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute left-[12%] top-[22%] -z-10 h-px w-[76%] rotate-[-6deg] bg-gradient-to-r from-transparent via-[#526170]/[0.055] to-transparent"
+          className="absolute left-[12%] top-[22%] z-[2] h-px w-[76%] rotate-[-6deg] bg-gradient-to-r from-transparent via-[rgba(120,170,200,0.18)] to-transparent"
           animate={{ x: ["-4%", "5%", "-4%"], opacity: [0.025, 0.075, 0.025] }}
           transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div
-          className="absolute left-1/2 top-[16%] -z-10 h-[42rem] w-[42rem] -translate-x-1/2 rounded-full bg-[rgba(var(--active-rgb),0.09)] blur-3xl transition-colors duration-[1800ms]"
-          animate={{ opacity: [0.18, 0.38, 0.18], scale: [0.96, 1.04, 0.96] }}
-          transition={{ duration: 7.5, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <div className="pointer-events-none absolute left-1/2 top-[18%] -z-10 h-[58%] w-screen -translate-x-1/2 overflow-hidden">
-          {[0, 1, 2, 3, 4, 5].map((index) => (
-            <motion.span
-              key={index}
-              className="absolute h-1.5 w-1.5 rounded-full bg-[#466482] shadow-[0_0_22px_rgba(var(--active-rgb),0.16)] transition-colors duration-[1600ms]"
-              style={{
-                left: `${18 + index * 12}%`,
-                top: `${18 + (index % 3) * 18}%`,
-              }}
-              animate={{
-                x: [0, index % 2 ? -26 : 30, 0],
-                y: [0, index % 2 ? 18 : -22, 0],
-                opacity: [0.03, 0.1, 0.03],
-                scale: [0.76, 1.18, 0.76],
-              }}
-              transition={{ duration: 7 + index * 0.45, repeat: Infinity, ease: "easeInOut", delay: index * 0.4 }}
-            />
-          ))}
-          <motion.span
-            className="absolute left-[12%] top-[36%] h-px w-[76%] rotate-[-8deg] bg-gradient-to-r from-transparent via-[#466482] to-transparent opacity-10 blur-[0.5px] transition-colors duration-[1600ms]"
-            animate={{ x: ["-10%", "10%", "-10%"], opacity: [0.03, 0.08, 0.03] }}
-            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.span
-            className="absolute left-[18%] top-[54%] h-px w-[64%] rotate-[12deg] bg-gradient-to-r from-transparent via-[#466482] to-transparent opacity-10 blur-[0.5px] transition-colors duration-[1600ms]"
-            animate={{ x: ["8%", "-8%", "8%"], opacity: [0.03, 0.075, 0.03] }}
-            transition={{ duration: 10.5, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </div>
-        <div className="relative flex min-h-[calc(100vh-3.5rem)] w-full flex-col items-center justify-center gap-6 pt-4 sm:gap-7 sm:pt-6">
-          <HeroObject
-            className="w-[min(72vw,340px)] sm:w-[min(45vw,440px)] lg:w-[min(36vw,500px)]"
-            activeColor={activeTheme.color}
-            style={{
-              "--sphere-glow": `rgba(${activeTheme.rgb},0.36)`,
-              "--sphere-core": `rgba(${activeTheme.rgb},0.26)`,
-              "--sphere-edge": `rgba(${activeTheme.rgb},0.26)`,
-              "--sphere-shadow": `rgba(${activeTheme.rgb},0.32)`,
-              "--sphere-core-strong": `rgba(${activeTheme.rgb},0.42)`,
-              "--sphere-core-soft": `rgba(${activeTheme.rgb},0.18)`,
-              "--sphere-line": `rgba(${activeTheme.rgb},0.42)`,
-              "--sphere-stroke": `rgba(${activeTheme.rgb},0.54)`,
-              "--sphere-dot": `rgba(${activeTheme.rgb},0.78)`,
-              "--sphere-orbit": `rgba(${activeTheme.rgb},0.82)`,
-              "--sphere-rim": `rgba(${activeTheme.rgb},0.28)`,
-            }}
-          />
+        <div className="relative z-10 flex min-h-[calc(100vh-3.5rem)] w-full flex-col items-center justify-center gap-8 pt-4 sm:gap-10 sm:pt-6">
+          <HeroCrystalLoop />
           <motion.div
             className="flex max-w-5xl flex-col items-center px-5 py-3 sm:px-8"
             style={{ y: heroIntroY }}
