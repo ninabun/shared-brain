@@ -1,3 +1,6 @@
 .vercel
 public/animations/*.zip
 public/images/crystal-animation/
+out/
+.next/
+node_modules/
