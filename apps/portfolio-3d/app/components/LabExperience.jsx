@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import content from "../data/lab.json";
 
 const HERO_CRYSTAL_FRAME_COUNT = 300;
-const HERO_CRYSTAL_FRAME_PATH = "/animations/healthcare-crystal-loop/frames/frame-";
+const HERO_CRYSTAL_FRAME_PATH = "/animations/healthcare-crystal-loop/webp/frame-";
+const HERO_CRYSTAL_FRAME_EXT = ".webp";
 const HERO_CRYSTAL_LOOP_MS = 25000;
 const HERO_CRYSTAL_THEME_MS = 5000;
 const HERO_CRYSTAL_THEMES = [
@@ -359,7 +360,7 @@ function HeroCrystalLoop() {
     return () => window.clearInterval(themeTimer);
   }, []);
 
-  const src = `${HERO_CRYSTAL_FRAME_PATH}${String(frame).padStart(3, "0")}.png`;
+  const src = `${HERO_CRYSTAL_FRAME_PATH}${String(frame).padStart(3, "0")}${HERO_CRYSTAL_FRAME_EXT}`;
   const theme = HERO_CRYSTAL_THEMES[themeIndex];
 
   return (
@@ -379,6 +380,7 @@ function HeroCrystalLoop() {
       <img
         src={src}
         alt="Healthcare Reimagined crystal sphere animation"
+        decoding="async"
         draggable="false"
         className="relative z-10 h-full w-full object-contain transition-[filter] duration-[1500ms]"
         style={{
