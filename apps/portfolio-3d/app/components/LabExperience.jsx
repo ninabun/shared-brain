@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Activity, ArrowRight, BrainCircuit, Menu, Sparkles, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import content from "../data/lab.json";
 
 const HERO_CRYSTAL_FRAME_COUNT = 300;
@@ -327,23 +327,73 @@ function Section({ id, eyebrow, title, children, className = "" }) {
 }
 
 function HeroCrystalLoop() {
-  const [frame, setFrame] = useState(1);
+  const canvasRef = useRef(null);
+  const framesRef = useRef([]);
+  const loadedRef = useRef([]);
+  const lastFrameRef = useRef(0);
   const [themeIndex, setThemeIndex] = useState(0);
 
   useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return undefined;
+
+    const context = canvas.getContext("2d", { alpha: true });
+    if (!context) return undefined;
+
+    const size = 720;
+    canvas.width = size;
+    canvas.height = size;
+
+    let cancelled = false;
     let animationFrame;
     const startedAt = performance.now();
     const frameDuration = HERO_CRYSTAL_LOOP_MS / HERO_CRYSTAL_FRAME_COUNT;
 
+    function drawFrame(index) {
+      const image = framesRef.current[index] || framesRef.current[lastFrameRef.current];
+      if (!image) return;
+
+      context.clearRect(0, 0, size, size);
+      context.drawImage(image, 0, 0, size, size);
+      lastFrameRef.current = index;
+    }
+
+    for (let index = 0; index < HERO_CRYSTAL_FRAME_COUNT; index += 1) {
+      const image = new Image();
+      image.decoding = "async";
+      image.onload = () => {
+        if (cancelled) return;
+        loadedRef.current[index] = true;
+        framesRef.current[index] = image;
+        if (index === 0) drawFrame(0);
+      };
+      image.src = `${HERO_CRYSTAL_FRAME_PATH}${String(index + 1).padStart(3, "0")}${HERO_CRYSTAL_FRAME_EXT}`;
+    }
+
     function tick(now) {
       const elapsed = (now - startedAt) % HERO_CRYSTAL_LOOP_MS;
-      const nextFrame = Math.floor(elapsed / frameDuration) + 1;
-      setFrame(nextFrame > HERO_CRYSTAL_FRAME_COUNT ? 1 : nextFrame);
+      const targetFrame = Math.min(HERO_CRYSTAL_FRAME_COUNT - 1, Math.floor(elapsed / frameDuration));
+
+      if (loadedRef.current[targetFrame]) {
+        drawFrame(targetFrame);
+      } else {
+        for (let offset = 1; offset < HERO_CRYSTAL_FRAME_COUNT; offset += 1) {
+          const fallbackFrame = (targetFrame - offset + HERO_CRYSTAL_FRAME_COUNT) % HERO_CRYSTAL_FRAME_COUNT;
+          if (loadedRef.current[fallbackFrame]) {
+            drawFrame(fallbackFrame);
+            break;
+          }
+        }
+      }
+
       animationFrame = requestAnimationFrame(tick);
     }
 
     animationFrame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(animationFrame);
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(animationFrame);
+    };
   }, []);
 
   useEffect(() => {
@@ -354,7 +404,6 @@ function HeroCrystalLoop() {
     return () => window.clearInterval(themeTimer);
   }, []);
 
-  const src = `${HERO_CRYSTAL_FRAME_PATH}${String(frame).padStart(3, "0")}${HERO_CRYSTAL_FRAME_EXT}`;
   const theme = HERO_CRYSTAL_THEMES[themeIndex];
 
   return (
@@ -371,11 +420,10 @@ function HeroCrystalLoop() {
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
       />
       <div className="absolute inset-[7%] rounded-full border border-[rgba(var(--crystal-rgb),0.22)] shadow-[0_0_52px_rgba(var(--crystal-rgb),0.2),inset_0_0_38px_rgba(var(--crystal-rgb),0.1)] transition-[border-color,box-shadow] duration-[1500ms]" />
-      <img
-        src={src}
-        alt="Healthcare Reimagined crystal sphere animation"
-        decoding="async"
-        draggable="false"
+      <canvas
+        ref={canvasRef}
+        role="img"
+        aria-label="Healthcare Reimagined crystal sphere animation"
         className="relative z-10 h-full w-full object-contain transition-[filter] duration-[1500ms]"
         style={{
           filter: `drop-shadow(0 0 22px rgba(${theme.rgb},0.32)) drop-shadow(0 18px 54px rgba(${theme.rgb},0.16))`,
