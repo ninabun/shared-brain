@@ -39,6 +39,13 @@
           "ctas": ["Watch Concept"]
         },
         {
+          "name": "Earth Observatory",
+          "problem": "Complex healthcare information can feel abstract when it is explained only through text, diagrams or verbal explanation.",
+          "solution": "A scroll-driven 3D observatory prototype that can be adapted for patient education, fetal development walkthroughs and immersive medical presentations.",
+          "tools": ["Next.js", "React Three Fiber", "GSAP"],
+          "ctas": ["Open Case Study", "Live Demo"]
+        },
+        {
           "name": "AI Music & Video",
           "problem": "Healthcare communication often needs a calmer emotional layer.",
           "solution": "AI-generated sound for patient engagement, education and ambience.",
@@ -46,7 +53,7 @@
           "ctas": ["Watch Demo"]
         },
         {
-          "name": "AI Video Concept",
+          "name": "Immersive Medical UX",
           "problem": "Complex health messages need clearer visual explanation.",
           "solution": "AI-assisted video concepts for storytelling and patient-facing education.",
           "tools": ["Higgsfield", "CapCut"],
