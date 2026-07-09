@@ -331,9 +331,6 @@ function HeroCrystalLoop() {
   const [themeIndex, setThemeIndex] = useState(0);
 
   useEffect(() => {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduceMotion) return undefined;
-
     let animationFrame;
     const startedAt = performance.now();
     const frameDuration = HERO_CRYSTAL_LOOP_MS / HERO_CRYSTAL_FRAME_COUNT;
@@ -350,9 +347,6 @@ function HeroCrystalLoop() {
   }, []);
 
   useEffect(() => {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduceMotion) return undefined;
-
     const themeTimer = window.setInterval(() => {
       setThemeIndex((current) => (current + 1) % HERO_CRYSTAL_THEMES.length);
     }, HERO_CRYSTAL_THEME_MS);
