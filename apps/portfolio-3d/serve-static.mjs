@@ -49,6 +49,12 @@ createServer(async (request, response) => {
     if (fileStat?.isDirectory()) {
       filePath = path.join(filePath, "index.html");
     }
+    if (!existsSync(filePath) && !path.extname(filePath)) {
+      const htmlFilePath = `${filePath}.html`;
+      if (existsSync(htmlFilePath)) {
+        filePath = htmlFilePath;
+      }
+    }
     if (!existsSync(filePath)) {
       filePath = path.join(outDir, "index.html");
     }

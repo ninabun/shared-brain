@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Activity, ArrowRight, BrainCircuit, Menu, Sparkles, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import content from "../data/lab.json";
+import { getProjectSlug } from "../data/projects";
 
 const HERO_CRYSTAL_FRAME_COUNT = 300;
 const HERO_CRYSTAL_FRAME_PATH = "/animations/healthcare-crystal-loop/webp/frame-";
@@ -18,9 +19,8 @@ const HERO_CRYSTAL_THEMES = [
 
 const navItems = [
   { label: "Solutions", href: "#platform" },
-  { label: "Vision", href: "#mission" },
-  { label: "Research", href: "#roadmap" },
   { label: "About", href: "#about" },
+  { label: "Contact", href: "#contact" },
 ];
 
 const iconMap = {
@@ -30,9 +30,9 @@ const iconMap = {
 };
 
 const areaCtas = {
-  "Care Experience": "View Care Solutions",
-  "Clinical Operations": "View Clinical Solutions",
-  "Healthcare Intelligence": "View Intelligence Solutions",
+  "Care Experience": "Upcoming For More",
+  "Clinical Operations": "Upcoming For More",
+  "Healthcare Intelligence": "Upcoming For More",
 };
 
 const areaThemes = {
@@ -532,17 +532,27 @@ function PlatformArchitecture({ modules, onActivateArea }) {
               <div className="mt-8 border-t border-[#1b2430]/10 pt-6">
                 <p className="text-[13px] font-medium uppercase tracking-[0.2em] text-[#526170]/72">Projects</p>
                 <div className="mt-4 grid gap-2.5">
-                  {visibleProjects.map((project) => (
-                    <div
-                      key={project.name}
-                      className="relative overflow-hidden rounded-full border border-white/78 bg-white/38 px-5 py-3.5 text-[15px] font-medium text-[#526170] shadow-[inset_0_1px_0_rgba(255,255,255,0.96),inset_10px_10px_24px_rgba(255,255,255,0.28),inset_-12px_-16px_28px_rgba(82,105,116,0.1),0_16px_36px_rgba(58,84,98,0.12)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl transition duration-500 hover:-translate-y-0.5 hover:border-[rgba(var(--area-rgb),0.26)] hover:bg-white/54 hover:text-[#1b2430] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.96),inset_10px_10px_24px_rgba(255,255,255,0.28),inset_-12px_-16px_28px_rgba(82,105,116,0.1),0_18px_42px_rgba(var(--area-rgb),0.14)]"
-                      onMouseEnter={() => onActivateArea?.(area.title)}
-                    >
-                      <span className="pointer-events-none absolute left-7 right-10 top-1.5 h-3 rounded-full bg-white/42 blur-sm" />
-                      <span className="pointer-events-none absolute bottom-0 left-8 right-12 h-px bg-gradient-to-r from-transparent via-[var(--area-color)] to-transparent opacity-0 transition duration-500 group-hover:opacity-35" />
-                      {project.name}
-                    </div>
-                  ))}
+                  {visibleProjects.map((project) => {
+                    const slug = getProjectSlug(project.name);
+                    const hasProjectPage = slug !== "#contact";
+                    const Component = hasProjectPage ? "a" : "div";
+
+                    return (
+                      <Component
+                        key={project.name}
+                        {...(hasProjectPage ? { href: `/projects/${slug}` } : {})}
+                        className={`relative overflow-hidden rounded-full border border-white/78 bg-white/38 px-5 py-3.5 text-[15px] font-medium text-[#526170] shadow-[inset_0_1px_0_rgba(255,255,255,0.96),inset_10px_10px_24px_rgba(255,255,255,0.28),inset_-12px_-16px_28px_rgba(82,105,116,0.1),0_16px_36px_rgba(58,84,98,0.12)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl transition duration-500 ${hasProjectPage ? "hover:-translate-y-0.5 hover:border-[rgba(var(--area-rgb),0.26)] hover:bg-white/54 hover:text-[#1b2430] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.96),inset_10px_10px_24px_rgba(255,255,255,0.28),inset_-12px_-16px_28px_rgba(82,105,116,0.1),0_18px_42px_rgba(var(--area-rgb),0.14)]" : "cursor-default opacity-72"}`}
+                        onMouseEnter={() => onActivateArea?.(area.title)}
+                      >
+                        <span className="pointer-events-none absolute left-7 right-10 top-1.5 h-3 rounded-full bg-white/42 blur-sm" />
+                        <span className="pointer-events-none absolute bottom-0 left-8 right-12 h-px bg-gradient-to-r from-transparent via-[var(--area-color)] to-transparent opacity-0 transition duration-500 group-hover:opacity-35" />
+                        <span className="relative z-10 flex items-center justify-between gap-3">
+                          <span>{project.name}</span>
+                          {hasProjectPage ? <ArrowRight size={13} /> : null}
+                        </span>
+                      </Component>
+                    );
+                  })}
                 </div>
               </div>
               <a
@@ -657,7 +667,7 @@ export default function LabExperience() {
 
       <Section id="about" eyebrow="About" title="Built between care, code and product design.">
         <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_0.8fr]">
-          <div className="max-w-xl space-y-3 text-[14px] leading-6 tracking-[-0.005em] text-[#526170]/78 sm:text-[15px] sm:leading-7">
+          <div className="max-w-2xl space-y-3 text-lg leading-8 tracking-[-0.005em] text-[#526170]/82">
             <p>Wing Yee builds AI-powered healthcare products by combining clinical experience, computer science and product design.</p>
             <p>The goal is to transform everyday healthcare workflows into practical AI systems.</p>
           </div>

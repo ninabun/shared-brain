@@ -7,7 +7,6 @@ const appDir = path.dirname(fileURLToPath(import.meta.url));
 const nextConfig = {
   reactStrictMode: false,
   output: "export",
-  assetPrefix: "./",
   outputFileTracingRoot: appDir,
   transpilePackages: ["three", "@react-three/fiber", "@react-three/drei"],
 };
