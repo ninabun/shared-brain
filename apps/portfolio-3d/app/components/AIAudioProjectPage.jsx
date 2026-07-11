@@ -3,6 +3,11 @@
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, AudioLines, CheckCircle2, Disc3, Sparkles, Waves } from "lucide-react";
 
+const navItems = [
+  { label: "Solutions", href: "/#platform" },
+  { label: "About", href: "/#about" },
+  { label: "Contact", href: "/#contact" },
+];
 const demos = [
   {
     title: "Breastfeeding Education",
@@ -113,12 +118,17 @@ function Header() {
       >
         Wing Yee AI Lab
       </a>
-      <a
-        href="/#platform"
-        className="inline-flex items-center gap-2 rounded-full border border-white/48 bg-white/32 px-4 py-2 text-sm text-[#526170]/78 shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_12px_34px_rgba(7,15,28,0.1)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl transition hover:-translate-y-0.5 hover:bg-white/50 hover:text-[#1b2430]"
-      >
-        <ArrowLeft size={14} /> Back to AI Lab
-      </a>
+      <div className="hidden items-center gap-2.5 text-[13px] text-[#1b2430]/70 md:flex">
+        {navItems.map((item) => (
+          <a
+            key={item.label}
+            href={item.href}
+            className="rounded-full border border-white/48 bg-white/32 px-4 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_12px_34px_rgba(7,15,28,0.12)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl transition duration-300 hover:-translate-y-0.5 hover:bg-white/50 hover:text-[#1b2430]"
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
     </header>
   );
 }
@@ -214,14 +224,11 @@ export default function AIAudioProjectPage() {
               <span key={tag} className="rounded-full border border-white/70 bg-white/42 px-4 py-2 text-sm text-[#526170]/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.86)] backdrop-blur-xl">
                 {tag}
               </span>
-            ))}
+          ))}
           </div>
         </motion.div>
         <WaveVisual />
         <div className="mt-10 flex justify-center gap-3">
-          <a href="/#platform" className="rounded-full bg-[#1b2430] px-5 py-3 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:bg-[#263343]">
-            Back to AI Lab
-          </a>
           <a href="#demo-gallery" className="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/42 px-5 py-3 text-sm font-medium text-[#1b2430]/78 shadow-[inset_0_1px_0_rgba(255,255,255,0.86)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-white/58 hover:text-[#1b2430]">
             View Demo Gallery <ArrowRight size={15} />
           </a>
@@ -247,7 +254,7 @@ export default function AIAudioProjectPage() {
         <div id="demo-gallery" className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {demos.map((demo) => (
             <DemoCard key={demo.title} demo={demo} />
-          ))}
+        ))}
         </div>
       </Section>
 
@@ -260,7 +267,7 @@ export default function AIAudioProjectPage() {
               <p className="mt-4 text-base leading-7 text-[#526170]/78">{body}</p>
               {index < flow.length - 1 ? <span className="absolute -right-5 top-1/2 hidden h-px w-10 bg-gradient-to-r from-[#63E6D8]/70 to-transparent lg:block" /> : null}
             </GlassCard>
-          ))}
+        ))}
         </div>
       </Section>
 
@@ -272,7 +279,7 @@ export default function AIAudioProjectPage() {
               <p className="mt-7 text-xl font-semibold tracking-[-0.035em] text-[#1b2430]">{title}</p>
               <p className="mt-3 text-base leading-7 text-[#526170]/78">{body}</p>
             </GlassCard>
-          ))}
+        ))}
         </div>
       </Section>
 
@@ -297,7 +304,7 @@ export default function AIAudioProjectPage() {
             <span key={tool} className="rounded-full border border-white/70 bg-white/42 px-5 py-3 text-sm font-medium text-[#526170]/82 shadow-[inset_0_1px_0_rgba(255,255,255,0.86)] backdrop-blur-xl">
               {tool}
             </span>
-          ))}
+        ))}
         </div>
       </Section>
 

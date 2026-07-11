@@ -186,30 +186,6 @@ export const projects = [
     futureDirection: "A reception assistant that connects visitor needs, ward workflow and escalation logic.",
   },
   {
-    slug: "ai-feedback-assistant",
-    title: "AI Feedback Assistant",
-    solutionArea: "Clinical Operations",
-    oneLine: "AI-assisted feedback handling with human approval at the centre.",
-    problem: [
-      "Feedback handling can be repetitive, slow and inconsistent.",
-      "Teams need to understand sentiment quickly without losing human judgement.",
-      "Drafting responses takes time when the workflow is not structured.",
-    ],
-    solution: [
-      "AI Feedback Assistant classifies feedback, identifies sentiment and drafts response options.",
-      "Human review remains the final step before any communication is sent.",
-    ],
-    demo: {
-      type: "coming-soon",
-      cta: "View Workflow",
-      note: "Workflow mockup can be connected here.",
-    },
-    howItWorks: ["Feedback", "AI classification", "Draft response", "Human approval"],
-    impact: ["Response time reduced", "Communication consistency improved", "Human review protected"],
-    tools: ["AI Agent", "Automation", "Workflow Design"],
-    futureDirection: "A feedback intelligence layer for recurring patient, visitor and service signals.",
-  },
-  {
     slug: "hermes-ai-agent",
     title: "Hermes AI Agent",
     solutionArea: "Healthcare Intelligence",
@@ -285,7 +261,10 @@ export const projects = [
 
 export const projectsBySlug = Object.fromEntries(projects.map((project) => [project.slug, project]));
 export const projectSlugByTitle = Object.fromEntries(projects.map((project) => [project.title, project.slug]));
+const projectSlugAliases = {
+  "Roster Automation": "roster-automation",
+};
 
 export function getProjectSlug(title) {
-  return projectSlugByTitle[title] || "#contact";
+  return projectSlugByTitle[title] || projectSlugAliases[title] || "#contact";
 }

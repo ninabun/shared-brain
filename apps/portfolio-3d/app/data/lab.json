@@ -94,10 +94,10 @@
           "ctas": ["Explore Module"]
         },
         {
-          "name": "AI Feedback Assistant",
-          "problem": "Feedback handling can be repetitive, slow and inconsistent.",
-          "solution": "AI classifies sentiment, drafts replies and keeps human approval before sending.",
-          "tools": ["AI Agent", "Automation"],
+          "name": "Enquiry Chatbot",
+          "problem": "Repeated enquiries can interrupt clinical teams and create inconsistent communication.",
+          "solution": "An AI-assisted enquiry layer that answers common questions and routes requests to the right workflow.",
+          "tools": ["AI Chatbot", "Workflow Design"],
           "ctas": ["View Workflow"]
         },
         {

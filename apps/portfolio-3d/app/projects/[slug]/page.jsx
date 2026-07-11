@@ -1,12 +1,15 @@
 import AIAudioProjectPage from "../../components/AIAudioProjectPage";
+import EarthObservatoryPage from "../../components/EarthObservatoryPage";
 import ProjectPageTemplate from "../../components/ProjectPageTemplate";
+import RosterAutomationPage from "../../components/RosterAutomationPage";
+import SmartReceptionPage from "../../components/SmartReceptionPage";
 import { projects, projectsBySlug, solutionAreaThemes } from "../../data/projects";
 
 const clearedProjectSlugs = new Set([
   "projection-mapping",
   "immersive-medical-ux",
+  "roster-automation",
   "smart-reception",
-  "ai-feedback-assistant",
   "hermes-ai-agent",
   "n8n-workflow",
   "multi-agent-healthcare-workflow",
@@ -30,6 +33,18 @@ export default function ProjectPage({ params }) {
 
   if (params.slug === "ai-music-video") {
     return <AIAudioProjectPage />;
+  }
+
+  if (params.slug === "roster-automation") {
+    return <RosterAutomationPage />;
+  }
+
+  if (params.slug === "earth-observatory") {
+    return <EarthObservatoryPage />;
+  }
+
+  if (params.slug === "smart-reception") {
+    return <SmartReceptionPage />;
   }
 
   if (clearedProjectSlugs.has(params.slug)) {
