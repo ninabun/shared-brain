@@ -17,7 +17,7 @@ const clearedProjectSlugs = new Set([
 ]);
 
 export function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
+  return [...projects.map((project) => ({ slug: project.slug })), { slug: "antenatal-care-companion" }];
 }
 
 export function generateMetadata({ params }) {
@@ -44,7 +44,7 @@ export default function ProjectPage({ params }) {
     return <HealthcareApplicationPage app={applications["medication-verification"]} />;
   }
 
-  if (params.slug === "antenatal-care-companion") {
+  if (params.slug === "antenatal-companion" || params.slug === "antenatal-care-companion") {
     return <HealthcareApplicationPage app={applications["antenatal-care-companion"]} />;
   }
 

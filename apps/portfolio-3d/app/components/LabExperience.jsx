@@ -491,7 +491,7 @@ function PlatformArchitecture({ modules, onActivateArea }) {
       <div className="relative grid gap-6 lg:grid-cols-3">
       {modules.map((area, areaIndex) => {
         const Icon = iconMap[area.title] || Sparkles;
-        const visibleProjects = area.projects.slice(0, 3);
+        const visibleProjects = area.projects.slice(0, area.title === "Care Experience" ? 4 : 3);
         const cta = areaCtas[area.title] || "View Solutions";
         const theme = areaThemes[area.title] || areaThemes["Care Experience"];
 
@@ -531,7 +531,7 @@ function PlatformArchitecture({ modules, onActivateArea }) {
               <p className="mt-5 min-h-20 text-[15px] leading-7 text-[#334155]/82">{area.description}</p>
               <div className="mt-8 border-t border-[#1b2430]/10 pt-6">
                 <p className="text-[13px] font-medium uppercase tracking-[0.2em] text-[#526170]/72">Projects</p>
-                <div className="mt-4 grid gap-2.5">
+                <div className={`mt-4 grid gap-2.5 ${area.title === "Care Experience" ? "sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2" : ""}`}>
                   {visibleProjects.map((project) => {
                     const slug = getProjectSlug(project.name);
                     const hasProjectPage = slug !== "#contact";

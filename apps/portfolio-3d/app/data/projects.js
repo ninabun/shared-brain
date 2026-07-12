@@ -196,13 +196,13 @@ export const projects = [
     howItWorks:["Retrieve","Validate","Compare","Clinical review","Record outcome"],impact:["Differences made visible","Review focused","Authority preserved"],tools:["Next.js","n8n","Deterministic Rules","Human Review"],futureDirection:"A governed medication-safety integration pilot using approved interfaces."
   },
   {
-    slug: "antenatal-care-companion",
-    title: "Antenatal Care Companion",
+    slug: "antenatal-companion",
+    title: "AI Antenatal Companion",
     solutionArea: "Care Experience",
     oneLine: "Gestation-specific guidance, reminders and governed maternity-concern escalation.",
     problem:["Pregnant women face uncertainty about schedules, investigations and how to raise concerns."],
     solution:["A personalised timeline delivers approved information.","Structured concerns create owned maternity-team review tasks."],
-    demo:{type:"live",cta:"Open Companion",href:"/projects/antenatal-care-companion",note:"Interactive concept using fictional maternity data."},
+    demo:{type:"live",cta:"Open Companion",href:"/projects/antenatal-companion",note:"Interactive concept using fictional maternity data."},
     howItWorks:["Enrol","Personalise","Inform","Structure concern","Clinical review"],impact:["Clearer journey","Visible concern status","Structured staff queue"],tools:["Next.js","n8n","Approved Content","Human Review"],futureDirection:"A multilingual, governed antenatal support pilot with approved maternity content."
   },
   {

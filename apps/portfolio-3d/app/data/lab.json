@@ -32,6 +32,27 @@
       "description": "Creating better healthcare experiences through immersive technologies, communication and education.",
       "projects": [
         {
+          "name": "AI Antenatal Companion",
+          "problem": "Expectant mothers and families may struggle to navigate appointments, investigations, ward visiting arrangements and labour-support requirements across fragmented information.",
+          "solution": "A personalised maternity companion provides approved stage-specific guidance, appointment preparation, visitor information, labour-support criteria and governed escalation to clinical teams.",
+          "tools": ["Next.js", "AI Agent", "n8n", "Approved Content"],
+          "ctas": ["Open Companion", "View Care Journey"]
+        },
+        {
+          "name": "Smart Reception",
+          "problem": "Visitor and bell inquiries interrupt clinical staff before needs are understood.",
+          "solution": "A tablet-based inquiry layer that identifies needs before interrupting staff.",
+          "tools": ["Tablet UI", "Workflow Design"],
+          "ctas": ["Explore Module"]
+        },
+        {
+          "name": "AI Music & Video",
+          "problem": "Healthcare communication often needs a calmer emotional layer.",
+          "solution": "AI-generated sound for patient engagement, education and ambience.",
+          "tools": ["Suno"],
+          "ctas": ["Watch Demo"]
+        },
+        {
           "name": "Projection Mapping",
           "problem": "Patient education and presentations can feel flat or difficult to remember.",
           "solution": "Immersive visual storytelling for education, relaxation and clinical communication.",
@@ -44,13 +65,6 @@
           "solution": "A scroll-driven 3D observatory prototype that can be adapted for patient education, fetal development walkthroughs and immersive medical presentations.",
           "tools": ["Next.js", "React Three Fiber", "GSAP"],
           "ctas": ["Open Case Study", "Live Demo"]
-        },
-        {
-          "name": "AI Music & Video",
-          "problem": "Healthcare communication often needs a calmer emotional layer.",
-          "solution": "AI-generated sound for patient engagement, education and ambience.",
-          "tools": ["Suno"],
-          "ctas": ["Watch Demo"]
         },
         {
           "name": "Immersive Medical UX",
@@ -85,13 +99,6 @@
           "solution": "AI-assisted roster generation for fairness, usability and planning efficiency.",
           "tools": ["Codex"],
           "ctas": ["Watch Demo", "Case Study"]
-        },
-        {
-          "name": "Smart Reception",
-          "problem": "Visitor and bell inquiries interrupt clinical staff before needs are understood.",
-          "solution": "A tablet-based inquiry layer that identifies needs before interrupting staff.",
-          "tools": ["Tablet UI", "Workflow Design"],
-          "ctas": ["Explore Module"]
         },
         {
           "name": "Enquiry Chatbot",
