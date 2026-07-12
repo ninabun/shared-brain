@@ -1,18 +1,19 @@
 import AIAudioProjectPage from "../../components/AIAudioProjectPage";
 import EarthObservatoryPage from "../../components/EarthObservatoryPage";
+import HealthcareApplicationPage from "../../components/healthcare/HealthcareApplicationPage";
+import { applications } from "../../components/healthcare/data";
+import HealthcareIntelligencePage from "../../components/HealthcareIntelligencePage";
 import ProjectPageTemplate from "../../components/ProjectPageTemplate";
 import RosterAutomationPage from "../../components/RosterAutomationPage";
 import SmartReceptionPage from "../../components/SmartReceptionPage";
 import { projects, projectsBySlug, solutionAreaThemes } from "../../data/projects";
+import { notFound } from "next/navigation";
 
 const clearedProjectSlugs = new Set([
   "projection-mapping",
   "immersive-medical-ux",
   "roster-automation",
   "smart-reception",
-  "hermes-ai-agent",
-  "n8n-workflow",
-  "multi-agent-healthcare-workflow",
 ]);
 
 export function generateStaticParams() {
@@ -39,6 +40,14 @@ export default function ProjectPage({ params }) {
     return <RosterAutomationPage />;
   }
 
+  if (params.slug === "medication-verification") {
+    return <HealthcareApplicationPage app={applications["medication-verification"]} />;
+  }
+
+  if (params.slug === "antenatal-care-companion") {
+    return <HealthcareApplicationPage app={applications["antenatal-care-companion"]} />;
+  }
+
   if (params.slug === "earth-observatory") {
     return <EarthObservatoryPage />;
   }
@@ -52,7 +61,11 @@ export default function ProjectPage({ params }) {
   }
 
   if (!project) {
-    return <ProjectPageTemplate project={{ ...projects[0], title: "Project Not Found" }} />;
+    notFound();
+  }
+
+  if (project.solutionArea === "Healthcare Intelligence") {
+    return <HealthcareIntelligencePage project={project} />;
   }
 
   const theme = solutionAreaThemes[project.solutionArea];

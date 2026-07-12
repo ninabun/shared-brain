@@ -1,8 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Bell, CheckCircle2, ClipboardList, GitBranch, MonitorPlay, ShieldCheck, UsersRound } from "lucide-react";
-import HeroMotionBar from "./HeroMotionBar";
+import { ArrowRight, Bell, CalendarDays, CheckCircle2, ClipboardList, GitBranch, MonitorPlay, ShieldCheck, SlidersHorizontal, UsersRound } from "lucide-react";
 
 const navItems = [
   { label: "Solutions", href: "/#platform" },
@@ -92,6 +91,126 @@ function WorkflowColumn({ title, items, accent }) {
   );
 }
 
+function RosterHeroVisual() {
+  const staff = ["RN Lee", "RM Chan", "EN Ho", "SN Wong"];
+  const week = ["M", "T", "W", "T", "F", "S", "S"];
+  const shifts = ["AM", "PM", "N", "OFF", "AM", "PM", "OFF", "N", "AM", "PM", "AM", "OFF", "PM", "N", "AM", "OFF", "AM", "PM", "N", "OFF", "AM", "PM", "AM", "N", "OFF", "PM", "AM", "OFF"];
+  const constraints = ["Leave request", "Night sequence", "Skill mix"];
+
+  return (
+    <motion.div
+      className="relative mx-auto mt-12 w-full max-w-6xl overflow-hidden rounded-[2.6rem] border border-white/72 bg-[linear-gradient(145deg,rgba(255,255,255,0.52),rgba(222,236,246,0.34))] p-4 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.92),inset_16px_18px_38px_rgba(255,255,255,0.25),inset_-18px_-22px_42px_rgba(80,100,120,0.1),0_28px_90px_rgba(40,70,88,0.13)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl sm:p-5"
+      initial={{ opacity: 0, y: 20, scale: 0.985 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.85, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_44%,rgba(79,139,255,0.15),transparent_42%)]" />
+      <motion.div
+        className="absolute left-0 top-0 h-full w-40 bg-gradient-to-r from-transparent via-[#4F8BFF]/12 to-transparent"
+        animate={{ x: ["-30%", "760%", "-30%"], opacity: [0, 0.75, 0] }}
+        transition={{ duration: 7.2, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute left-[18%] top-[16%] h-24 w-24 rounded-full bg-[#4F8BFF]/18 blur-3xl"
+        animate={{ scale: [0.8, 1.25, 0.8], opacity: [0.22, 0.5, 0.22] }}
+        transition={{ duration: 5.4, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      <div className="relative z-10 grid gap-4 lg:grid-cols-[0.72fr_1.55fr_0.78fr]">
+        <div className="rounded-[2rem] border border-white/72 bg-white/46 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.88),0_18px_44px_rgba(55,80,95,0.1)] backdrop-blur-xl">
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#526170]/70">Staff pool</p>
+            <UsersRound className="text-[#4F8BFF]" size={20} strokeWidth={1.55} />
+          </div>
+          <div className="mt-6 space-y-3">
+            {staff.map((name, index) => (
+              <motion.div
+                key={name}
+                className="flex items-center justify-between rounded-2xl border border-white/72 bg-white/52 px-4 py-3 text-sm font-semibold text-[#526170] shadow-[inset_0_1px_0_rgba(255,255,255,0.86)]"
+                animate={{ x: [0, index % 2 ? 4 : -4, 0], borderColor: ["rgba(255,255,255,0.72)", "rgba(79,139,255,0.32)", "rgba(255,255,255,0.72)"] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: index * 0.18 }}
+              >
+                <span>{name}</span>
+                <span className="h-2 w-2 rounded-full bg-[#4F8BFF] shadow-[0_0_14px_rgba(79,139,255,0.6)]" />
+              </motion.div>
+            ))}
+          </div>
+          <div className="mt-5 rounded-2xl border border-[#4F8BFF]/18 bg-white/38 p-4">
+            <p className="text-sm font-semibold tracking-[-0.02em] text-[#1b2430]">AI checks requests before publishing.</p>
+          </div>
+        </div>
+
+        <div className="relative rounded-[2rem] border border-white/72 bg-white/48 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_18px_44px_rgba(55,80,95,0.1)] backdrop-blur-xl">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#526170]/70">Generated monthly roster</p>
+              <p className="mt-2 text-2xl font-semibold tracking-[-0.05em] text-[#1b2430]">Balanced duty matrix</p>
+            </div>
+            <CalendarDays className="text-[#4F8BFF]" size={24} strokeWidth={1.55} />
+          </div>
+          <div className="mt-6 grid grid-cols-7 gap-2">
+            {week.map((day, index) => (
+              <div key={`${day}-${index}`} className="text-center text-[11px] font-semibold uppercase tracking-[0.16em] text-[#526170]/58">
+                {day}
+              </div>
+            ))}
+            {shifts.map((shift, index) => (
+              <motion.div
+                key={`${shift}-${index}`}
+                className="relative flex h-12 items-center justify-center rounded-xl border border-white/72 bg-white/54 text-[12px] font-semibold text-[#526170] shadow-[inset_0_1px_0_rgba(255,255,255,0.88)]"
+                animate={{
+                  backgroundColor: ["rgba(255,255,255,0.54)", index % 6 === 0 ? "rgba(79,139,255,0.16)" : "rgba(255,255,255,0.66)", "rgba(255,255,255,0.54)"],
+                  y: [0, index % 3 === 0 ? -3 : 2, 0],
+                }}
+                transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut", delay: index * 0.045 }}
+              >
+                {shift}
+                {index % 7 === 2 ? <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-[#4F8BFF] shadow-[0_0_12px_rgba(79,139,255,0.6)]" /> : null}
+              </motion.div>
+            ))}
+          </div>
+          <motion.div
+            className="absolute left-5 right-5 top-[46%] h-px bg-gradient-to-r from-transparent via-[#4F8BFF]/70 to-transparent"
+            animate={{ y: [0, 96, 0], opacity: [0, 0.9, 0] }}
+            transition={{ duration: 5.6, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
+
+        <div className="rounded-[2rem] border border-white/72 bg-white/46 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.88),0_18px_44px_rgba(55,80,95,0.1)] backdrop-blur-xl">
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#526170]/70">Fairness controls</p>
+            <SlidersHorizontal className="text-[#4F8BFF]" size={20} strokeWidth={1.55} />
+          </div>
+          <div className="mt-6 space-y-5">
+            {constraints.map((item, index) => (
+              <div key={item}>
+                <div className="flex items-center justify-between text-sm font-medium text-[#526170]/80">
+                  <span>{item}</span>
+                  <span>{86 - index * 9}%</span>
+                </div>
+                <div className="mt-2 h-2 overflow-hidden rounded-full bg-[#526170]/10">
+                  <motion.span
+                    className="block h-full rounded-full bg-[#4F8BFF] shadow-[0_0_18px_rgba(79,139,255,0.34)]"
+                    animate={{ width: [`${54 + index * 8}%`, `${86 - index * 9}%`, `${54 + index * 8}%`] }}
+                    transition={{ duration: 4.8 + index * 0.35, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+          <motion.div
+            className="mt-7 rounded-[1.4rem] border border-[#4F8BFF]/20 bg-[#4F8BFF]/10 px-4 py-4 text-center text-sm font-semibold text-[#315fbd]"
+            animate={{ boxShadow: ["0 0 0 rgba(79,139,255,0)", "0 0 32px rgba(79,139,255,0.18)", "0 0 0 rgba(79,139,255,0)"] }}
+            transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
+          >
+            Ready for manager review
+          </motion.div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function RosterAutomationPage() {
   return (
     <main className="min-h-screen overflow-hidden bg-[#f6f9fb] text-[#1b2430]">
@@ -113,7 +232,7 @@ export default function RosterAutomationPage() {
             <div key={item} className="rounded-full border border-white/64 bg-white/46 px-5 py-3 text-sm font-medium text-[#526170]/86 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_14px_30px_rgba(55,80,95,0.08)] backdrop-blur-xl">{item}</div>
           ))}
         </motion.div>
-              <HeroMotionBar accent="#4F8BFF" label="Operations rhythm" detail="Roster planning pulse" />
+              <RosterHeroVisual />
       </section>
 
       <Section eyebrow="Healthcare Problem" title="Rostering is an operational burden, not an admin detail.">
@@ -196,6 +315,17 @@ export default function RosterAutomationPage() {
           <p className="mt-8 max-w-4xl text-xl leading-9 text-[#526170]/84">The next version can support staff self-service requests, approval workflow, conflict alerts, audit trails and multi-department workforce dashboards.</p>
         </GlassCard>
       </Section>
+
+      <section id="workflow-extension" className="relative z-10 mx-auto w-full max-w-7xl scroll-mt-20 px-5 py-20 text-[#1b2430] sm:px-8 lg:px-12">
+        <p className="text-sm font-medium uppercase tracking-[0.26em] text-[#4F8BFF]">Healthcare AI</p>
+        <h2 className="mt-5 max-w-4xl text-4xl font-semibold leading-[1.04] tracking-[-0.045em] sm:text-5xl">From generated roster to approved clinical operation.</h2>
+        <p className="mt-6 max-w-3xl text-lg leading-8 text-[#526170]">Roster generation solves the planning problem. Workflow orchestration solves approval, publication and change management.</p>
+        <div className="mt-10 grid gap-5 lg:grid-cols-3">
+          {[['Roster engine','Generate and validate the schedule.'],['n8n','Coordinate review, approval, publication, notification and version history.'],['Management','Review exceptions, approve publication and retain authority.']].map(([title,body])=><GlassCard key={title} className="p-6"><p className="text-sm uppercase tracking-[0.2em] text-[#4F8BFF]">{title}</p><p className="mt-4 text-base leading-7 text-[#526170]">{body}</p></GlassCard>)}
+        </div>
+        <p className="mt-8 rounded-3xl border border-amber-300/40 bg-amber-50/70 p-6 text-[#76531f]">A technically valid roster still requires operational and clinical management review.</p>
+        <div className="mt-7 flex flex-wrap gap-3"><a href="https://n8nrostering.vercel.app/operations.html" className="inline-flex items-center gap-3 rounded-full bg-[#1b2430] px-6 py-3 text-sm font-medium text-white">Open Workflow Extension <ArrowRight size={15}/></a><a href="/#platform" className="inline-flex items-center gap-3 rounded-full border border-[#1b2430]/15 bg-white/60 px-6 py-3 text-sm font-medium">Healthcare AI</a></div>
+      </section>
     </main>
   );
 }

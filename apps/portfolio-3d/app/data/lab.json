@@ -114,32 +114,25 @@
       "description": "Turning healthcare information into actionable intelligence, briefings and decision support.",
       "projects": [
         {
-          "name": "Hermes AI Agent",
-          "problem": "AI developments move too quickly to follow manually.",
-          "solution": "A daily AI intelligence pipeline that summarizes fast-changing updates.",
-          "tools": ["LLM", "VPS"],
-          "ctas": ["Today's AI Brief"]
+          "name": "Healthcare AI Agents",
+          "problem": "Healthcare work requires context-aware support without transferring clinical authority to AI.",
+          "solution": "AI agents interpret healthcare context, coordinate tasks and support staff while keeping clinical decisions under human control.",
+          "tools": ["AI Agents", "Human Review"],
+          "ctas": ["Explore Product"]
         },
         {
-          "name": "n8n Workflow",
-          "problem": "Administrative and communication processes often repeat across teams.",
-          "solution": "Backend automation that connects routine signals to repeatable actions.",
-          "tools": ["n8n", "Automation"],
-          "ctas": ["View Workflow"]
+          "name": "Workflow Orchestration",
+          "problem": "Healthcare processes span systems, rules, AI services and human checkpoints.",
+          "solution": "Traceable workflows connect systems, rules, AI services and human review across healthcare operations.",
+          "tools": ["Workflow", "Audit Trail"],
+          "ctas": ["Explore Product"]
         },
         {
-          "name": "Multi-Agent Healthcare Workflow",
-          "problem": "Clinical, operational and educational tasks often need coordinated support.",
-          "solution": "A future multi-agent layer for connected healthcare workflows.",
-          "tools": ["Multi-agent", "Research"],
-          "ctas": ["Future Direction"]
-        },
-        {
-          "name": "Future MCP Integration",
-          "problem": "Healthcare tools need safer ways to connect context, systems and agents.",
-          "solution": "Exploring MCP-enabled architecture for connected AI healthcare tools.",
-          "tools": ["MCP", "AI Systems"],
-          "ctas": ["Future Direction"]
+          "name": "System Integration",
+          "problem": "New services need governed access to established hospital platforms.",
+          "solution": "A secure integration layer connects clinical systems, operational platforms and AI-enabled services without replacing core hospital infrastructure.",
+          "tools": ["APIs", "Governance"],
+          "ctas": ["Explore Product"]
         }
       ]
     }
