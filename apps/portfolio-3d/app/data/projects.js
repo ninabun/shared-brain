@@ -250,6 +250,7 @@ export const projectsBySlug = Object.fromEntries(projects.map((project) => [proj
 export const projectSlugByTitle = Object.fromEntries(projects.map((project) => [project.title, project.slug]));
 const projectSlugAliases = {
   "Roster Automation": "roster-automation",
+  "Medication Verification": "medication-verification",
 };
 
 export function getProjectSlug(title) {

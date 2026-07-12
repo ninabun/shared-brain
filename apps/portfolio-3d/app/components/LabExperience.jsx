@@ -491,7 +491,7 @@ function PlatformArchitecture({ modules, onActivateArea }) {
       <div className="relative grid gap-6 lg:grid-cols-3">
       {modules.map((area, areaIndex) => {
         const Icon = iconMap[area.title] || Sparkles;
-        const visibleProjects = area.projects.slice(0, area.title === "Care Experience" ? 4 : 3);
+        const visibleProjects = area.projects.slice(0, area.title === "Care Experience" ? 5 : 3);
         const cta = areaCtas[area.title] || "View Solutions";
         const theme = areaThemes[area.title] || areaThemes["Care Experience"];
 

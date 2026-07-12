@@ -101,18 +101,11 @@
           "ctas": ["Watch Demo", "Case Study"]
         },
         {
-          "name": "Enquiry Chatbot",
-          "problem": "Repeated enquiries can interrupt clinical teams and create inconsistent communication.",
-          "solution": "An AI-assisted enquiry layer that answers common questions and routes requests to the right workflow.",
-          "tools": ["AI Chatbot", "Workflow Design"],
-          "ctas": ["View Workflow"]
-        },
-        {
-          "name": "Future Nursing Assistant",
-          "problem": "Nursing teams need practical support for repeated information and coordination tasks.",
-          "solution": "A future assistant for ward workflow support and task coordination.",
-          "tools": ["Concept", "AI Workflow"],
-          "ctas": ["Future Direction"]
+          "name": "Medication Verification",
+          "problem": "Medication information can differ across approved documentation and active orders.",
+          "solution": "A deterministic comparison highlights exact differences for focused clinical review.",
+          "tools": ["Next.js", "n8n", "Deterministic Rules"],
+          "ctas": ["Explore Product"]
         }
       ]
     },
