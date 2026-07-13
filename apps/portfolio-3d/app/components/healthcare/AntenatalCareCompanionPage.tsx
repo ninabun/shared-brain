@@ -106,7 +106,7 @@ export default function AntenatalCareCompanionPage() {
           ))}
         </motion.div>
         <div className="mx-auto mt-3 w-full max-w-5xl text-left"><AntenatalHeroVisual /></div>
-        <div className="mx-auto mt-3 flex flex-wrap items-center justify-center gap-3">
+        <div className="mx-auto mt-3 flex w-full max-w-5xl flex-wrap items-center justify-start gap-3 text-left">
           <a className="inline-flex items-center rounded-full bg-[#1b2430] px-6 py-2.5 text-sm font-medium !text-white transition hover:-translate-y-0.5 hover:bg-[#263343]" style={{ color: "#fff" }} href="https://antenatal-care-companion.vercel.app/" target="_blank" rel="noreferrer">Open Live Demo</a>
           <span className="max-w-xl text-left text-xs leading-5 text-[#74551f]"><b>Safety boundary: </b>The app supports information and escalation. Clinical decisions remain with healthcare professionals.</span>
         </div>
