@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Activity, ArrowRight, BrainCircuit, Menu, Sparkles, X } from "lucide-react";
+import { Activity, ArrowRight, BrainCircuit, ChevronDown, Menu, Sparkles, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import content from "../data/lab.json";
 import { getProjectSlug } from "../data/projects";
@@ -326,6 +326,43 @@ function Section({ id, eyebrow, title, children, className = "" }) {
   );
 }
 
+function CollapsibleSection({ id, label, summary, children }) {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const openFromHash = () => {
+      if (window.location.hash === `#${id}`) setOpen(true);
+    };
+
+    openFromHash();
+    window.addEventListener("hashchange", openFromHash);
+    return () => window.removeEventListener("hashchange", openFromHash);
+  }, [id]);
+
+  return (
+    <section id={id} className="relative z-10 mx-auto w-full max-w-7xl scroll-mt-24 px-5 sm:scroll-mt-28 sm:px-8 lg:px-12">
+      <button
+        type="button"
+        className="group flex w-full items-center justify-between gap-6 border-t border-[#1b2430]/10 py-5 text-left sm:py-6"
+        aria-expanded={open}
+        aria-controls={`${id}-content`}
+        onClick={() => setOpen((current) => !current)}
+      >
+        <span className="text-sm font-semibold uppercase tracking-[0.22em] text-[#1b2430]/72 sm:text-base">{label}</span>
+        <span className="flex items-center gap-4 text-right text-xs text-[#526170]/62 sm:text-sm">
+          <span className="hidden max-w-xl sm:block">{summary}</span>
+          <ChevronDown size={18} className={`shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+        </span>
+      </button>
+      <div id={`${id}-content`} className={`grid transition-[grid-template-rows,opacity] duration-500 ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
+        <div className="overflow-hidden">
+          <div className="pb-12 pt-3 sm:pb-16">{children}</div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function HeroCrystalLoop() {
   const canvasRef = useRef(null);
   const framesRef = useRef([]);
@@ -491,7 +528,7 @@ function PlatformArchitecture({ modules, onActivateArea }) {
       <div className="relative grid gap-6 lg:grid-cols-3">
       {modules.map((area, areaIndex) => {
         const Icon = iconMap[area.title] || Sparkles;
-        const visibleProjects = area.projects.slice(0, area.title === "Care Experience" ? 5 : 3);
+        const visibleProjects = area.projects;
         const cta = areaCtas[area.title] || "View Solutions";
         const theme = areaThemes[area.title] || areaThemes["Care Experience"];
 
@@ -657,15 +694,11 @@ export default function LabExperience() {
         <PlatformArchitecture modules={modules} onActivateArea={setActiveArea} />
       </Section>
 
-      <Section
-        id="how"
-        eyebrow="How I Think"
-        title="The product development framework behind AI solutions."
-      >
+      <CollapsibleSection id="how" label="How I Think" summary="The product development framework behind AI solutions.">
         <ThinkingFramework />
-      </Section>
+      </CollapsibleSection>
 
-      <Section id="about" eyebrow="About" title="Built between care, code and product design.">
+      <CollapsibleSection id="about" label="About" summary="Built between care, code and product design.">
         <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_0.8fr]">
           <div className="max-w-2xl space-y-3 text-lg leading-8 tracking-[-0.005em] text-[#526170]/82">
             <p>Wing Yee builds AI-powered healthcare products by combining clinical experience, computer science and product design.</p>
@@ -685,15 +718,15 @@ export default function LabExperience() {
             )}
           </div>
         </div>
-      </Section>
+      </CollapsibleSection>
 
-      <Section id="mission" eyebrow="Mission" title="Technology should give healthcare professionals more time to care.">
+      <CollapsibleSection id="mission" label="Mission" summary="Technology should give healthcare professionals more time to care.">
         <p className="mt-8 max-w-2xl text-lg leading-8 text-[#526170]/82">
           AI should reduce repetitive work, improve communication, and create better healthcare experiences.
         </p>
-      </Section>
+      </CollapsibleSection>
 
-      <Section id="roadmap" eyebrow="Roadmap" title="Future versions.">
+      <CollapsibleSection id="roadmap" label="Roadmap" summary="Future versions.">
         <div className="mt-14 grid gap-4 sm:grid-cols-2">
           {futureRoadmap.map((item, index) => (
             <motion.div
@@ -718,9 +751,9 @@ export default function LabExperience() {
         >
           View Roadmap <ArrowRight size={15} />
         </a>
-      </Section>
+      </CollapsibleSection>
 
-      <Section id="contact" eyebrow="Contact" title="Start a practical AI workflow conversation.">
+      <CollapsibleSection id="contact" label="Contact" summary="Start a practical AI workflow conversation.">
         <div className="mt-10 flex flex-col gap-5 border-t border-[#1b2430]/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="max-w-2xl text-base leading-8 text-[#526170]/78">
             Bring a healthcare workflow problem, patient experience idea, or AI automation concept into the lab.
@@ -732,7 +765,7 @@ export default function LabExperience() {
             Start conversation <ArrowRight size={16} />
           </a>
         </div>
-      </Section>
+      </CollapsibleSection>
 
     </main>
   );

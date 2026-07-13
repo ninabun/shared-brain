@@ -9,7 +9,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
   return <main className={styles.root}><div className={styles.backdrop}/><div className={styles.content}><Header/>{children}</div></main>;
 }
 
-function Header() { return <header className={styles.topbar}><a className={styles.brand} href="/">Wing Yee AI Lab</a><nav className={styles.toplinks} aria-label="Global navigation"><a className={styles.toplink} href="/#platform">Solutions</a><a className={styles.toplink} href="/#about">About</a><a className={styles.toplink} href="/#contact">Contact</a></nav></header>; }
+export function Header() { return <header className={styles.topbar}><a className={styles.brand} href="/">Wing Yee AI Lab</a><nav className={styles.toplinks} aria-label="Global navigation"><a className={styles.toplink} href="/#platform">Solutions</a><a className={styles.toplink} href="/#about">About</a><a className={styles.toplink} href="/#contact">Contact</a></nav></header>; }
 
 export function LocalSectionNav({ items }: { items: { label:string; href:string }[] }) { return <nav className={styles.localNav} aria-label="On this page"><div className={styles.localNavInner}>{items.map(i=><a key={i.href} href={i.href}>{i.label}</a>)}</div></nav>; }
 

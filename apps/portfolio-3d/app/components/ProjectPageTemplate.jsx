@@ -124,19 +124,19 @@ export default function ProjectPageTemplate({ project }) {
         </a>
       </header>
 
-      <section className="relative z-10 mx-auto grid min-h-[68vh] max-w-7xl items-center gap-10 px-5 py-12 sm:px-8 lg:grid-cols-[1.02fr_0.98fr] lg:px-12">
+      <section className="relative z-10 mx-auto flex min-h-svh max-w-7xl flex-col items-center justify-center gap-6 px-5 pb-8 pt-20 text-center sm:px-8 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 24, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-3xl text-left"
+          className="mx-auto max-w-4xl text-center"
         >
           <p className="text-[13px] font-semibold uppercase tracking-[0.24em] text-[var(--project-color)]">{project.solutionArea}</p>
-          <h1 className="mt-5 text-[3rem] font-semibold leading-[0.96] tracking-[-0.06em] text-[#1b2430] sm:text-[4.5rem] lg:text-[5.2rem]">
+          <h1 className="mt-4 text-5xl font-semibold leading-[0.96] tracking-[-0.06em] text-[#1b2430] sm:text-6xl lg:text-7xl">
             {project.title}
           </h1>
-          <p className="mt-7 max-w-2xl text-[1.12rem] leading-8 text-[#526170]/88">{project.oneLine}</p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#526170]/88 sm:text-lg">{project.oneLine}</p>
+          <div className="mt-5 flex flex-wrap justify-center gap-3">
             <a
               href="#demo"
               className="inline-flex items-center gap-2 rounded-full bg-[#1b2430] px-5 py-3 text-sm font-medium text-white shadow-[0_18px_44px_rgba(27,36,48,0.16)] transition hover:-translate-y-0.5 hover:bg-[#263343]"
@@ -153,7 +153,7 @@ export default function ProjectPageTemplate({ project }) {
         </motion.div>
 
         <motion.div
-          className="h-[22rem] w-full rounded-[2.4rem] border border-[rgba(var(--project-rgb),0.16)] bg-white/34 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_28px_90px_rgba(var(--project-rgb),0.14)] backdrop-blur-2xl"
+          className="h-[min(36svh,19rem)] w-full max-w-5xl rounded-[2rem] border border-[rgba(var(--project-rgb),0.16)] bg-white/34 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_28px_90px_rgba(var(--project-rgb),0.14)] backdrop-blur-2xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}

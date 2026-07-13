@@ -152,7 +152,7 @@ export default function EarthObservatoryPage() {
       <Background />
       <Header />
 
-      <section className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-5 pb-16 pt-28 text-center sm:px-8 lg:px-12">
+      <section className="relative z-10 mx-auto flex min-h-svh max-w-7xl flex-col justify-center px-5 pb-8 pt-20 text-center sm:px-8 lg:px-12">
 <motion.p
           className="text-sm font-medium uppercase tracking-[0.3em] text-[#8B7BFF]/78"
           initial={{ opacity: 0, y: 18 }}
@@ -162,7 +162,7 @@ export default function EarthObservatoryPage() {
           Care Experience
         </motion.p>
         <motion.h1
-          className="mx-auto mt-7 max-w-5xl text-5xl font-semibold leading-[0.98] tracking-[-0.06em] text-[#1b2430] sm:text-7xl lg:text-8xl"
+          className="mx-auto mt-4 max-w-5xl text-5xl font-semibold leading-[0.98] tracking-[-0.06em] text-[#1b2430] sm:text-6xl lg:text-7xl"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.1 }}
@@ -170,33 +170,20 @@ export default function EarthObservatoryPage() {
           Earth Observatory
         </motion.h1>
         <motion.p
-          className="mx-auto mt-8 max-w-2xl text-lg leading-8 text-[#526170]/86 sm:text-xl"
+          className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#526170]/86 sm:text-lg"
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.18 }}
         >
           A cinematic 3D experience prototype for turning complex healthcare information into calm, visual understanding.
         </motion.p>
-        <motion.div
-          className="mx-auto mt-10 flex flex-wrap items-center justify-center gap-3"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.26 }}
-        >
-          <a
-            href="https://earth-observatory.vercel.app"
-            className="inline-flex items-center gap-3 rounded-full bg-[#1b2430] px-6 py-3 text-sm font-medium text-white shadow-[0_18px_50px_rgba(27,36,48,0.18)] transition hover:-translate-y-0.5 hover:bg-[#263343]"
-          >
-            Launch Experience <ArrowRight size={15} />
-          </a>
-          <a
-            href="#demo"
-            className="inline-flex items-center gap-3 rounded-full border border-white/64 bg-white/46 px-6 py-3 text-sm font-medium text-[#1b2430]/78 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_36px_rgba(27,36,48,0.08)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-white/62"
-          >
-            View Case Study
-          </a>
-        </motion.div>
-              <HeroMotionBar accent="#8B7BFF" label="Visual rhythm" detail="Observatory motion signal" />
+        <HeroMotionBar
+          accent="#8B7BFF"
+          label="Visual rhythm"
+          detail="Observatory motion signal"
+          actionHref="https://earth-observatory.vercel.app"
+          actionLabel="Open Live Demo"
+        />
       </section>
 
       <Section eyebrow="Product Demo" title="A live 3D observatory experience." className="pt-8" id="demo">

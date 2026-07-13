@@ -10,8 +10,6 @@ import { projects, projectsBySlug, solutionAreaThemes } from "../../data/project
 import { notFound } from "next/navigation";
 
 const clearedProjectSlugs = new Set([
-  "projection-mapping",
-  "immersive-medical-ux",
   "roster-automation",
   "smart-reception",
 ]);

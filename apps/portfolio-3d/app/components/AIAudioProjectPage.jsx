@@ -159,7 +159,7 @@ function Section({ eyebrow, title, children }) {
 
 function WaveVisual() {
   return (
-    <div className="relative mx-auto mt-12 h-48 w-full max-w-4xl overflow-hidden rounded-[2.25rem] border border-white/78 bg-white/38 shadow-[inset_0_1px_0_rgba(255,255,255,0.94),inset_-12px_-18px_34px_rgba(82,105,116,0.09),0_30px_90px_rgba(65,120,150,0.12)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl">
+    <div className="relative mx-auto mt-6 h-36 w-full max-w-4xl overflow-hidden rounded-[2.25rem] border border-white/78 bg-white/38 shadow-[inset_0_1px_0_rgba(255,255,255,0.94),inset_-12px_-18px_34px_rgba(82,105,116,0.09),0_30px_90px_rgba(65,120,150,0.12)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(99,230,216,0.2),transparent_44%)]" />
       <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-end gap-2">
         {Array.from({ length: 34 }).map((_, index) => (
@@ -205,7 +205,7 @@ export default function AIAudioProjectPage() {
       <AudioBackground />
       <Header />
 
-      <section className="relative z-10 mx-auto flex min-h-[86vh] max-w-7xl flex-col justify-center px-5 py-16 text-center sm:px-8 lg:px-12">
+      <section className="relative z-10 mx-auto flex min-h-svh max-w-7xl flex-col justify-center px-5 pb-8 pt-20 text-center sm:px-8 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 24, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -213,10 +213,10 @@ export default function AIAudioProjectPage() {
           className="mx-auto max-w-5xl"
         >
           <p className="text-sm font-medium uppercase tracking-[0.28em] text-[#2f8396]/78">Patient Experience / AI Audio</p>
-          <h1 className="mt-7 text-5xl font-semibold leading-[0.96] tracking-[-0.06em] text-[#1b2430] sm:text-7xl">
+          <h1 className="mt-4 text-5xl font-semibold leading-[0.96] tracking-[-0.06em] text-[#1b2430] sm:text-6xl lg:text-7xl">
             AI Audio Experience for Patient-Centred Care
           </h1>
-          <p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-[#526170]/82 sm:text-xl">
+          <p className="mx-auto mt-4 max-w-3xl text-base leading-7 text-[#526170]/82 sm:text-lg">
             Using AI-generated music, voice and immersive sound design to improve healthcare communication, emotional support and presentation experience.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">

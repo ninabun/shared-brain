@@ -99,7 +99,7 @@ function RosterHeroVisual() {
 
   return (
     <motion.div
-      className="relative mx-auto mt-12 w-full max-w-6xl overflow-hidden rounded-[2.6rem] border border-white/72 bg-[linear-gradient(145deg,rgba(255,255,255,0.52),rgba(222,236,246,0.34))] p-4 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.92),inset_16px_18px_38px_rgba(255,255,255,0.25),inset_-18px_-22px_42px_rgba(80,100,120,0.1),0_28px_90px_rgba(40,70,88,0.13)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl sm:p-5"
+      className="relative mx-auto mt-5 w-full max-w-6xl overflow-hidden rounded-[2.6rem] border border-white/72 bg-[linear-gradient(145deg,rgba(255,255,255,0.52),rgba(222,236,246,0.34))] p-4 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.92),inset_16px_18px_38px_rgba(255,255,255,0.25),inset_-18px_-22px_42px_rgba(80,100,120,0.1),0_28px_90px_rgba(40,70,88,0.13)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl sm:p-5"
       initial={{ opacity: 0, y: 20, scale: 0.985 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.85, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
@@ -217,17 +217,17 @@ export default function RosterAutomationPage() {
       <Background />
       <Header />
 
-      <section className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-5 pb-16 pt-28 text-center sm:px-8 lg:px-12">
+      <section className="relative z-10 mx-auto flex min-h-svh max-w-7xl flex-col justify-center px-5 pb-8 pt-20 text-center sm:px-8 lg:px-12">
 <motion.p className="text-sm font-medium uppercase tracking-[0.3em] text-[#4F8BFF]/78" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.04 }}>
           Clinical Operations
         </motion.p>
-        <motion.h1 className="mx-auto mt-7 max-w-5xl text-5xl font-semibold leading-[0.98] tracking-[-0.06em] text-[#1b2430] sm:text-7xl lg:text-8xl" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.1 }}>
+        <motion.h1 className="mx-auto mt-4 max-w-5xl text-5xl font-semibold leading-[0.98] tracking-[-0.06em] text-[#1b2430] sm:text-6xl lg:text-7xl" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.1 }}>
           Roster Automation
         </motion.h1>
-        <motion.p className="mx-auto mt-8 max-w-2xl text-lg leading-8 text-[#526170]/86 sm:text-xl" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.18 }}>
+        <motion.p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#526170]/86 sm:text-lg" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.18 }}>
           A workflow optimisation system for fairer, faster and more transparent clinical roster planning.
         </motion.p>
-        <motion.div className="mx-auto mt-10 grid w-full max-w-4xl gap-3 sm:grid-cols-3" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.26 }}>
+        <motion.div className="mx-auto mt-5 grid w-full max-w-4xl gap-2 sm:grid-cols-3" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.26 }}>
           {["Reduce rework", "Improve fairness", "Protect manager review"].map((item) => (
             <div key={item} className="rounded-full border border-white/64 bg-white/46 px-5 py-3 text-sm font-medium text-[#526170]/86 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_14px_30px_rgba(55,80,95,0.08)] backdrop-blur-xl">{item}</div>
           ))}
