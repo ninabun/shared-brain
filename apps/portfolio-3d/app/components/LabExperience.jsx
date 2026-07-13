@@ -738,7 +738,10 @@ export default function LabExperience() {
             Bring a healthcare workflow problem, patient experience idea, or AI automation concept into the lab.
           </p>
           <a
-            href="#contact"
+            href="https://wa.me/85251395439?text=Hi%2C%20there.%20I%20want%20to%20know%20more%20about%20Wing%20Yee%20AI%20Lab."
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Start a WhatsApp conversation with Wing Yee AI Lab"
             className="inline-flex w-fit items-center gap-3 rounded-full bg-[#1b2430] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#263343]"
           >
             Start conversation <ArrowRight size={16} />
