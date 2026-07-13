@@ -1,53 +1,51 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ArrowRight, X } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight } from "lucide-react";
 
 export default function TechnologyExplainer({ items, accent = "#2f8396" }) {
   const [active, setActive] = useState(null);
 
-  useEffect(() => {
-    if (!active) return undefined;
-    const closeOnEscape = (event) => {
-      if (event.key === "Escape") setActive(null);
-    };
-    document.addEventListener("keydown", closeOnEscape);
-    return () => document.removeEventListener("keydown", closeOnEscape);
-  }, [active]);
-
   return (
-    <>
+    <div onMouseLeave={() => setActive(null)}>
+      <div className="mb-5 flex min-h-44 items-center justify-center sm:min-h-40">
+        <div
+          id="technology-usage"
+          role="status"
+          aria-live="polite"
+          className={`w-full max-w-2xl rounded-[1.75rem] border px-6 py-5 text-center transition duration-300 sm:px-8 ${active ? "translate-y-0 border-white/80 bg-white/72 opacity-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.94),0_22px_60px_rgba(35,60,76,0.13)]" : "translate-y-1 border-transparent bg-transparent opacity-65"}`}
+        >
+          {active ? (
+            <>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em]" style={{ color: accent }}>Technology purpose</p>
+              <h3 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-[#1b2430]">{active.name}</h3>
+              <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-[#526170] sm:text-base sm:leading-7">{active.purpose}</p>
+            </>
+          ) : (
+            <p className="text-sm text-[#526170]/68">Hover over or focus a technology to see how it supports this product.</p>
+          )}
+        </div>
+      </div>
+
       <div className="flex snap-x gap-3 overflow-x-auto pb-4 [scrollbar-width:thin]">
         {items.map((item) => (
           <button
             key={item.name}
             type="button"
+            onMouseEnter={() => setActive(item)}
+            onFocus={() => setActive(item)}
+            onBlur={() => setActive(null)}
             onClick={() => setActive(item)}
             className="group inline-flex shrink-0 snap-start items-center gap-3 rounded-full border border-white/68 bg-white/44 px-5 py-3 text-sm font-medium text-[#526170]/84 shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_12px_28px_rgba(55,80,95,0.08)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-white/68 focus-visible:outline-none focus-visible:ring-2"
             style={{ "--tw-ring-color": accent }}
-            aria-haspopup="dialog"
+            aria-controls="technology-usage"
+            aria-expanded={active?.name === item.name}
           >
             {item.name}
             <ArrowRight size={14} style={{ color: accent }} className="transition-transform group-hover:translate-x-0.5" />
           </button>
         ))}
       </div>
-
-      {active ? (
-        <div className="fixed inset-0 z-50 grid place-items-center px-5 py-8" role="dialog" aria-modal="true" aria-labelledby="technology-dialog-title">
-          <button type="button" className="absolute inset-0 cursor-default bg-[#13202b]/30 backdrop-blur-md" aria-label="Close technology explanation" onClick={() => setActive(null)} />
-          <div className="relative w-full max-w-lg rounded-[2rem] border border-white/80 bg-[#f7fafc]/95 p-7 text-left text-[#1b2430] shadow-[0_32px_100px_rgba(20,35,48,0.28)] ring-1 ring-[#1b2430]/5 sm:p-9">
-            <button type="button" onClick={() => setActive(null)} className="absolute right-5 top-5 grid h-10 w-10 place-items-center rounded-full border border-[#1b2430]/10 bg-white/70 text-[#526170] transition hover:bg-white" aria-label="Close dialog">
-              <X size={18} />
-            </button>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em]" style={{ color: accent }}>Technology purpose</p>
-            <h3 id="technology-dialog-title" className="mt-4 pr-12 text-3xl font-semibold tracking-[-0.045em]">{active.name}</h3>
-            <p className="mt-6 text-base leading-8 text-[#526170]">{active.purpose}</p>
-            <div className="mt-7 h-px w-full bg-gradient-to-r from-transparent via-[#526170]/18 to-transparent" />
-            <p className="mt-5 text-sm text-[#526170]/70">This technology supports the product workflow; human review remains part of the operating model.</p>
-          </div>
-        </div>
-      ) : null}
-    </>
+    </div>
   );
 }
