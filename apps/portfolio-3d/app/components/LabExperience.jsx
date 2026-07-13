@@ -326,7 +326,7 @@ function Section({ id, eyebrow, title, children, className = "" }) {
   );
 }
 
-function CollapsibleSection({ id, label, summary, children }) {
+function CollapsibleSection({ id, label, children }) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -349,8 +349,7 @@ function CollapsibleSection({ id, label, summary, children }) {
         onClick={() => setOpen((current) => !current)}
       >
         <span className="text-sm font-semibold uppercase tracking-[0.22em] text-[#1b2430]/72 sm:text-base">{label}</span>
-        <span className="flex items-center gap-4 text-right text-xs text-[#526170]/62 sm:text-sm">
-          <span className="hidden max-w-xl sm:block">{summary}</span>
+        <span className="flex items-center text-[#526170]/62">
           <ChevronDown size={18} className={`shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
         </span>
       </button>
@@ -694,11 +693,11 @@ export default function LabExperience() {
         <PlatformArchitecture modules={modules} onActivateArea={setActiveArea} />
       </Section>
 
-      <CollapsibleSection id="how" label="How I Think" summary="The product development framework behind AI solutions.">
+      <CollapsibleSection id="how" label="How I Think">
         <ThinkingFramework />
       </CollapsibleSection>
 
-      <CollapsibleSection id="about" label="About" summary="Built between care, code and product design.">
+      <CollapsibleSection id="about" label="About">
         <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_0.8fr]">
           <div className="max-w-2xl space-y-3 text-lg leading-8 tracking-[-0.005em] text-[#526170]/82">
             <p>Wing Yee builds AI-powered healthcare products by combining clinical experience, computer science and product design.</p>
@@ -720,13 +719,13 @@ export default function LabExperience() {
         </div>
       </CollapsibleSection>
 
-      <CollapsibleSection id="mission" label="Mission" summary="Technology should give healthcare professionals more time to care.">
+      <CollapsibleSection id="mission" label="Mission">
         <p className="mt-8 max-w-2xl text-lg leading-8 text-[#526170]/82">
           AI should reduce repetitive work, improve communication, and create better healthcare experiences.
         </p>
       </CollapsibleSection>
 
-      <CollapsibleSection id="roadmap" label="Roadmap" summary="Future versions.">
+      <CollapsibleSection id="roadmap" label="Roadmap">
         <div className="mt-14 grid gap-4 sm:grid-cols-2">
           {futureRoadmap.map((item, index) => (
             <motion.div
@@ -753,7 +752,7 @@ export default function LabExperience() {
         </a>
       </CollapsibleSection>
 
-      <CollapsibleSection id="contact" label="Contact" summary="Start a practical AI workflow conversation.">
+      <CollapsibleSection id="contact" label="Contact">
         <div className="mt-10 flex flex-col gap-5 border-t border-[#1b2430]/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="max-w-2xl text-base leading-8 text-[#526170]/78">
             Bring a healthcare workflow problem, patient experience idea, or AI automation concept into the lab.

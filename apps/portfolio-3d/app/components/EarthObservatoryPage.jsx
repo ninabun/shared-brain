@@ -11,7 +11,6 @@ import {
   Stethoscope,
   UsersRound,
 } from "lucide-react";
-import HeroMotionBar from "./HeroMotionBar";
 
 const navItems = [
   { label: "Solutions", href: "/#platform" },
@@ -177,30 +176,30 @@ export default function EarthObservatoryPage() {
         >
           A cinematic 3D experience prototype for turning complex healthcare information into calm, visual understanding.
         </motion.p>
-        <HeroMotionBar
-          accent="#8B7BFF"
-          label="Visual rhythm"
-          detail="Observatory motion signal"
-          actionHref="https://earth-observatory.vercel.app"
-          actionLabel="Open Live Demo"
-        />
-      </section>
-
-      <Section eyebrow="Product Demo" title="A live 3D observatory experience." className="pt-8" id="demo">
-        <GlassCard className="mt-12 p-3">
-          <div className="relative aspect-[16/9] overflow-hidden rounded-[1.65rem] bg-[#dfeaf2]">
+        <motion.div
+          className="mx-auto mt-5 w-full max-w-5xl rounded-[2rem] border border-white/76 bg-white/42 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.92),0_24px_70px_rgba(40,70,88,0.12)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.26 }}
+        >
+          <div className="relative h-[min(36svh,290px)] min-h-52 overflow-hidden rounded-[1.4rem] bg-[#dfeaf2]">
             <iframe
               title="Earth Observatory live demo"
               src="https://earth-observatory.vercel.app"
               className="h-full w-full border-0"
-              loading="lazy"
+              loading="eager"
             />
+            <a
+              href="https://earth-observatory.vercel.app"
+              target="_blank"
+              rel="noreferrer"
+              className="absolute bottom-3 left-3 z-10 inline-flex items-center gap-2 rounded-full bg-[#1b2430] px-5 py-3 text-sm font-medium text-white shadow-[0_12px_30px_rgba(20,30,40,0.28)] transition hover:-translate-y-0.5 hover:bg-[#263343]"
+            >
+              Open Live Demo <ArrowRight size={15} />
+            </a>
           </div>
-        </GlassCard>
-        <p className="mx-auto mt-7 max-w-3xl text-center text-lg leading-8 text-[#526170]/82">
-          The current demo uses Earth as the visual subject. The same interaction model can be adapted for fetal development, anatomy education and projection-mapped healthcare communication.
-        </p>
-      </Section>
+        </motion.div>
+      </section>
 
       <Section eyebrow="Why It Matters" title="Healthcare is easier when people can see it.">
         <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">

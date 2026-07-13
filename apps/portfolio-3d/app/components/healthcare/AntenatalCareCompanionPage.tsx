@@ -96,20 +96,19 @@ function AntenatalHeroVisual() {
 export default function AntenatalCareCompanionPage() {
   return (
     <Shell>
-      <section className="mx-auto flex min-h-screen w-full max-w-[1440px] items-center px-5 pb-12 pt-28 sm:px-8 lg:px-12 lg:pb-16 lg:pt-24">
-        <div className="grid w-full items-center gap-10 lg:grid-cols-[minmax(0,.88fr)_minmax(520px,1.12fr)] lg:gap-14 xl:gap-20">
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-            <motion.p className="text-xs font-extrabold uppercase tracking-[0.22em] text-[#7868e2]" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.75, delay: 0.05 }}>Patient Experience / Maternity Care</motion.p>
-            <motion.h1 className="mt-5 max-w-2xl text-[clamp(2.25rem,3.3vw,3.75rem)] font-medium leading-[1.01] tracking-[-0.055em] text-[#1b2a36]" initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.85, delay: 0.11, ease: [0.22, 1, 0.36, 1] }}>Personalised guidance throughout the antenatal journey.</motion.h1>
-            <motion.p className="mt-6 max-w-xl text-base leading-7 text-[#5d6f7d] sm:text-lg sm:leading-8" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.18 }}>Gestation-specific information, investigation schedules and approved education — with a governed pathway for raising clinical concerns.</motion.p>
-            <motion.div className="mt-7 flex flex-wrap items-center gap-3" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.24 }}>
-              <a className="inline-flex items-center rounded-full bg-[linear-gradient(135deg,#7868e2,#6558d1)] px-6 py-3 text-sm font-bold shadow-[0_14px_32px_rgba(101,88,209,.28)] ring-1 ring-white/35 transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_42px_rgba(101,88,209,.42)]" style={{ color: "#fff" }} href="https://antenatal-care-companion.vercel.app/" target="_blank" rel="noreferrer">Open Live Demo</a>
-            </motion.div>
-            <motion.div className="mt-6 flex max-w-xl items-start gap-3 rounded-2xl border border-[#ead8b4] bg-[#fff9ea]/80 p-4 text-[#74551f]" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.75, delay: 0.32 }}>
-              <ShieldCheck className="mt-0.5 shrink-0" size={19} /><p className="text-xs leading-5"><b className="block">Safety boundary</b>The app supports information, communication and escalation. It does not replace maternity assessment, emergency services or clinical judgement.</p>
-            </motion.div>
-          </motion.div>
-          <AntenatalHeroVisual />
+      <section className="mx-auto flex min-h-svh w-full max-w-7xl flex-col justify-center px-5 pb-8 pt-20 text-center sm:px-8 lg:px-12">
+        <motion.p className="text-sm font-medium uppercase tracking-[0.3em] text-[#2f8396]/78" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.04 }}>Care Experience</motion.p>
+        <motion.h1 className="mx-auto mt-4 max-w-5xl text-5xl font-semibold leading-[0.98] tracking-[-0.06em] text-[#1b2430] sm:text-6xl lg:text-7xl" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.1 }}>Personalised guidance throughout the antenatal journey.</motion.h1>
+        <motion.p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#526170]/86 sm:text-lg" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.18 }}>Gestation-specific information, investigation schedules and approved education — with a governed pathway for raising clinical concerns.</motion.p>
+        <motion.div className="mx-auto mt-5 grid w-full max-w-4xl gap-2 sm:grid-cols-3" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.26 }}>
+          {["Personalised timeline", "Approved guidance", "Clinician-led escalation"].map((item) => (
+            <div key={item} className="rounded-full border border-white/64 bg-white/46 px-5 py-3 text-sm font-medium text-[#526170]/86 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_14px_30px_rgba(55,80,95,0.08)] backdrop-blur-xl">{item}</div>
+          ))}
+        </motion.div>
+        <div className="mx-auto mt-5 w-full max-w-5xl text-left"><AntenatalHeroVisual /></div>
+        <div className="mx-auto mt-4 flex flex-wrap items-center justify-center gap-3">
+          <a className="inline-flex items-center rounded-full bg-[#1b2430] px-6 py-3 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:bg-[#263343]" href="https://antenatal-care-companion.vercel.app/" target="_blank" rel="noreferrer">Open Live Demo</a>
+          <span className="max-w-xl text-left text-xs leading-5 text-[#74551f]"><b>Safety boundary: </b>The app supports information and escalation. Clinical decisions remain with healthcare professionals.</span>
         </div>
       </section>
     </Shell>

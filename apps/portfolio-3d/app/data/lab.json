@@ -93,6 +93,13 @@
           "ctas": ["Explore Product"]
         },
         {
+          "name": "Projection Mapping",
+          "problem": "Healthcare intelligence can be difficult to communicate through conventional screens and reports.",
+          "solution": "Projection mapping turns complex system signals and healthcare concepts into immersive, spatial visual experiences.",
+          "tools": ["Blender", "TouchDesigner", "Healthcare Intelligence"],
+          "ctas": ["Explore Product"]
+        },
+        {
           "name": "Workflow Orchestration",
           "problem": "Healthcare processes span systems, rules, AI services and human checkpoints.",
           "solution": "Traceable workflows connect systems, rules, AI services and human review across healthcare operations.",
@@ -104,13 +111,6 @@
           "problem": "New services need governed access to established hospital platforms.",
           "solution": "A secure integration layer connects clinical systems, operational platforms and AI-enabled services without replacing core hospital infrastructure.",
           "tools": ["APIs", "Governance"],
-          "ctas": ["Explore Product"]
-        },
-        {
-          "name": "Projection Mapping",
-          "problem": "Healthcare intelligence can be difficult to communicate through conventional screens and reports.",
-          "solution": "Projection mapping turns complex system signals and healthcare concepts into immersive, spatial visual experiences.",
-          "tools": ["Blender", "TouchDesigner", "Healthcare Intelligence"],
           "ctas": ["Explore Product"]
         }
       ]

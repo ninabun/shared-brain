@@ -242,8 +242,8 @@ export default function SmartReceptionPage() {
 
       <Section eyebrow="Experience The Workflow" title="Video demo and ward panel previews.">
         <div className="grid gap-5 lg:grid-cols-[1.35fr_0.65fr]">
-          <GlassCard className="p-3">
-            <div className="relative flex aspect-[16/10] items-center justify-center overflow-hidden rounded-[1.65rem] border border-dashed border-[#2f8396]/24 bg-white/32 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.86)]">
+          <GlassCard className="self-start p-3">
+            <div className="relative flex h-56 items-center justify-center overflow-hidden rounded-[1.65rem] border border-dashed border-[#2f8396]/24 bg-white/32 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.86)] sm:h-64">
               <div className="px-6">
                 <MonitorPlay className="mx-auto text-[#2f8396]" size={42} strokeWidth={1.45} />
                 <p className="mt-6 text-2xl font-semibold tracking-[-0.04em]">Video Demo</p>
@@ -252,13 +252,21 @@ export default function SmartReceptionPage() {
                 </p>
               </div>
             </div>
-            <div className="px-4 pb-4 pt-5">
+            <div className="flex flex-col gap-4 px-4 pb-4 pt-5 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="text-xl font-semibold tracking-[-0.04em]">Smart Reception Demo</p>
                 <p className="mt-2 text-sm leading-6 text-[#526170]/76">
                   Place the final recorded demo here when the video is ready.
                 </p>
               </div>
+              <a
+                href="https://smart-reception-indol.vercel.app/"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex w-fit shrink-0 items-center gap-2 rounded-full bg-[#1b2430] px-5 py-3 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:bg-[#263343]"
+              >
+                Open Live Demo <ArrowRight size={15} />
+              </a>
             </div>
           </GlassCard>
 
@@ -283,14 +291,6 @@ export default function SmartReceptionPage() {
                 </div>
                 <p className="mt-7 text-xl font-semibold tracking-[-0.035em]">{title}</p>
                 <p className="mt-3 text-sm leading-6 text-[#526170]/78">{body}</p>
-                <div className="mt-6 aspect-[4/3] overflow-hidden rounded-[1.35rem] border border-white/70 bg-[#dfeaf2] shadow-[inset_0_1px_0_rgba(255,255,255,0.86)]">
-                  <iframe
-                    title={`${title} preview`}
-                    src={href}
-                    className="h-full w-full border-0"
-                    loading="lazy"
-                  />
-                </div>
               </GlassCard>
             ))}
 
