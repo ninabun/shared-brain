@@ -62,7 +62,7 @@ export default function ProjectPage({ params }) {
     notFound();
   }
 
-  if (project.solutionArea === "Healthcare Intelligence") {
+  if (project.solutionArea === "Healthcare Intelligence" && project.sections) {
     return <HealthcareIntelligencePage project={project} />;
   }
 

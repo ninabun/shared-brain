@@ -568,7 +568,7 @@ function PlatformArchitecture({ modules, onActivateArea }) {
               <p className="mt-5 min-h-20 text-[15px] leading-7 text-[#334155]/82">{area.description}</p>
               <div className="mt-8 border-t border-[#1b2430]/10 pt-6">
                 <p className="text-[13px] font-medium uppercase tracking-[0.2em] text-[#526170]/72">Projects</p>
-                <div className={`mt-4 grid gap-2.5 ${area.title === "Care Experience" ? "sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2" : ""}`}>
+                <div className="mt-4 grid grid-cols-1 gap-2.5">
                   {visibleProjects.map((project) => {
                     const slug = getProjectSlug(project.name);
                     const hasProjectPage = slug !== "#contact";
