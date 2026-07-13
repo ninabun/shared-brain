@@ -29,12 +29,6 @@ const iconMap = {
   "Healthcare Intelligence": BrainCircuit,
 };
 
-const areaCtas = {
-  "Care Experience": "Upcoming For More",
-  "Clinical Operations": "Upcoming For More",
-  "Healthcare Intelligence": "Upcoming For More",
-};
-
 const areaThemes = {
   "Care Experience": {
     color: "#63E6D8",
@@ -528,7 +522,6 @@ function PlatformArchitecture({ modules, onActivateArea }) {
       {modules.map((area, areaIndex) => {
         const Icon = iconMap[area.title] || Sparkles;
         const visibleProjects = area.projects;
-        const cta = areaCtas[area.title] || "View Solutions";
         const theme = areaThemes[area.title] || areaThemes["Care Experience"];
 
         return (
@@ -591,13 +584,6 @@ function PlatformArchitecture({ modules, onActivateArea }) {
                   })}
                 </div>
               </div>
-              <a
-                href="#contact"
-                className="mt-8 inline-flex w-fit items-center gap-2 rounded-full border border-[#1b2430]/10 bg-white/70 px-5 py-3 text-sm font-medium text-[#1b2430]/82 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_36px_rgba(27,36,48,0.08)] transition hover:-translate-y-0.5 hover:border-[rgba(var(--area-rgb),0.5)] hover:text-[var(--area-color)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_18px_42px_rgba(var(--area-rgb),0.2)]"
-                onMouseEnter={() => onActivateArea?.(area.title)}
-              >
-                {cta} <ArrowRight size={14} />
-              </a>
             </div>
           </motion.div>
         );
@@ -726,7 +712,7 @@ export default function LabExperience() {
       </CollapsibleSection>
 
       <CollapsibleSection id="roadmap" label="Roadmap">
-        <div className="mt-14 grid gap-4 sm:grid-cols-2">
+        <div className="mt-5 grid gap-4 sm:mt-6 sm:grid-cols-2">
           {futureRoadmap.map((item, index) => (
             <motion.div
               key={item}
@@ -744,16 +730,10 @@ export default function LabExperience() {
             </motion.div>
           ))}
         </div>
-        <a
-          href="#contact"
-          className="mt-10 inline-flex w-fit items-center gap-3 rounded-full border border-[#1b2430]/10 bg-white/72 px-5 py-3 text-[15px] font-medium text-[#1b2430]/78 transition hover:border-[#2f8396]/30 hover:text-[#1b2430]"
-        >
-          View Roadmap <ArrowRight size={15} />
-        </a>
       </CollapsibleSection>
 
       <CollapsibleSection id="contact" label="Contact">
-        <div className="mt-10 flex flex-col gap-5 border-t border-[#1b2430]/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-3 flex flex-col gap-5 border-t border-[#1b2430]/10 pt-4 sm:mt-4 sm:flex-row sm:items-center sm:justify-between sm:pt-5">
           <p className="max-w-2xl text-base leading-8 text-[#526170]/78">
             Bring a healthcare workflow problem, patient experience idea, or AI automation concept into the lab.
           </p>
