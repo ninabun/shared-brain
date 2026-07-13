@@ -640,7 +640,7 @@ export default function LabExperience() {
           animate={{ x: ["-4%", "5%", "-4%"], opacity: [0.025, 0.075, 0.025] }}
           transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
         />
-        <div className="relative z-10 flex min-h-[calc(100vh-3.5rem)] w-full flex-col items-center justify-center gap-4 pt-4 sm:gap-5 sm:pt-6">
+        <div className="relative z-10 flex min-h-[calc(100vh-3.5rem)] w-full -translate-y-8 flex-col items-center justify-center gap-4 pt-4 sm:-translate-y-10 sm:gap-5 sm:pt-6">
           <HeroCrystalLoop />
           <motion.div
             className="flex max-w-5xl flex-col items-center px-5 py-1 sm:px-8"
