@@ -26,10 +26,10 @@ const matters = [
 ];
 
 const applications = [
-  ["Pregnancy education", "A future 3D fetal development journey for expectant families."],
-  ["Treatment explanation", "Visual storytelling for treatment plans, procedures and recovery."],
-  ["Children's care", "Gentle interactive environments for education and reassurance."],
-  ["Clinical learning", "Immersive anatomy and health concepts for staff or student education."],
+  ["Pregnancy education", "A 3D fetal development journey for expectant families.", []],
+  ["Treatment explanation", "Visual storytelling for treatment plans, procedures and recovery.", ["Consultation display"]],
+  ["Children's care", "Gentle interactive environments for education and reassurance.", ["Projection mapping"]],
+  ["Clinical learning", "Immersive anatomy and health concepts for staff or student education.", ["Anatomy education", "Exhibition experience"]],
 ];
 
 const flow = ["Clinical topic", "AI-assisted simplification", "3D visual story", "Clinician review", "Patient understanding"];
@@ -49,8 +49,6 @@ const tools = [
   { name: "WebGL", purpose: "Uses the device GPU to deliver the live, immersive 3D presentation directly in the browser." },
   { name: "Vercel", purpose: "Hosts and distributes the prototype globally so the live product can be opened without installation." },
 ];
-const future = ["Fetal development", "Anatomy education", "Consultation display", "Projection mapping", "Exhibition experience"];
-
 function Background() {
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[#f6f9fb]">
@@ -137,20 +135,33 @@ function GlassCard({ children, className = "" }) {
   );
 }
 
-function ApplicationCard({ title, body, index }) {
+function ApplicationCard({ title, body, extensions, index }) {
   const accents = ["#63E6D8", "#4F8BFF", "#8B7BFF", "#63E6D8"];
 
   return (
-    <GlassCard className="group min-h-[260px] p-6 transition duration-500 hover:-translate-y-1.5 hover:bg-white/54">
-      <div
-        className="mb-8 flex h-12 w-12 items-center justify-center rounded-2xl border bg-white/72 shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_16px_34px_rgba(80,120,140,0.12)]"
+    <div className="group rounded-[1.35rem] border border-white/72 bg-white/44 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_12px_28px_rgba(55,80,95,0.08)] backdrop-blur-xl transition duration-500 hover:-translate-y-1 hover:bg-white/58">
+      <div className="flex items-start gap-4">
+        <div
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border bg-white/72 shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_10px_24px_rgba(80,120,140,0.1)]"
         style={{ borderColor: `${accents[index]}55`, color: accents[index] }}
-      >
-        <Orbit size={22} strokeWidth={1.7} />
+        >
+          <Orbit size={19} strokeWidth={1.7} />
+        </div>
+        <div className="min-w-0">
+          <h3 className="text-xl font-semibold tracking-[-0.035em]">{title}</h3>
+          <p className="mt-2 text-sm leading-6 text-[#526170]/82">{body}</p>
+          {extensions.length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {extensions.map((extension) => (
+                <span key={extension} className="rounded-full border border-[#8B7BFF]/14 bg-white/62 px-3 py-1 text-xs font-medium text-[#526170]/84">
+                  {extension}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-      <h3 className="text-2xl font-semibold tracking-[-0.04em]">{title}</h3>
-      <p className="mt-4 text-base leading-7 text-[#526170]/82">{body}</p>
-    </GlassCard>
+    </div>
   );
 }
 
@@ -225,51 +236,14 @@ export default function EarthObservatoryPage() {
         </div>
       </Section>
 
-      <Section eyebrow="Healthcare Applications" title="One interaction pattern. Many clinical moments.">
-        <div className="mt-12 grid gap-5 md:grid-cols-2">
-          {applications.map(([title, body], index) => (
-            <ApplicationCard key={title} title={title} body={body} index={index} />
+      <Section eyebrow="Healthcare Applications" title="One interaction pattern. Many clinical moments — from Earth today to healthcare journeys tomorrow.">
+        <GlassCard className="mt-10 p-4 sm:p-5">
+          <div className="grid gap-3 md:grid-cols-2">
+          {applications.map(([title, body, extensions], index) => (
+            <ApplicationCard key={title} title={title} body={body} extensions={extensions} index={index} />
           ))}
-        </div>
-
-        <motion.div
-          className="relative mx-auto my-14 flex max-w-4xl flex-col items-center text-center"
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-        >
-          <div className="h-14 w-px bg-gradient-to-b from-[#8B7BFF]/10 via-[#8B7BFF]/60 to-[#63E6D8]/30" />
-          <div className="grid h-11 w-11 place-items-center rounded-full border border-[#8B7BFF]/22 bg-white/70 text-[#8B7BFF] shadow-[0_12px_34px_rgba(139,123,255,0.16)]">
-            <Sparkles size={19} strokeWidth={1.7} />
           </div>
-          <p className="mt-5 max-w-3xl text-base leading-7 text-[#526170]/78">
-            The same interaction pattern that supports today&apos;s clinical explanations becomes the foundation for tomorrow&apos;s immersive healthcare journeys.
-          </p>
-          <div className="mt-5 h-14 w-px bg-gradient-to-b from-[#63E6D8]/30 via-[#8B7BFF]/60 to-[#8B7BFF]/10" />
-        </motion.div>
-
-        <div>
-          <p className="text-sm font-medium uppercase tracking-[0.26em] text-[#2f8396]/78 sm:text-base">Future Direction</p>
-          <h3 className="mt-5 max-w-4xl text-3xl font-semibold leading-[1.04] tracking-[-0.045em] text-[#1b2430] sm:text-4xl">
-            From Earth today to healthcare journeys tomorrow.
-          </h3>
-          <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-            {future.map((item, index) => (
-              <motion.div
-                key={item}
-                className="rounded-[1.4rem] border border-white/68 bg-white/42 p-5 text-center text-[#526170]/86 shadow-[inset_0_1px_0_rgba(255,255,255,0.84),0_16px_34px_rgba(55,80,95,0.1)] backdrop-blur-xl"
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.55, delay: index * 0.06 }}
-              >
-                <Sparkles className="mx-auto text-[#63E6D8]" size={21} strokeWidth={1.6} />
-                <p className="mt-5 text-sm font-medium">{item}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+        </GlassCard>
       </Section>
 
       <Section eyebrow="How It Works" title="From clinical information to visual understanding.">
