@@ -231,6 +231,45 @@ export default function EarthObservatoryPage() {
             <ApplicationCard key={title} title={title} body={body} index={index} />
           ))}
         </div>
+
+        <motion.div
+          className="relative mx-auto my-14 flex max-w-4xl flex-col items-center text-center"
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+        >
+          <div className="h-14 w-px bg-gradient-to-b from-[#8B7BFF]/10 via-[#8B7BFF]/60 to-[#63E6D8]/30" />
+          <div className="grid h-11 w-11 place-items-center rounded-full border border-[#8B7BFF]/22 bg-white/70 text-[#8B7BFF] shadow-[0_12px_34px_rgba(139,123,255,0.16)]">
+            <Sparkles size={19} strokeWidth={1.7} />
+          </div>
+          <p className="mt-5 max-w-3xl text-base leading-7 text-[#526170]/78">
+            The same interaction pattern that supports today&apos;s clinical explanations becomes the foundation for tomorrow&apos;s immersive healthcare journeys.
+          </p>
+          <div className="mt-5 h-14 w-px bg-gradient-to-b from-[#63E6D8]/30 via-[#8B7BFF]/60 to-[#8B7BFF]/10" />
+        </motion.div>
+
+        <div>
+          <p className="text-sm font-medium uppercase tracking-[0.26em] text-[#2f8396]/78 sm:text-base">Future Direction</p>
+          <h3 className="mt-5 max-w-4xl text-3xl font-semibold leading-[1.04] tracking-[-0.045em] text-[#1b2430] sm:text-4xl">
+            From Earth today to healthcare journeys tomorrow.
+          </h3>
+          <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+            {future.map((item, index) => (
+              <motion.div
+                key={item}
+                className="rounded-[1.4rem] border border-white/68 bg-white/42 p-5 text-center text-[#526170]/86 shadow-[inset_0_1px_0_rgba(255,255,255,0.84),0_16px_34px_rgba(55,80,95,0.1)] backdrop-blur-xl"
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.55, delay: index * 0.06 }}
+              >
+                <Sparkles className="mx-auto text-[#63E6D8]" size={21} strokeWidth={1.6} />
+                <p className="mt-5 text-sm font-medium">{item}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </Section>
 
       <Section eyebrow="How It Works" title="From clinical information to visual understanding.">
@@ -283,23 +322,6 @@ export default function EarthObservatoryPage() {
         <div className="mt-10"><TechnologyExplainer items={tools} accent="#8B7BFF" /></div>
       </Section>
 
-      <Section eyebrow="Future Direction" title="From Earth today to healthcare journeys tomorrow.">
-        <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-          {future.map((item, index) => (
-            <motion.div
-              key={item}
-              className="rounded-[1.4rem] border border-white/68 bg-white/42 p-5 text-center text-[#526170]/86 shadow-[inset_0_1px_0_rgba(255,255,255,0.84),0_16px_34px_rgba(55,80,95,0.1)] backdrop-blur-xl"
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.55, delay: index * 0.06 }}
-            >
-              <Sparkles className="mx-auto text-[#63E6D8]" size={21} strokeWidth={1.6} />
-              <p className="mt-5 text-sm font-medium">{item}</p>
-            </motion.div>
-          ))}
-        </div>
-      </Section>
     </main>
   );
 }
