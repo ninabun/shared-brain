@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, Bell, CalendarDays, CheckCircle2, ClipboardList, GitBranch, MonitorPlay, ShieldCheck, SlidersHorizontal, UsersRound } from "lucide-react";
+import TechnologyExplainer from "./TechnologyExplainer";
 
 const navItems = [
   { label: "Solutions", href: "/#platform" },
@@ -21,7 +22,16 @@ const evidence = [
   ["Criteria-based", "Coverage, sequence and staff mix can be configured by department."],
   ["Manager-controlled", "Automation supports planning while keeping final review human."],
 ];
-const technology = ["Workflow Logic", "Rules Engine", "CSV Export", "Print / PDF", "Codex", "HTML", "CSS", "JavaScript"];
+const technology = [
+  { name: "Workflow Logic", purpose: "Turns staff availability, requests and coverage needs into a repeatable sequence for generating a draft roster." },
+  { name: "Rules Engine", purpose: "Applies department criteria consistently and flags conflicts before a manager reviews the proposed schedule." },
+  { name: "CSV Export", purpose: "Moves roster data into common operational tools for further checking, reporting or controlled distribution." },
+  { name: "Print / PDF", purpose: "Creates a stable, shareable roster format for noticeboards, meetings and offline operational use." },
+  { name: "Codex", purpose: "Supports rapid development and refinement of the prototype while the workflow remains governed by human requirements." },
+  { name: "HTML", purpose: "Provides the semantic structure for staff inputs, roster tables and management review screens." },
+  { name: "CSS", purpose: "Makes complex schedule information readable across desktop, tablet, print and PDF layouts." },
+  { name: "JavaScript", purpose: "Runs the interactive validation, roster generation and export behaviours directly in the browser." },
+];
 
 function Background() {
   return (
@@ -304,9 +314,7 @@ export default function RosterAutomationPage() {
       </Section>
 
       <Section eyebrow="Technology" title="Technology exists to support the operating model.">
-        <div className="flex flex-wrap gap-3">
-          {technology.map((item) => <span key={item} className="rounded-full border border-white/68 bg-white/44 px-5 py-3 text-sm font-medium text-[#526170]/84 shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_12px_28px_rgba(55,80,95,0.08)] backdrop-blur-xl">{item}</span>)}
-        </div>
+        <TechnologyExplainer items={technology} accent="#4F8BFF" />
       </Section>
 
       <Section eyebrow="Future Direction" title="From roster generator to workforce planning platform.">

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, BellRing, CheckCircle2, ClipboardList, GitBranch, MonitorPlay, Route, ShieldCheck, Tablet } from "lucide-react";
+import TechnologyExplainer from "./TechnologyExplainer";
 
 const navItems = [
   { label: "Solutions", href: "/#platform" },
@@ -21,7 +22,16 @@ const evidence = [
   ["Routed response", "AI-assisted logic sends requests toward the right role or pathway."],
   ["Human oversight", "Staff remain responsible for response, prioritisation and judgement."],
 ];
-const technology = ["Digital Reception", "AI Routing Logic", "Tablet Interface", "Notification Workflow", "Human Review", "React", "Next.js", "Workflow Design"];
+const technology = [
+  { name: "Digital Reception", purpose: "Creates a clear first contact point where visitors can submit routine needs without interrupting clinical staff." },
+  { name: "AI Routing Logic", purpose: "Classifies the request and directs it toward the most appropriate ward role or response pathway." },
+  { name: "Tablet Interface", purpose: "Provides an accessible visitor-facing screen designed for quick use at the ward entrance." },
+  { name: "Notification Workflow", purpose: "Delivers the routed request to staff and keeps the communication path visible until response." },
+  { name: "Human Review", purpose: "Keeps prioritisation, response and clinical judgement with authorised ward staff." },
+  { name: "React", purpose: "Builds responsive visitor and staff interfaces from reusable workflow components." },
+  { name: "Next.js", purpose: "Provides the application structure, routing and production-ready web delivery for both ward panels." },
+  { name: "Workflow Design", purpose: "Maps each visitor request to a clear operational step so technology reduces rather than adds interruption." },
+];
 const outsideWardPanelUrl = "https://smart-reception-indol.vercel.app/outside";
 const insideWardPanelUrl = "https://smart-reception-indol.vercel.app/ward";
 
@@ -330,9 +340,7 @@ export default function SmartReceptionPage() {
       </Section>
 
       <Section eyebrow="Technology" title="Technology exists to protect clinical attention.">
-        <div className="flex flex-wrap gap-3">
-          {technology.map((item) => <span key={item} className="rounded-full border border-white/68 bg-white/44 px-5 py-3 text-sm font-medium text-[#526170]/84 shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_12px_28px_rgba(55,80,95,0.08)] backdrop-blur-xl">{item}</span>)}
-        </div>
+        <TechnologyExplainer items={technology} accent="#2f8396" />
       </Section>
 
       <Section eyebrow="Future Direction" title="From smart reception to hospital communication layer.">
