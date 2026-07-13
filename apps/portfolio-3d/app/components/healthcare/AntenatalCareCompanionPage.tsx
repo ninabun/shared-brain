@@ -7,7 +7,7 @@ import { Shell } from "./Shared";
 const journey = [
   { week: "15", label: "Now", detail: "Current week", icon: Baby },
   { week: "20", label: "10 Aug", detail: "Morphology scan", icon: CalendarDays },
-  { week: "28", label: "Sep", detail: "Blood screening", icon: HeartPulse },
+  { week: "26–28", label: "Sep", detail: "Blood screening", icon: HeartPulse },
   { week: "36", label: "Nov", detail: "GBS screening", icon: Stethoscope },
 ];
 
