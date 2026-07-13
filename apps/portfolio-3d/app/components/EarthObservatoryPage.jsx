@@ -256,6 +256,9 @@ export default function EarthObservatoryPage() {
               </motion.div>
             ))}
           </div>
+          <p className="mx-auto mt-6 max-w-3xl text-center text-sm leading-6 text-[#526170]/72">
+            A clinical topic is simplified into a focused 3D visual story, checked by clinicians, and delivered as clearer patient understanding.
+          </p>
         </GlassCard>
       </Section>
 
