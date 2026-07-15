@@ -467,7 +467,7 @@ function ThinkingFramework() {
   const steps = content.thinking;
 
   return (
-    <div className="relative mt-16 max-w-3xl">
+    <div className="relative mt-5 max-w-3xl sm:mt-6">
       <motion.div
         className="absolute bottom-10 left-[1.15rem] top-7 w-px bg-gradient-to-b from-cyan-100/0 via-[#2f8396]/28 to-cyan-100/0"
         initial={{ scaleY: 0, opacity: 0 }}
@@ -684,7 +684,7 @@ export default function LabExperience() {
       </CollapsibleSection>
 
       <CollapsibleSection id="about" label="About">
-        <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_0.8fr]">
+        <div className="mt-5 grid gap-10 sm:mt-6 lg:grid-cols-[1fr_0.8fr]">
           <div className="max-w-2xl space-y-3 text-lg leading-8 tracking-[-0.005em] text-[#526170]/82">
             <p>Wing Yee builds AI-powered healthcare products by combining clinical experience, computer science and product design.</p>
             <p>The goal is to transform everyday healthcare workflows into practical AI systems.</p>
@@ -706,7 +706,7 @@ export default function LabExperience() {
       </CollapsibleSection>
 
       <CollapsibleSection id="mission" label="Mission">
-        <p className="mt-8 max-w-2xl text-lg leading-8 text-[#526170]/82">
+        <p className="mt-5 max-w-2xl text-lg leading-8 text-[#526170]/82 sm:mt-6">
           AI should reduce repetitive work, improve communication, and create better healthcare experiences.
         </p>
       </CollapsibleSection>
@@ -716,24 +716,24 @@ export default function LabExperience() {
           {futureRoadmap.map((item, index) => (
             <motion.div
               key={item}
-              className="min-h-36 rounded-[1.35rem] border border-[#1b2430]/[0.085] bg-white/72 p-5 shadow-[0_18px_60px_rgba(80,120,140,0.08)] backdrop-blur-xl"
+              className="rounded-[1.2rem] border border-[#1b2430]/[0.085] bg-white/72 p-4 shadow-[0_18px_60px_rgba(80,120,140,0.08)] backdrop-blur-xl sm:p-5"
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: index * 0.05 }}
             >
-              <span className="text-[13px] text-[#2f8396]/62">0{index + 1}</span>
-              <p className="mt-10 text-base tracking-[-0.025em] text-[#1b2430]/76">{item}</p>
-              <p className="mt-5 text-[13px] uppercase tracking-[0.2em] text-[#2f8396]/62">
-                Future Version
-              </p>
+              <div className="flex items-center justify-between gap-4">
+                <span className="text-[12px] text-[#2f8396]/62">0{index + 1}</span>
+                <span className="text-[11px] uppercase tracking-[0.18em] text-[#2f8396]/62">Future Version</span>
+              </div>
+              <p className="mt-4 text-lg font-medium leading-7 tracking-[-0.025em] text-[#1b2430]/80">{item}</p>
             </motion.div>
           ))}
         </div>
       </CollapsibleSection>
 
       <CollapsibleSection id="contact" label="Contact">
-        <div className="mt-3 flex flex-col gap-5 border-t border-[#1b2430]/10 pt-4 sm:mt-4 sm:flex-row sm:items-center sm:justify-between sm:pt-5">
+        <div className="mt-5 flex flex-col gap-5 sm:mt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="max-w-2xl text-base leading-8 text-[#526170]/78">
             Bring a healthcare workflow problem, patient experience idea, or AI automation concept into the lab.
           </p>
