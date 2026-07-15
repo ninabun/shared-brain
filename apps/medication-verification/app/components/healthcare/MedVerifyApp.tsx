@@ -2252,19 +2252,33 @@ function DoctorWorkspace({
     [query],
   );
   const [patient, setPatient] = useState(
-    filteredPatients[0] ?? bedSortedPatients[0],
-  );
+      filteredPatients[0] ?? bedSortedPatients[0],
+    ),
+    [resultFilter, setResultFilter] = useState<"pending" | "completed">(
+      "pending",
+    );
   useEffect(() => {
     if (query && filteredPatients.length) setPatient(filteredPatients[0]);
   }, [query, filteredPatients]);
-  const patientRuns = liveRuns.filter((r) => r.patientId === patient.id);
+  const patientRuns = liveRuns.filter((r) => r.patientId === patient.id),
+    isSuperseded = (medId: string) =>
+      liveRuns.some(
+        (r) =>
+          r.key === `EXCEPTION-${patient.id}-${medId}` && r.result === "MATCH",
+      ),
+    completedCount = patient.medications.filter((m) =>
+      isSuperseded(m.id),
+    ).length;
   return (
     <div className={styles.doctorLayout}>
       <PatientSidebar
         items={filteredPatients}
         selected={patient}
         title="Doctor result queue · by bed"
-        onSelect={setPatient}
+        onSelect={(nextPatient) => {
+          setPatient(nextPatient);
+          setResultFilter("pending");
+        }}
       />
       <main className={styles.main}>
         <div className={styles.crumb}>
@@ -2274,11 +2288,12 @@ function DoctorWorkspace({
           Select patient
           <select
             value={patient.id}
-            onChange={(e) =>
+            onChange={(e) => {
               setPatient(
                 patients.find((p) => p.id === e.target.value) ?? patients[0],
-              )
-            }
+              );
+              setResultFilter("pending");
+            }}
           >
             {filteredPatients.map((p) => (
               <option key={p.id} value={p.id}>
@@ -2403,13 +2418,39 @@ function DoctorWorkspace({
           <h2>Exceptions first</h2>
           <span>Matched results follow</span>
         </div>
+        <div className={styles.queueToolbar}>
+          <div>
+            <button
+              type="button"
+              aria-pressed={resultFilter === "pending"}
+              onClick={() => setResultFilter("pending")}
+            >
+              Pending
+            </button>
+            <button
+              type="button"
+              aria-pressed={resultFilter === "completed"}
+              onClick={() => setResultFilter("completed")}
+            >
+              Completed
+            </button>
+          </div>
+          <span>
+            {resultFilter === "completed"
+              ? `${completedCount} resolved`
+              : `${patient.medications.length - completedCount} active`}
+          </span>
+        </div>
         {patient.medications
           .filter(
             (m) =>
-              medicationMatches(m, query) ||
-              `${patient.name} ${patient.mrn} ${patient.hn}`
-                .toLowerCase()
-                .includes(query.toLowerCase()),
+              (resultFilter === "completed"
+                ? isSuperseded(m.id)
+                : !isSuperseded(m.id)) &&
+              (medicationMatches(m, query) ||
+                `${patient.name} ${patient.mrn} ${patient.hn}`
+                  .toLowerCase()
+                  .includes(query.toLowerCase())),
           )
           .map((med, i) => {
             const exceptionKey = `EXCEPTION-${patient.id}-${med.id}`,
