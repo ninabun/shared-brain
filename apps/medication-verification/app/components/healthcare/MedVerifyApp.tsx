@@ -895,6 +895,16 @@ function isHighAlertName(name: string) {
     Boolean(medicationCatalogueByName.get(name)?.risk)
   );
 }
+function displayFrequency(r: {
+  frequencyType?: string;
+  intervalMinutes?: number;
+  scheduledTime?: string;
+}) {
+  if (r.frequencyType === "SCHEDULED" && r.scheduledTime)
+    return `Scheduled ${r.scheduledTime}`;
+  if (r.intervalMinutes) return `Every ${r.intervalMinutes / 60} hours`;
+  return r.scheduledTime || "Review";
+}
 function MedicationCard({
   selected,
   number,
@@ -967,7 +977,7 @@ function MedicationCard({
         ) : (
           <button className={styles.awaitingDoctor} disabled>
             <AlertTriangle />
-            Awaiting Doctor amendment
+            Awaiting Doctor {selected.comparison.overallResult === "REVIEW" ? "review" : "amendment"}
           </button>
         )}
         {action && (
@@ -1013,12 +1023,7 @@ function Source({
               : `${r.doseValue} ${r.doseUnit}`,
           ],
           ["Route", r.route || "Not supplied"],
-          [
-            "Frequency",
-            r.intervalMinutes
-              ? `Every ${r.intervalMinutes / 60} hours`
-              : r.scheduledTime || "Review",
-          ],
+          ["Frequency", displayFrequency(r)],
           ["PRN", r.specialInstructions === "PRN" ? "Yes" : "No"],
           [
             "Duration",
@@ -1028,7 +1033,13 @@ function Source({
           ],
           ["Special instructions", r.specialInstructions || "—"],
         ].map(([a, b]) => (
-          <div key={a} data-diff={diffFields.has(a.toLowerCase())}>
+          <div
+            key={a}
+            data-diff={
+              diffFields.has(a.toLowerCase()) ||
+              (a === "Frequency" && diffFields.has("timing / frequency"))
+            }
+          >
             <dt>{a}</dt>
             <dd>{b}</dd>
           </div>
@@ -1751,9 +1762,7 @@ function recordToInput(r: any): OrderInput {
     medication: r.medicationName || "Not supplied",
     dose: r.doseValue == null ? "Not supplied" : `${r.doseValue} ${r.doseUnit}`,
     route: r.route || "Not supplied",
-    frequency: r.intervalMinutes
-      ? `Every ${r.intervalMinutes / 60} hours`
-      : r.scheduledTime || "Review",
+    frequency: displayFrequency(r),
     prn: r.specialInstructions === "PRN" ? "Yes" : "No",
     specialInstructions: r.specialInstructions || "",
     prnCondition: r.specialInstructions === "PRN" ? "As required" : "",
@@ -2368,10 +2377,11 @@ function DoctorWorkspace({
               >
                 <AlertTriangle />
                 <span>
-                  <b>Modify Now</b>
+                  <b>{item.result === "REVIEW" ? "Review" : "Modify"}</b>
                   <small>
-                    Return to the source-system interface to amend and rerun the
-                    comparison.
+                    {item.result === "REVIEW"
+                      ? "Review the difference, confirm the intended order or amend and rerun the comparison."
+                      : "Return to the source-system interface to amend and rerun the comparison."}
                   </small>
                 </span>
               </button>
@@ -2398,6 +2408,11 @@ function DoctorWorkspace({
             const exceptionKey = `EXCEPTION-${patient.id}-${med.id}`,
               superseded = liveRuns.some(
                 (r) => r.key === exceptionKey && r.result === "MATCH",
+              ),
+              diffFields = new Set(
+                med.comparison.fields
+                  .filter((field) => field.result !== "MATCH")
+                  .map((field) => field.field.toLowerCase()),
               );
             return (
               <article className={styles.doctorOrder} key={med.id}>
@@ -2432,7 +2447,9 @@ function DoctorWorkspace({
                   ) : (
                     <>
                       <div className={styles.doctorReviewing}>
-                        Exception returned to Doctor CW Chan for amendment.
+                        {med.comparison.overallResult === "REVIEW"
+                          ? "Doctor confirmation is required because the source expressions are not automatically equivalent."
+                          : "Mismatch returned to Doctor CW Chan for amendment."}
                         Nurse can view the status but cannot acknowledge or edit
                         it.
                       </div>
@@ -2453,18 +2470,27 @@ function DoctorWorkspace({
                       >
                         <AlertTriangle />
                         <span>
-                          <b>Modify Now</b>
+                          <b>
+                            {med.comparison.overallResult === "REVIEW"
+                              ? "Review"
+                              : "Modify"}
+                          </b>
                           <small>
-                            Open this medication in both source sessions, amend,
-                            confirm and rerun n8n.
+                            {med.comparison.overallResult === "REVIEW"
+                              ? "Review the highlighted difference, confirm the intended order or amend and rerun n8n."
+                              : "Open this medication in both source sessions, amend, confirm and rerun n8n."}
                           </small>
                         </span>
                       </button>
                     </>
                   ))}
                 <div className={styles.sources}>
-                  <Source name="E-DOCUMENTATION" r={med.eDocumentation} />
-                  <Source name="IPMOE" r={med.ipmoe} />
+                  <Source
+                    name="E-DOCUMENTATION"
+                    r={med.eDocumentation}
+                    diffFields={diffFields}
+                  />
+                  <Source name="IPMOE" r={med.ipmoe} diffFields={diffFields} />
                 </div>
               </article>
             );
