@@ -426,7 +426,6 @@ export default function MedVerifyApp() {
     setRuns((r) => ({ ...r, [run.key]: (r[run.key] || 0) + 1 }));
     setLiveRuns((old) => [run, ...old.filter((x) => x.key !== run.key)]);
     setSelected(patients.find((p) => p.id === run.patientId) ?? patients[0]);
-    setAmendment(null);
   };
   const resetDemo = () => {
     setActions({});
@@ -559,7 +558,10 @@ export default function MedVerifyApp() {
           runs={runs}
           amendment={amendment}
           onRun={acceptRun}
-          onGoDoctor={() => setView("doctor")}
+          onGoDoctor={() => {
+            setAmendment(null);
+            setView("doctor");
+          }}
         />
       ) : view === "doctor" ? (
         <DoctorWorkspace
@@ -1870,6 +1872,11 @@ function OrderEditor({
           value={value.medication}
           onChange={(e) => onChange(catalogueOrder(e.target.value))}
         >
+          {!item && (
+            <option value={value.medication}>
+              {value.medication} (current prescribed medication)
+            </option>
+          )}
           {options.map((x) => (
             <option key={x.id} value={x.name}>
               {x.name}
