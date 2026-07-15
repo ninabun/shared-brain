@@ -724,19 +724,6 @@ export default function MedVerifyApp() {
                   )}
                 </article>
               ))}
-            <section className={styles.meta}>
-              {[
-                ["Alert ID", `ALR-${selected.id}-248`],
-                ["All medications", String(selected.medications.length)],
-                ["Workflow", "n8n comparison complete"],
-                ["Generated", selected.generated],
-              ].map(([a, b]) => (
-                <div key={a}>
-                  <span>{a}</span>
-                  <b>{b}</b>
-                </div>
-              ))}
-            </section>
             <NurseMedicationQueue
               patient={selected}
               query={query}
