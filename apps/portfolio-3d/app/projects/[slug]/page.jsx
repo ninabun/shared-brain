@@ -10,8 +10,6 @@ import { projects, projectsBySlug, solutionAreaThemes } from "../../data/project
 import { notFound } from "next/navigation";
 
 const clearedProjectSlugs = new Set([
-  "projection-mapping",
-  "immersive-medical-ux",
   "roster-automation",
   "smart-reception",
 ]);
@@ -64,7 +62,7 @@ export default function ProjectPage({ params }) {
     notFound();
   }
 
-  if (project.solutionArea === "Healthcare Intelligence") {
+  if (project.solutionArea === "Healthcare Intelligence" && project.sections) {
     return <HealthcareIntelligencePage project={project} />;
   }
 

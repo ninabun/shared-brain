@@ -5,13 +5,12 @@ import {
   ArrowRight,
   Brain,
   HeartPulse,
-  MonitorPlay,
   Orbit,
   Sparkles,
   Stethoscope,
   UsersRound,
 } from "lucide-react";
-import HeroMotionBar from "./HeroMotionBar";
+import TechnologyExplainer from "./TechnologyExplainer";
 
 const navItems = [
   { label: "Solutions", href: "/#platform" },
@@ -27,10 +26,10 @@ const matters = [
 ];
 
 const applications = [
-  ["Pregnancy education", "A future 3D fetal development journey for expectant families."],
-  ["Treatment explanation", "Visual storytelling for treatment plans, procedures and recovery."],
-  ["Children's care", "Gentle interactive environments for education and reassurance."],
-  ["Clinical learning", "Immersive anatomy and health concepts for staff or student education."],
+  ["Pregnancy education", "A 3D fetal development journey for expectant families.", []],
+  ["Treatment explanation", "Visual storytelling for treatment plans, procedures and recovery.", ["Consultation display"]],
+  ["Children's care", "Gentle interactive environments for education and reassurance.", ["Projection mapping"]],
+  ["Clinical learning", "Immersive anatomy and health concepts for staff or student education.", ["Anatomy education", "Exhibition experience"]],
 ];
 
 const flow = ["Clinical topic", "AI-assisted simplification", "3D visual story", "Clinician review", "Patient understanding"];
@@ -40,9 +39,16 @@ const impact = [
   ["Experience", "Calmer"],
   ["Education", "Memorable"],
 ];
-const tools = ["Next.js", "React Three Fiber", "Three.js", "Drei", "GSAP", "Framer Motion", "WebGL", "Vercel"];
-const future = ["Fetal development", "Anatomy education", "Consultation display", "Projection mapping", "Exhibition experience"];
-
+const tools = [
+  { name: "Next.js", purpose: "Provides the product shell, routing and deployable web experience around the interactive observatory." },
+  { name: "React Three Fiber", purpose: "Connects React components to the 3D scene so interface state and spatial content can work together." },
+  { name: "Three.js", purpose: "Renders the Earth, camera, lighting and spatial interactions that form the core visual experience." },
+  { name: "Drei", purpose: "Supplies reliable 3D helpers for camera control, scene setup and reusable WebGL behaviours." },
+  { name: "GSAP", purpose: "Coordinates cinematic sequences and precise timeline-based movement inside the experience." },
+  { name: "Framer Motion", purpose: "Animates the interface around the 3D scene and keeps transitions clear and responsive." },
+  { name: "WebGL", purpose: "Uses the device GPU to deliver the live, immersive 3D presentation directly in the browser." },
+  { name: "Vercel", purpose: "Hosts and distributes the prototype globally so the live product can be opened without installation." },
+];
 function Background() {
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[#f6f9fb]">
@@ -129,20 +135,33 @@ function GlassCard({ children, className = "" }) {
   );
 }
 
-function ApplicationCard({ title, body, index }) {
+function ApplicationCard({ title, body, extensions, index }) {
   const accents = ["#63E6D8", "#4F8BFF", "#8B7BFF", "#63E6D8"];
 
   return (
-    <GlassCard className="group min-h-[260px] p-6 transition duration-500 hover:-translate-y-1.5 hover:bg-white/54">
-      <div
-        className="mb-8 flex h-12 w-12 items-center justify-center rounded-2xl border bg-white/72 shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_16px_34px_rgba(80,120,140,0.12)]"
+    <div className="group rounded-[1.35rem] border border-white/72 bg-white/44 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_12px_28px_rgba(55,80,95,0.08)] backdrop-blur-xl transition duration-500 hover:-translate-y-1 hover:bg-white/58">
+      <div className="flex items-start gap-4">
+        <div
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border bg-white/72 shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_10px_24px_rgba(80,120,140,0.1)]"
         style={{ borderColor: `${accents[index]}55`, color: accents[index] }}
-      >
-        <Orbit size={22} strokeWidth={1.7} />
+        >
+          <Orbit size={19} strokeWidth={1.7} />
+        </div>
+        <div className="min-w-0">
+          <h3 className="text-xl font-semibold tracking-[-0.035em]">{title}</h3>
+          <p className="mt-2 text-sm leading-6 text-[#526170]/82">{body}</p>
+          {extensions.length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {extensions.map((extension) => (
+                <span key={extension} className="rounded-full border border-[#8B7BFF]/14 bg-white/62 px-3 py-1 text-xs font-medium text-[#526170]/84">
+                  {extension}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-      <h3 className="text-2xl font-semibold tracking-[-0.04em]">{title}</h3>
-      <p className="mt-4 text-base leading-7 text-[#526170]/82">{body}</p>
-    </GlassCard>
+    </div>
   );
 }
 
@@ -152,8 +171,8 @@ export default function EarthObservatoryPage() {
       <Background />
       <Header />
 
-      <section className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-5 pb-16 pt-28 text-center sm:px-8 lg:px-12">
-<motion.p
+      <section className="relative z-10 mx-auto flex h-svh max-w-7xl flex-col px-5 pb-4 pt-16 text-center sm:px-8 lg:px-12">
+        <motion.p
           className="text-sm font-medium uppercase tracking-[0.3em] text-[#8B7BFF]/78"
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
@@ -162,7 +181,7 @@ export default function EarthObservatoryPage() {
           Care Experience
         </motion.p>
         <motion.h1
-          className="mx-auto mt-7 max-w-5xl text-5xl font-semibold leading-[0.98] tracking-[-0.06em] text-[#1b2430] sm:text-7xl lg:text-8xl"
+          className="mx-auto mt-2 max-w-5xl text-[clamp(2.35rem,6.5svh,4.5rem)] font-semibold leading-[0.98] tracking-[-0.06em] text-[#1b2430]"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.1 }}
@@ -170,7 +189,7 @@ export default function EarthObservatoryPage() {
           Earth Observatory
         </motion.h1>
         <motion.p
-          className="mx-auto mt-8 max-w-2xl text-lg leading-8 text-[#526170]/86 sm:text-xl"
+          className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-[#526170]/86 sm:text-base"
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.18 }}
@@ -178,42 +197,32 @@ export default function EarthObservatoryPage() {
           A cinematic 3D experience prototype for turning complex healthcare information into calm, visual understanding.
         </motion.p>
         <motion.div
-          className="mx-auto mt-10 flex flex-wrap items-center justify-center gap-3"
-          initial={{ opacity: 0, y: 16 }}
+          className="mx-auto mt-4 flex min-h-0 w-full max-w-5xl flex-1 flex-col rounded-[2rem] border border-white/76 bg-white/42 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.92),0_24px_70px_rgba(40,70,88,0.12)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl"
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.26 }}
         >
-          <a
-            href="https://earth-observatory.vercel.app"
-            className="inline-flex items-center gap-3 rounded-full bg-[#1b2430] px-6 py-3 text-sm font-medium text-white shadow-[0_18px_50px_rgba(27,36,48,0.18)] transition hover:-translate-y-0.5 hover:bg-[#263343]"
-          >
-            Launch Experience <ArrowRight size={15} />
-          </a>
-          <a
-            href="#demo"
-            className="inline-flex items-center gap-3 rounded-full border border-white/64 bg-white/46 px-6 py-3 text-sm font-medium text-[#1b2430]/78 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_36px_rgba(27,36,48,0.08)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-white/62"
-          >
-            View Case Study
-          </a>
-        </motion.div>
-              <HeroMotionBar accent="#8B7BFF" label="Visual rhythm" detail="Observatory motion signal" />
-      </section>
-
-      <Section eyebrow="Product Demo" title="A live 3D observatory experience." className="pt-8" id="demo">
-        <GlassCard className="mt-12 p-3">
-          <div className="relative aspect-[16/9] overflow-hidden rounded-[1.65rem] bg-[#dfeaf2]">
+          <div className="relative min-h-0 flex-1 overflow-hidden rounded-[1.4rem] bg-[#dfeaf2]">
             <iframe
               title="Earth Observatory live demo"
               src="https://earth-observatory.vercel.app"
               className="h-full w-full border-0"
-              loading="lazy"
+              loading="eager"
             />
           </div>
-        </GlassCard>
-        <p className="mx-auto mt-7 max-w-3xl text-center text-lg leading-8 text-[#526170]/82">
-          The current demo uses Earth as the visual subject. The same interaction model can be adapted for fetal development, anatomy education and projection-mapped healthcare communication.
-        </p>
-      </Section>
+          <div className="flex pt-3">
+            <a
+              href="https://earth-observatory.vercel.app"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-[#1b2430] px-5 py-2.5 text-sm font-medium !text-white shadow-[0_12px_30px_rgba(20,30,40,0.2)] transition hover:-translate-y-0.5 hover:bg-[#263343]"
+              style={{ color: "#fff" }}
+            >
+              Open Live Demo <ArrowRight size={15} />
+            </a>
+          </div>
+        </motion.div>
+      </section>
 
       <Section eyebrow="Why It Matters" title="Healthcare is easier when people can see it.">
         <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
@@ -227,91 +236,66 @@ export default function EarthObservatoryPage() {
         </div>
       </Section>
 
-      <Section eyebrow="Healthcare Applications" title="One interaction pattern. Many clinical moments.">
-        <div className="mt-12 grid gap-5 md:grid-cols-2">
-          {applications.map(([title, body], index) => (
-            <ApplicationCard key={title} title={title} body={body} index={index} />
+      <Section eyebrow="Healthcare Applications" title="One interaction pattern. Many clinical moments — from Earth today to healthcare journeys tomorrow.">
+        <GlassCard className="mt-10 p-4 sm:p-5">
+          <div className="grid gap-3 md:grid-cols-2">
+          {applications.map(([title, body, extensions], index) => (
+            <ApplicationCard key={title} title={title} body={body} extensions={extensions} index={index} />
           ))}
-        </div>
+          </div>
+        </GlassCard>
       </Section>
 
       <Section eyebrow="How It Works" title="From clinical information to visual understanding.">
         <GlassCard className="mt-12 p-6 sm:p-8">
-          <div className="grid gap-3 md:grid-cols-5">
+          <div className="relative grid gap-4 md:grid-cols-5">
+            <div className="absolute bottom-8 left-[10%] right-[10%] top-8 hidden overflow-hidden rounded-full bg-[#8B7BFF]/12 md:block">
+              <motion.div className="h-full w-full origin-left bg-gradient-to-r from-[#4F8BFF]/30 via-[#63E6D8]/75 to-[#8B7BFF]/45" initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }} />
+            </div>
             {flow.map((item, index) => (
               <motion.div
                 key={item}
-                className="relative rounded-[1.35rem] border border-white/72 bg-white/38 p-5 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]"
+                className="relative z-10 rounded-[1.35rem] border border-white/82 bg-white/72 p-5 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_14px_34px_rgba(55,80,95,0.1)] backdrop-blur-xl"
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.55, delay: index * 0.06 }}
               >
-                <span className="text-[12px] font-medium uppercase tracking-[0.2em] text-[#2f8396]/70">
+                <motion.span className="mx-auto grid h-10 w-10 place-items-center rounded-full bg-[#1b2430] text-[12px] font-semibold text-white" animate={{ boxShadow: ["0 0 0 0 rgba(99,230,216,0)", "0 0 0 8px rgba(99,230,216,0.16)", "0 0 0 0 rgba(99,230,216,0)"] }} transition={{ duration: 2.8, repeat: Infinity, delay: index * 0.35 }}>
                   0{index + 1}
-                </span>
-                <p className="mt-5 text-[15px] font-medium leading-6 text-[#1b2430]/82">{item}</p>
+                </motion.span>
+                <p className="mt-4 text-[15px] font-medium leading-6 text-[#1b2430]/82">{item}</p>
+                {index < flow.length - 1 ? <ArrowRight className="absolute -bottom-4 left-1/2 z-20 -translate-x-1/2 rotate-90 text-[#2f8396] md:-right-5 md:bottom-auto md:left-auto md:top-1/2 md:translate-x-0 md:-translate-y-1/2 md:rotate-0" size={20} /> : null}
               </motion.div>
             ))}
           </div>
+          <p className="mx-auto mt-6 max-w-3xl text-center text-sm leading-6 text-[#526170]/72">
+            A clinical topic is simplified into a focused 3D visual story, checked by clinicians, and delivered as clearer patient understanding.
+          </p>
         </GlassCard>
       </Section>
 
       <Section eyebrow="Potential Impact" title="Designed to support communication, not replace care.">
-        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {impact.map(([label, value]) => (
-            <GlassCard key={label} className="p-7">
-              <p className="text-sm uppercase tracking-[0.22em] text-[#526170]/68">{label}</p>
-              <p className="mt-8 text-4xl font-semibold tracking-[-0.06em] text-[#1b2430]">{value}</p>
-            </GlassCard>
+        <GlassCard className="mt-12 p-5 sm:p-7">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-stretch">
+          {impact.map(([label, value], index) => (
+            <div key={label} className="flex min-w-0 flex-1 flex-col items-center gap-3 lg:flex-row">
+              <motion.div className="w-full flex-1 rounded-[1.5rem] border border-white/80 bg-white/58 p-6 text-center" initial={{ opacity: 0, scale: 0.94 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.55, delay: index * 0.12 }}>
+                <p className="text-xs uppercase tracking-[0.2em] text-[#526170]/68">{label}</p>
+                <p className="mt-5 text-3xl font-semibold tracking-[-0.055em] text-[#1b2430]">{value}</p>
+              </motion.div>
+              {index < impact.length - 1 ? <motion.div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#8B7BFF]/12 text-[#8B7BFF]" animate={{ x: [0, 4, 0] }} transition={{ duration: 1.8, repeat: Infinity, delay: index * 0.2 }}><ArrowRight className="rotate-90 lg:rotate-0" size={17} /></motion.div> : null}
+            </div>
           ))}
-        </div>
+          </div>
+          <p className="mt-6 text-center text-sm leading-6 text-[#526170]/72">Clearer understanding enables more visual communication, creating a calmer experience that makes education more memorable.</p>
+        </GlassCard>
       </Section>
 
       <Section eyebrow="Technology" title="Built as an immersive WebGL product prototype.">
-        <div className="mt-10 flex flex-wrap gap-3">
-          {tools.map((tool) => (
-            <span
-              key={tool}
-              className="rounded-full border border-white/68 bg-white/44 px-5 py-3 text-sm font-medium text-[#526170]/84 shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_12px_28px_rgba(55,80,95,0.08)] backdrop-blur-xl"
-            >
-              {tool}
-            </span>
-          ))}
-        </div>
+        <div className="mt-10"><TechnologyExplainer items={tools} accent="#8B7BFF" /></div>
       </Section>
 
-      <Section eyebrow="Future Direction" title="From Earth today to healthcare journeys tomorrow.">
-        <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-          {future.map((item, index) => (
-            <motion.div
-              key={item}
-              className="rounded-[1.4rem] border border-white/68 bg-white/42 p-5 text-center text-[#526170]/86 shadow-[inset_0_1px_0_rgba(255,255,255,0.84),0_16px_34px_rgba(55,80,95,0.1)] backdrop-blur-xl"
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.55, delay: index * 0.06 }}
-            >
-              <Sparkles className="mx-auto text-[#63E6D8]" size={21} strokeWidth={1.6} />
-              <p className="mt-5 text-sm font-medium">{item}</p>
-            </motion.div>
-          ))}
-        </div>
-        <div className="mt-12 flex flex-wrap gap-3">
-          <a
-            href="/#platform"
-            className="inline-flex items-center gap-3 rounded-full bg-[#1b2430] px-6 py-3 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:bg-[#263343]"
-          >
-            Back to Solutions <ArrowRight size={15} />
-          </a>
-          <a
-            href="https://earth-observatory.vercel.app"
-            className="inline-flex items-center gap-3 rounded-full border border-white/64 bg-white/46 px-6 py-3 text-sm font-medium text-[#1b2430]/78 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_36px_rgba(27,36,48,0.08)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-white/62"
-          >
-            Open Live Demo <MonitorPlay size={15} />
-          </a>
-        </div>
-      </Section>
     </main>
   );
 }

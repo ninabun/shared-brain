@@ -32,7 +32,7 @@
       "description": "Creating better healthcare experiences through immersive technologies, communication and education.",
       "projects": [
         {
-          "name": "AI Antenatal Companion",
+          "name": "Pregnancy Companion",
           "problem": "Expectant mothers and families may struggle to navigate appointments, investigations, ward visiting arrangements and labour-support requirements across fragmented information.",
           "solution": "A personalised maternity companion provides approved stage-specific guidance, appointment preparation, visitor information, labour-support criteria and governed escalation to clinical teams.",
           "tools": ["Next.js", "AI Agent", "n8n", "Approved Content"],
@@ -53,39 +53,11 @@
           "ctas": ["Watch Demo"]
         },
         {
-          "name": "Projection Mapping",
-          "problem": "Patient education and presentations can feel flat or difficult to remember.",
-          "solution": "Immersive visual storytelling for education, relaxation and clinical communication.",
-          "tools": ["Blender", "TouchDesigner", "HeavyM"],
-          "ctas": ["Watch Concept"]
-        },
-        {
           "name": "Earth Observatory",
           "problem": "Complex healthcare information can feel abstract when it is explained only through text, diagrams or verbal explanation.",
           "solution": "A scroll-driven 3D observatory prototype that can be adapted for patient education, fetal development walkthroughs and immersive medical presentations.",
           "tools": ["Next.js", "React Three Fiber", "GSAP"],
           "ctas": ["Open Case Study", "Live Demo"]
-        },
-        {
-          "name": "Immersive Medical UX",
-          "problem": "Complex health messages need clearer visual explanation.",
-          "solution": "AI-assisted video concepts for storytelling and patient-facing education.",
-          "tools": ["Higgsfield", "CapCut"],
-          "ctas": ["Watch Demo"]
-        },
-        {
-          "name": "Interactive Education",
-          "problem": "Patients and visitors need simple, visual ways to understand information.",
-          "solution": "Interactive product experiences for healthcare communication.",
-          "tools": ["WebGL", "Product Design"],
-          "ctas": ["Explore Experience"]
-        },
-        {
-          "name": "Future Yoga Room Experience",
-          "problem": "Care environments need calmer digital experiences that support wellbeing.",
-          "solution": "A future immersive relaxation module for patient comfort.",
-          "tools": ["Concept", "Projection", "AI Media"],
-          "ctas": ["Future Direction"]
         }
       ]
     },
@@ -118,6 +90,13 @@
           "problem": "Healthcare work requires context-aware support without transferring clinical authority to AI.",
           "solution": "AI agents interpret healthcare context, coordinate tasks and support staff while keeping clinical decisions under human control.",
           "tools": ["AI Agents", "Human Review"],
+          "ctas": ["Explore Product"]
+        },
+        {
+          "name": "Projection Mapping",
+          "problem": "Healthcare intelligence can be difficult to communicate through conventional screens and reports.",
+          "solution": "Projection mapping turns complex system signals and healthcare concepts into immersive, spatial visual experiences.",
+          "tools": ["Blender", "TouchDesigner", "Healthcare Intelligence"],
           "ctas": ["Explore Product"]
         },
         {
