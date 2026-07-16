@@ -6,7 +6,7 @@ Scope: Phase 1, read-only except for this report. No files were deleted, moved, 
 ## Repository Identity
 
 - Repository: `https://github.com/ninabun/shared-brain.git`.
-- Local root: `C:\Users\ninad\Documents\Shared brain`.
+- Portfolio root: `apps/portfolio-3d`.
 - Portfolio app: `apps/portfolio-3d` (`wing-yee-ai-lab-3d`, private package, version `0.1.0`).
 - Production URL: `https://portfolio-3d-neon-eight.vercel.app/`.
 - Vercel project: `portfolio-3d`, ID `prj_fnvvCdIQ0hndbdC0tEuxkXxlqjIc`, team `team_JcKfgaQDLOuLpXLmD1uBTiOi`.
@@ -261,7 +261,7 @@ All product routes also depend on `app/layout.jsx` and `app/globals.css`; the ro
 
 ## Asset Inventory
 
-Local `public` total at audit time: approximately **233.85 MB**, 786 files: 302 PNG (207.34 MB), 300 WebP (20.78 MB), 182 JPG (5.73 MB), 2 JSON. Git tracks 634 public files; the 152 ignored crystal JPGs account for the difference.
+Local `public` total at audit time: approximately **233.85 MiB**, 786 files: 302 PNG (207.34 MiB), 300 WebP (20.78 MiB), 182 JPG (5.73 MiB), 2 JSON. Git tracks 634 public files; the 152 ignored crystal JPGs account for the difference.
 
 Runtime-used assets:
 
