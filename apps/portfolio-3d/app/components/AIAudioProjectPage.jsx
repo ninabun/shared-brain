@@ -12,49 +12,42 @@ const demos = [
   {
     title: "Breastfeeding Education",
     language: "Chinese",
-    src: "/audio/chinese-breastfeeding-demo.mp3",
     useCase: "Patient education (Breastfeeding)",
     mood: "Warm, human, reassuring",
   },
   {
     title: "Newborn Baby Support",
     language: "Chinese",
-    src: "/audio/chinese-newborn-support-demo.mp3",
     useCase: "Emotional support (Newborn baby)",
     mood: "Warm, human, reassuring",
   },
   {
     title: "Stay Healthy Education I",
     language: "English",
-    src: "/audio/english-stay-healthy-01-demo.mp3",
     useCase: "Patient education (Stay Healthy)",
     mood: "Warm, human, reassuring",
   },
   {
     title: "Stay Healthy Education II",
     language: "English",
-    src: "/audio/english-stay-healthy-02-demo.mp3",
     useCase: "Patient education (Stay Healthy)",
     mood: "Warm, human, reassuring",
   },
   {
     title: "Labour Room Pain Relief",
     language: "Pure Instrumental",
-    src: "/audio/instrumental-labour-room-pain-relief-demo.mp3",
     useCase: "Pain relief (Labour room)",
     mood: "Warm, calm",
   },
   {
     title: "Projection Mapping Cinematic",
     language: "Pure Instrumental",
-    src: "/audio/instrumental-projection-mapping-cinematic-demo.mp3",
     useCase: "Projection Mapping, Exhibition",
     mood: "Cinematic",
   },
   {
     title: "Projection Mapping Immersive",
     language: "Pure Instrumental",
-    src: "/audio/instrumental-projection-mapping-immersive-demo.mp3",
     useCase: "Projection Mapping, Exhibition",
     mood: "Immersive",
   },
@@ -187,11 +180,8 @@ function DemoCard({ demo }) {
           {demo.language}
         </span>
       </div>
-      <div className="mt-7 rounded-[1.4rem] border border-white/78 bg-white/48 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]">
-        {/* Replace this placeholder path with the final demo audio file in /public/audio/. */}
-        <audio className="w-full" controls preload="none">
-          <source src={demo.src} type="audio/mpeg" />
-        </audio>
+      <div className="mt-7 rounded-[1.4rem] border border-white/78 bg-white/48 p-4 text-sm text-[#526170]/72 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]">
+        Audio preview pending an approved source file.
       </div>
       <p className="mt-6 text-sm uppercase tracking-[0.16em] text-[#526170]/58">Use case</p>
       <p className="mt-3 text-base leading-7 text-[#526170]/82">{demo.useCase}</p>
