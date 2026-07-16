@@ -1,22 +1,116 @@
 "use client";
-import { useMemo, useState } from "react";
-import { AlertTriangle, ArrowLeft, Baby, BellRing, BookOpen, Check, Clock3, HeartPulse, Phone, Settings2, ShieldCheck, Stethoscope } from "lucide-react";
-import { AuditTimeline, HumanApprovalGate, LocalSectionNav, Section, Shell, SystemStatusBadge, WorkflowExecutionPanel } from "./Shared";
-import styles from "./Healthcare.module.css";
 
-export type RequestStatus="Submitted"|"Received"|"Acknowledged"|"Under clinical review"|"Callback arranged"|"Completed"|"Escalated";
-export interface AntenatalWorkflowAdapter{enrolPatient(id:string):Promise<void>;retrieveGestationalProfile(id:string):Promise<{week:number;dueDate:string}>;askQuestion(question:string):Promise<string>;submitConcern(category:string,details:Record<string,string>):Promise<{id:string;status:RequestStatus}>;createClinicalTask(requestId:string):Promise<void>;acknowledgeConcern(requestId:string):Promise<void>;escalateConcern(requestId:string):Promise<void>;updateRequestStatus(requestId:string,status:RequestStatus):Promise<void>}
-export class MockAntenatalWorkflowAdapter implements AntenatalWorkflowAdapter{async enrolPatient(_id:string){return}async retrieveGestationalProfile(_id:string){return{week:15,dueDate:"08 Jan 2027"}}async askQuestion(q:string){return q.includes("morphology")?"Your morphology scan is scheduled within the approved 20–22 week window.":"Here is approved information for week 15."}async submitConcern(_category:string,_details:Record<string,string>):Promise<{id:string;status:RequestStatus}>{return{id:`ANC-${Date.now()}`,status:"Received"}}async createClinicalTask(_id:string){return}async acknowledgeConcern(_id:string){return}async escalateConcern(_id:string){return}async updateRequestStatus(_id:string,_status:RequestStatus){return}}
-export class N8nAntenatalWorkflowAdapter implements AntenatalWorkflowAdapter{constructor(private endpoint=""){ }private async call<T>(action:string,payload:unknown):Promise<T>{if(!this.endpoint)throw new Error("Configure the authenticated server-side n8n gateway.");const r=await fetch(this.endpoint,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({action,payload})});if(!r.ok)throw new Error("Workflow unavailable");return r.json() as Promise<T>}async enrolPatient(id:string){await this.call<void>("enrolPatient",{id})}async retrieveGestationalProfile(id:string){return this.call<{week:number;dueDate:string}>("retrieveGestationalProfile",{id})}async askQuestion(question:string){return this.call<string>("askQuestion",{question})}async submitConcern(category:string,details:Record<string,string>){return this.call<{id:string;status:RequestStatus}>("submitConcern",{category,details})}async createClinicalTask(requestId:string){await this.call<void>("createClinicalTask",{requestId})}async acknowledgeConcern(requestId:string){await this.call<void>("acknowledgeConcern",{requestId})}async escalateConcern(requestId:string){await this.call<void>("escalateConcern",{requestId})}async updateRequestStatus(requestId:string,status:RequestStatus){await this.call<void>("updateRequestStatus",{requestId,status})}}
+import { motion } from "framer-motion";
+import { Baby, CalendarDays, Check, HeartPulse, ShieldCheck, Stethoscope } from "lucide-react";
+import { Shell } from "./Shared";
 
-export function PatientJourneyTimeline(){return <div className={styles.journeyTimeline}>{[["12 weeks","Dating scan","complete"],["15 weeks","Current milestone","current"],["18 weeks","Blood screening","upcoming"],["20–22 weeks","Morphology scan","upcoming"],["24 weeks","Antenatal visit","upcoming"]].map(([w,n,s])=><div data-state={s} key={w}><span/><b>{w}</b><p>{n}</p></div>)}</div>}
-export function RequestStatusTimeline({status}:{status:RequestStatus}){const states:RequestStatus[]=["Submitted","Received","Acknowledged","Under clinical review","Callback arranged","Completed"];const current=status==="Escalated"?3:states.indexOf(status);return <div className={styles.requestTimeline}>{states.map((x,i)=><div className={i<=current?styles.done:""} key={x}><span>{i<=current?<Check size={12}/>:i+1}</span><b>{x}</b></div>)}{status==="Escalated"&&<div className={styles.escalated}><AlertTriangle size={14}/>Escalated</div>}</div>}
-export function ConcernIntakeForm({onSubmit}:{onSubmit:(category:string)=>void}){const [category,setCategory]=useState("Vaginal bleeding");return <form className={styles.concernForm} onSubmit={e=>{e.preventDefault();onSubmit(category)}}><label>Concern category<select value={category} onChange={e=>setCategory(e.target.value)}>{["Vaginal bleeding","Abdominal pain","Watery or clear discharge","Reduced fetal movement","Fever","Severe vomiting","Headache or visual disturbance","Other concern"].map(x=><option key={x}>{x}</option>)}</select></label><label>What is happening?<textarea required defaultValue="Light bleeding noticed this morning."/></label><label>When did it start?<input required defaultValue="08:20 today"/></label><button className={`${styles.button} ${styles.primary}`}>Submit for maternity review</button><p className={styles.disclaimer}>If symptoms are severe, bleeding is heavy, or you feel very unwell, call emergency services or your maternity unit now.</p></form>}
-export function ClinicalReviewQueue({status,onAction}:{status:RequestStatus;onAction:(s:RequestStatus)=>void}){return <div className={styles.clinicalQueue}><div className={styles.queueRow}><div><SystemStatusBadge label="Waiting 04:12" tone="warn"/><h3>ANC-F015 · 15 weeks</h3><p>Vaginal bleeding · structured concern received</p></div><AlertTriangle size={24}/></div><div className={styles.queueAnswers}><p><b>Started</b>08:20 today</p><p><b>Amount</b>Light</p><p><b>Pain</b>No</p><p><b>Safety indicator</b>Clinical review required</p></div><div className={styles.actions}><button className={`${styles.button} ${styles.primary}`} onClick={()=>onAction("Acknowledged")}>Acknowledge</button><button className={styles.button} onClick={()=>onAction("Callback arranged")}>Arrange callback</button><button className={styles.button} onClick={()=>onAction("Escalated")}>Escalate</button></div><RequestStatusTimeline status={status}/></div>}
+const journey = [
+  { week: "15", label: "Now", detail: "Current week", icon: Baby },
+  { week: "20", label: "10 Aug", detail: "Morphology scan", icon: CalendarDays },
+  { week: "26–28", label: "Sep", detail: "Blood screening", icon: HeartPulse },
+  { week: "36", label: "Nov", detail: "GBS screening", icon: Stethoscope },
+];
 
-export default function AntenatalCareCompanionPage(){const adapter=useMemo(()=>new MockAntenatalWorkflowAdapter(),[]);const [tab,setTab]=useState<"patient"|"staff"|"content">("patient");const [status,setStatus]=useState<RequestStatus>("Submitted");const [question,setQuestion]=useState("What happens at 15 weeks?");const [answer,setAnswer]=useState("Select a demo question to view approved gestation-specific guidance.");async function ask(q:string){setQuestion(q);setAnswer(await adapter.askQuestion(q))}async function concern(category:string){const r=await adapter.submitConcern(category,{});setStatus(r.status);setTab("staff")}
-return <Shell><section className={styles.applicationHero}><a className={styles.breadcrumb} href="/#platform"><ArrowLeft size={15}/>Healthcare Intelligence · Workflow Products</a><div className={styles.eyebrow}>Patient Experience / Maternity Care</div><h1 className={styles.h1}>Personalised guidance throughout the antenatal journey.</h1><p className={styles.lead}>A pregnancy-support app that provides gestation-specific information, investigation schedules, approved education and a governed pathway for raising clinical concerns.</p><div className={styles.actions}><a className={`${styles.button} ${styles.primary}`} href="#prototype">Open the MVP</a><a className={styles.button} href="#workflow">View workflow</a></div><div className={styles.safetyControl}><ShieldCheck/><strong>Safety boundary</strong><p>The app supports information, communication and escalation. It does not replace maternity assessment, emergency services or clinical judgement.</p></div></section><LocalSectionNav items={[{label:"MVP",href:"#prototype"},{label:"Workflow",href:"#workflow"},{label:"Safety",href:"#safety"},{label:"Configuration",href:"#configuration"}]}/>
-<Section id="prototype" eyebrow="Interactive product evidence" title="One journey. Patient, staff and content views." intro="Synthetic patient data and local mock workflow adapters demonstrate the operating model without a live clinical connection."><div className={styles.tabs} role="tablist">{[["patient","Patient mobile"],["staff","Staff dashboard"],["content","Content management"]].map(([id,label])=><button role="tab" aria-selected={tab===id} className={`${styles.tab} ${tab===id?styles.tabActive:""}`} onClick={()=>setTab(id as typeof tab)} key={id}>{label}</button>)}</div>{tab==="patient"&&<div className={styles.antenatalGrid}><div className={styles.phonePreview}><div className={styles.phoneHead}><Baby/><span>Good morning</span><button><Phone size={14}/>Urgent help</button></div><div className={styles.gestation}><small>Your pregnancy</small><b>15 weeks</b><span>Expected due date · 08 January 2027</span></div><div className={styles.appointmentCards}><article><Clock3/><small>Next appointment</small><b>18 July · Antenatal Clinic</b></article><article><HeartPulse/><small>Next investigation</small><b>Blood screening</b></article></div><PatientJourneyTimeline/><div className={styles.companionPanel}><h3>Ask the Companion</h3>{["What happens at 15 weeks?","When is my morphology scan?","What blood tests are coming next?","What should I prepare for my appointment?","What does my reviewed swab result mean?"].map(q=><button className={question===q?styles.selected:""} onClick={()=>ask(q)} key={q}>{q}</button>)}<div className={styles.companionReply}><BookOpen/><p>{answer}</p></div></div></div><div><h3>Report a concern</h3><p className={styles.sub}>Approved deterministic rules create a review task. AI is not the only urgency detector.</p><ConcernIntakeForm onSubmit={concern}/><div className={styles.emergencyBox}><Phone/><div><b>Urgent help is always available</b><p>Call emergency services or the maternity assessment unit if symptoms are severe or rapidly worsening.</p></div></div></div></div>}{tab==="staff"&&<ClinicalReviewQueue status={status} onAction={setStatus}/>} {tab==="content"&&<div className={styles.configGrid}>{["Gestational-week content","Investigation windows","Sonography schedules","Approved factsheets","Reminder templates","Escalation rules","Contact destinations","Content versions and approval"].map((x,i)=><article className={styles.card} key={x}><Settings2/><h3>{x}</h3><p>Version {i+1}.2 · Approved for concept demo</p><button className={styles.button}>Review configuration</button></article>)}</div>}</Section>
-<Section id="workflow" eyebrow="Operational coordination layer" title="Information, scheduled care and concerns follow governed routes." intro="n8n validates patient, gestation and context, creates owned work and escalates unanswered concern tasks."><WorkflowExecutionPanel labels={["Antenatal file created","Patient enrolled","Gestational profile created","Patient question or concern","AI structures request","n8n validates context","Request route selected","Clinical task when required","Response timer","Outcome recorded"]} waitingAt={7}/></Section>
-<Section id="safety" eyebrow="Governance and clinical authority" title="AI supports communication. Maternity professionals decide." intro="Midwives and doctors review symptom reports, determine urgency, interpret investigations, prescribe and decide whether assessment is required." wide><div className={styles.grid3}><HumanApprovalGate>Symptom reports and maternity callbacks require human clinical review. Completion cannot be inferred from message delivery.</HumanApprovalGate><article className={styles.card}><AlertTriangle/><h3>Deterministic safety rules</h3><p>Defined warning signs create clinical tasks and escalation independently of AI interpretation.</p></article><article className={styles.card}><Phone/><h3>Emergency fallback</h3><p>Every concern journey retains a visible telephone and emergency-services route.</p></article></div></Section>
-<Section id="configuration" eyebrow="Audit and assurance" title="Approved content and workflow versions remain visible." intro="The concept records configuration, acknowledgement, assignment, callback, resolution and escalation timestamps."><div className={styles.grid2}><AuditTimeline items={["Patient enrolled","Timeline generated","Concern submitted","Clinical task created","Maternity team notified","Response timer started"]}/><div className={styles.card}><SystemStatusBadge label="Mock adapter active"/><h3>Concept prototype</h3><p>Uses fictional maternity data. Not connected to a live clinical system and not intended for clinical use.</p><div className={styles.actions}><a className={styles.button} href="/#platform">Back to Healthcare AI</a></div></div></div></Section></Shell>}
+function AntenatalHeroVisual() {
+  return (
+    <motion.div
+      className="relative w-full overflow-hidden rounded-[1.5rem] border border-white/80 bg-white/55 p-2.5 text-[#1b2430] shadow-[inset_0_1px_0_rgba(255,255,255,.95),0_28px_90px_rgba(50,76,92,.14)] ring-1 ring-[#243446]/5 backdrop-blur-2xl sm:rounded-[1.8rem] sm:p-4"
+      initial={{ opacity: 0, x: 28, scale: 0.97 }}
+      animate={{ opacity: 1, x: 0, scale: 1 }}
+      transition={{ duration: 0.9, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
+      aria-label="Animated antenatal journey and governed clinical response workflow"
+    >
+      <motion.div
+        aria-hidden="true"
+        className="absolute -right-20 -top-28 h-64 w-64 rounded-full bg-[#8b7bff]/20 blur-3xl"
+        animate={{ scale: [0.94, 1.14, 0.94], opacity: [0.35, 0.7, 0.35] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        aria-hidden="true"
+        className="absolute -bottom-24 -left-20 h-56 w-56 rounded-full bg-[#63d9bd]/18 blur-3xl"
+        animate={{ scale: [1.08, 0.9, 1.08], opacity: [0.28, 0.55, 0.28] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      <div className="relative z-10">
+        <div className="flex items-start justify-between gap-3 sm:gap-5">
+          <div>
+            <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#6558d1] sm:text-[11px] sm:tracking-[0.18em]">Personalised journey</p>
+            <h2 className="mt-0.5 text-lg font-semibold tracking-[-0.04em] text-[#1b2430] sm:mt-1 sm:text-2xl">Your pregnancy timeline</h2>
+            <p className="mt-0.5 text-[11px] leading-4 text-[#5d6d7a] sm:mt-1 sm:text-xs">Approved guidance, timed to your gestation.</p>
+          </div>
+          <motion.div
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[linear-gradient(145deg,#8b7bff,#6d5ed8)] text-center text-white shadow-[0_12px_34px_rgba(110,94,216,.3)] sm:h-12 sm:w-12"
+            animate={{ y: [0, -5, 0], boxShadow: ["0 12px 28px rgba(110,94,216,.22)", "0 18px 42px rgba(110,94,216,.42)", "0 12px 28px rgba(110,94,216,.22)"] }}
+            transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <span><b className="block text-base leading-4">15</b><small className="text-[8px] font-bold uppercase tracking-wider text-white/80">weeks</small></span>
+          </motion.div>
+        </div>
+
+        <div className="relative mt-2.5 grid grid-cols-4 gap-1.5 sm:mt-4 sm:gap-2">
+          <div aria-hidden="true" className="absolute left-[8%] right-[8%] top-[19px] h-px bg-[#b9c7cd]" />
+          <motion.div
+            aria-hidden="true"
+            className="absolute top-[16px] z-20 h-[7px] w-[7px] rounded-full bg-[#32ad91] shadow-[0_0_16px_rgba(50,173,145,.75)]"
+            animate={{ left: ["8%", "90%"] }}
+            transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
+          />
+          {journey.map(({ week, label, detail, icon: Icon }, index) => (
+            <motion.div
+              key={week}
+              className="relative z-10 min-w-0 text-center"
+              animate={{ y: [0, index % 2 ? -3 : 3, 0] }}
+              transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut", delay: index * 0.28 }}
+            >
+              <span className={`mx-auto grid h-9 w-9 place-items-center rounded-full border sm:h-10 sm:w-10 ${index === 0 ? "border-[#7868e2] bg-[#7868e2] text-white" : "border-[#c7c0f1] bg-white/90 text-[#6558d1]"}`}><Icon size={16} strokeWidth={1.8} /></span>
+              <b className="mt-1 block text-[10px] leading-3 text-[#1b2430] sm:mt-2 sm:text-xs sm:leading-normal">Week {week}</b>
+              <small className="mt-0.5 block truncate text-[9px] font-semibold text-[#6558d1] sm:mt-1 sm:text-[10px]">{label}</small>
+              <small className="mt-1 hidden text-[10px] leading-4 text-[#687986] sm:block">{detail}</small>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="mt-2 rounded-[1rem] border border-[#dce8e5] bg-[#f5fbf9]/90 p-2 shadow-[inset_0_1px_0_white] sm:mt-4 sm:rounded-[1.25rem] sm:p-3">
+          <div className="flex items-center justify-between gap-4">
+            <div><p className="text-[9px] font-extrabold uppercase tracking-[0.14em] text-[#267966] sm:text-[10px] sm:tracking-[0.16em]">Governed response</p><p className="mt-0.5 text-[13px] font-semibold text-[#21322f] sm:mt-1 sm:text-sm">Concern pathway</p></div>
+            <span className="rounded-full bg-[#e3f4ef] px-2.5 py-1 text-[9px] font-bold text-[#267966] sm:px-3 sm:text-[10px]">Clinician-led</span>
+          </div>
+          <div className="mt-1.5 grid grid-cols-3 gap-1.5 sm:mt-2 sm:gap-2">
+            {["Concern structured", "Clinical task created", "Midwife review"].map((item, index) => (
+              <motion.div
+                key={item}
+                className="flex min-w-0 items-center gap-1 rounded-lg border border-white bg-white/80 px-1.5 py-1.5 text-[8px] font-medium leading-3 text-[#526170] shadow-sm sm:gap-1.5 sm:rounded-xl sm:px-2 sm:py-2 sm:text-[11px]"
+                initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.55 + index * 0.16 }}
+              ><span className="grid h-4 w-4 shrink-0 place-items-center rounded-full bg-[#dff3ed] text-[#267966] sm:h-5 sm:w-5"><Check size={11} strokeWidth={2.4} /></span>{item}</motion.div>
+            ))}
+          </div>
+          <div className="mt-1.5 flex items-center gap-1.5 text-[9px] font-medium leading-3 text-[#6558d1] sm:mt-2 sm:gap-2 sm:text-[10px]"><ShieldCheck className="shrink-0" size={13} />AI supports the workflow. Clinical decisions remain human.</div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+export default function AntenatalCareCompanionPage() {
+  return (
+    <Shell>
+      <section className="mx-auto flex h-svh w-full max-w-7xl flex-col justify-start overflow-hidden px-5 pb-3 pt-[4.75rem] text-center sm:justify-center sm:px-8 sm:pb-4 sm:pt-16 lg:px-12">
+        <motion.p className="text-[11px] font-medium uppercase tracking-[0.24em] text-[#2f8396]/78 sm:text-sm sm:tracking-[0.3em]" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.04 }}>Care Experience</motion.p>
+        <motion.h1 className="mx-auto mt-1 max-w-5xl text-[clamp(2rem,9.6vw,2.5rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-[#1b2430] sm:mt-2 sm:text-[clamp(2.2rem,6.5svh,4.5rem)] sm:tracking-[-0.06em]" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.1 }}>Personalised guidance throughout the antenatal journey.</motion.h1>
+        <motion.p className="mx-auto mt-1 max-w-2xl text-[13px] leading-5 text-[#526170]/86 sm:mt-2 sm:text-base sm:leading-6" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.18 }}>Gestation-specific information, investigation schedules and approved education — with a governed pathway for raising clinical concerns.</motion.p>
+        <motion.div className="mx-auto mt-3 hidden w-full max-w-4xl gap-2 sm:grid sm:grid-cols-3 [@media(max-height:819px)]:hidden" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.26 }}>
+          {["Personalised timeline", "Approved guidance", "Clinician-led escalation"].map((item) => (
+            <div key={item} className="rounded-full border border-white/64 bg-white/46 px-5 py-3 text-sm font-medium text-[#526170]/86 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_14px_30px_rgba(55,80,95,0.08)] backdrop-blur-xl">{item}</div>
+          ))}
+        </motion.div>
+        <div className="mx-auto mt-2 w-full max-w-5xl text-left sm:mt-3"><AntenatalHeroVisual /></div>
+        <div className="mx-auto mt-2 flex w-full max-w-5xl flex-wrap items-center justify-start gap-2 text-left sm:mt-3 sm:gap-3">
+          <a className="inline-flex items-center rounded-full bg-[#1b2430] px-5 py-2 text-[13px] font-medium !text-white transition hover:-translate-y-0.5 hover:bg-[#263343] sm:px-6 sm:py-2.5 sm:text-sm" style={{ color: "#fff" }} href="https://antenatal-care-companion.vercel.app/" target="_blank" rel="noreferrer">Open Live Demo</a>
+          <span className="max-w-xl text-left text-[10px] leading-4 text-[#74551f] sm:text-xs sm:leading-5"><b>Safety boundary: </b>The app supports information and escalation. Clinical decisions remain with healthcare professionals.</span>
+        </div>
+      </section>
+    </Shell>
+  );
+}

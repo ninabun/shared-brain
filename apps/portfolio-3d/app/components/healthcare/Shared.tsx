@@ -9,7 +9,37 @@ export function Shell({ children }: { children: React.ReactNode }) {
   return <main className={styles.root}><div className={styles.backdrop}/><div className={styles.content}><Header/>{children}</div></main>;
 }
 
-function Header() { return <header className={styles.topbar}><a className={styles.brand} href="/">Wing Yee AI Lab</a><nav className={styles.toplinks} aria-label="Global navigation"><a className={styles.toplink} href="/#platform">Solutions</a><a className={styles.toplink} href="/#about">About</a><a className={styles.toplink} href="/#contact">Contact</a></nav></header>; }
+export function Header() {
+  const links = [
+    { label: "Solutions", href: "/#platform" },
+    { label: "About", href: "/#about" },
+    { label: "Contact", href: "/#contact" },
+  ];
+
+  return (
+    <header className="fixed left-0 right-0 top-0 z-30 text-[#1b2430]">
+      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-12" aria-label="Global navigation">
+        <a
+          href="/"
+          className="rounded-full border border-white/50 bg-white/34 px-4 py-2 text-[14px] font-semibold tracking-[-0.03em] text-[#1b2430] shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_14px_40px_rgba(8,18,28,0.14)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl transition hover:bg-white/50"
+        >
+          Wing Yee AI Lab
+        </a>
+        <div className="hidden items-center gap-2.5 text-[13px] text-[#1b2430]/70 md:flex">
+          {links.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              className="rounded-full border border-white/48 bg-white/32 px-4 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_12px_34px_rgba(7,15,28,0.12)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl transition duration-300 hover:-translate-y-0.5 hover:bg-white/50 hover:text-[#1b2430]"
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
+      </nav>
+    </header>
+  );
+}
 
 export function LocalSectionNav({ items }: { items: { label:string; href:string }[] }) { return <nav className={styles.localNav} aria-label="On this page"><div className={styles.localNavInner}>{items.map(i=><a key={i.href} href={i.href}>{i.label}</a>)}</div></nav>; }
 

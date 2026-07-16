@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import HeroMotionBar from "./HeroMotionBar";
 
 export default function HealthcareIntelligencePage({ project }) {
   return (
@@ -12,13 +13,14 @@ export default function HealthcareIntelligencePage({ project }) {
         <a href="/#platform" className="inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/40 px-4 py-2 text-sm text-[#526170] backdrop-blur-2xl"><ArrowLeft size={14} /> Healthcare AI</a>
       </header>
 
-      <section className="relative z-10 mx-auto flex min-h-[62vh] max-w-7xl items-center px-5 py-16 sm:px-8 lg:px-12">
-        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-4xl">
+      <section className="relative z-10 mx-auto flex min-h-svh max-w-7xl flex-col items-center justify-center px-5 pb-8 pt-20 text-center sm:px-8 lg:px-12">
+        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="mx-auto max-w-4xl">
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#6d5ce7]">Healthcare Intelligence</p>
-          <h1 className="mt-5 text-5xl font-semibold leading-[0.96] tracking-[-0.06em] sm:text-7xl">{project.title}</h1>
-          <p className="mt-8 max-w-3xl text-xl leading-9 text-[#526170]">{project.hero}</p>
+          <h1 className="mt-4 text-5xl font-semibold leading-[0.96] tracking-[-0.06em] sm:text-6xl lg:text-7xl">{project.title}</h1>
+          <p className="mx-auto mt-4 max-w-3xl text-base leading-7 text-[#526170] sm:text-lg">{project.hero}</p>
           <a href="#capabilities" className="mt-9 inline-flex items-center gap-2 rounded-full bg-[#1b2430] px-5 py-3 text-sm font-medium text-white">Explore capabilities <ArrowRight size={14} /></a>
         </motion.div>
+        <HeroMotionBar accent="#8B7BFF" label="Healthcare intelligence" detail="Human-governed AI workflow" />
       </section>
 
       <section id="capabilities" className="relative z-10 mx-auto grid max-w-7xl gap-5 px-5 pb-24 sm:px-8 md:grid-cols-2 lg:px-12">

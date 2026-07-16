@@ -86,12 +86,12 @@ const tools = ["SUNO", "Voice recording", "CapCut", "Projection mapping", "React
 function AudioBackground() {
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[#f6f9fb]">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_16%,rgba(99,230,216,0.14),transparent_32%),radial-gradient(circle_at_78%_34%,rgba(139,123,255,0.1),transparent_28%),linear-gradient(180deg,#F7FAFC_0%,#EEF4F8_54%,#E6EEF5_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_16%,rgba(47,131,150,0.09),transparent_32%),radial-gradient(circle_at_78%_34%,rgba(139,123,255,0.08),transparent_28%),linear-gradient(180deg,#F7FAFC_0%,#EEF4F8_54%,#E6EEF5_100%)]" />
       <div className="absolute inset-0 opacity-45 [background-image:linear-gradient(90deg,rgba(120,170,200,0.045)_1px,transparent_1px),linear-gradient(180deg,rgba(120,170,200,0.035)_1px,transparent_1px)] [background-size:132px_132px]" />
       {[0, 1, 2, 3, 4, 5].map((item) => (
         <motion.span
           key={item}
-          className="absolute h-1.5 w-1.5 rounded-full bg-[#7db6c8] shadow-[0_0_22px_rgba(99,230,216,0.34)]"
+          className="absolute h-1.5 w-1.5 rounded-full bg-[#527f8d] shadow-[0_0_18px_rgba(47,131,150,0.2)]"
           style={{
             left: `${12 + item * 15}%`,
             top: `${20 + (item % 3) * 19}%`,
@@ -159,13 +159,13 @@ function Section({ eyebrow, title, children }) {
 
 function WaveVisual() {
   return (
-    <div className="relative mx-auto mt-12 h-48 w-full max-w-4xl overflow-hidden rounded-[2.25rem] border border-white/78 bg-white/38 shadow-[inset_0_1px_0_rgba(255,255,255,0.94),inset_-12px_-18px_34px_rgba(82,105,116,0.09),0_30px_90px_rgba(65,120,150,0.12)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(99,230,216,0.2),transparent_44%)]" />
+    <div className="relative mx-auto mt-6 h-36 w-full max-w-4xl overflow-hidden rounded-[2.25rem] border border-white/78 bg-white/38 shadow-[inset_0_1px_0_rgba(255,255,255,0.94),inset_-12px_-18px_34px_rgba(82,105,116,0.09),0_30px_90px_rgba(65,120,150,0.12)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(47,131,150,0.12),transparent_44%)]" />
       <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-end gap-2">
         {Array.from({ length: 34 }).map((_, index) => (
           <motion.span
             key={index}
-            className="w-1.5 rounded-full bg-gradient-to-t from-[#63E6D8]/35 to-white shadow-[0_0_16px_rgba(99,230,216,0.38)]"
+            className="w-1.5 rounded-full bg-gradient-to-t from-[#2f8396]/45 to-[#a8bdc4] shadow-[0_0_13px_rgba(47,131,150,0.2)]"
             animate={{ height: [20, 72 + (index % 7) * 8, 24] }}
             transition={{ duration: 2.4 + (index % 5) * 0.25, repeat: Infinity, ease: "easeInOut", delay: index * 0.04 }}
           />
@@ -205,7 +205,7 @@ export default function AIAudioProjectPage() {
       <AudioBackground />
       <Header />
 
-      <section className="relative z-10 mx-auto flex min-h-[86vh] max-w-7xl flex-col justify-center px-5 py-16 text-center sm:px-8 lg:px-12">
+      <section className="relative z-10 mx-auto flex min-h-svh max-w-7xl flex-col justify-center px-5 pb-8 pt-20 text-center sm:px-8 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 24, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -213,10 +213,10 @@ export default function AIAudioProjectPage() {
           className="mx-auto max-w-5xl"
         >
           <p className="text-sm font-medium uppercase tracking-[0.28em] text-[#2f8396]/78">Patient Experience / AI Audio</p>
-          <h1 className="mt-7 text-5xl font-semibold leading-[0.96] tracking-[-0.06em] text-[#1b2430] sm:text-7xl">
+          <h1 className="mt-4 text-5xl font-semibold leading-[0.96] tracking-[-0.06em] text-[#1b2430] sm:text-6xl lg:text-7xl">
             AI Audio Experience for Patient-Centred Care
           </h1>
-          <p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-[#526170]/82 sm:text-xl">
+          <p className="mx-auto mt-4 max-w-3xl text-base leading-7 text-[#526170]/82 sm:text-lg">
             Using AI-generated music, voice and immersive sound design to improve healthcare communication, emotional support and presentation experience.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
