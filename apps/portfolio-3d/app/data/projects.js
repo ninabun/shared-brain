@@ -106,6 +106,30 @@ export const projects = [
     futureDirection: "A care communication media kit for education, ambience and digital experience design.",
   },
   {
+    slug: "immersive-medical-ux",
+    title: "Immersive Medical UX",
+    solutionArea: "Care Experience",
+    oneLine: "Immersive medical experiences that make healthcare ideas easier to understand.",
+    problem: [
+      "Complex workflow ideas are hard to explain through text alone.",
+      "Stakeholders need to see the product feeling before committing to a direction.",
+      "Early healthcare concepts need fast, clear and low-friction visualization.",
+    ],
+    solution: [
+      "Immersive Medical UX uses generated visuals and interaction design to prototype healthcare experiences.",
+      "It helps translate a clinical workflow idea into a clear, shareable product experience.",
+    ],
+    demo: {
+      type: "coming-soon",
+      cta: "View Prototype",
+      note: "Prototype previews will be added as the concept develops.",
+    },
+    howItWorks: ["Workflow idea", "AI visual concept", "Edited prototype", "Feedback loop"],
+    impact: ["Concept clarity improved", "Stakeholder communication improved", "Iteration made faster"],
+    tools: ["Higgsfield", "CapCut", "Google AI Studio", "Prompting"],
+    futureDirection: "A repeatable immersive prototyping workflow for healthcare product ideas.",
+  },
+  {
     slug: "roster-automation",
     title: "AI Rostering Automation System",
     solutionArea: "Clinical Operations",
