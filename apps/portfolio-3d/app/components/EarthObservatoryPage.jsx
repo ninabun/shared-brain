@@ -143,7 +143,7 @@ function ApplicationCard({ title, body, extensions, index }) {
       <div className="flex items-start gap-4">
         <div
           className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border bg-white/72 shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_10px_24px_rgba(80,120,140,0.1)]"
-        style={{ borderColor: `${accents[index]}55`, color: accents[index] }}
+        style={{ borderColor: `${accents[index % accents.length]}55`, color: accents[index % accents.length] }}
         >
           <Orbit size={19} strokeWidth={1.7} />
         </div>
