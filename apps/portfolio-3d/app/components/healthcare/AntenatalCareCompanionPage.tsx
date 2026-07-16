@@ -96,7 +96,7 @@ function AntenatalHeroVisual() {
 export default function AntenatalCareCompanionPage() {
   return (
     <Shell>
-      <section className="mx-auto flex h-svh w-full max-w-7xl flex-col justify-start overflow-hidden px-5 pb-3 pt-[4.75rem] text-center sm:justify-center sm:px-8 sm:pb-4 sm:pt-16 lg:px-12">
+      <section className="mx-auto flex min-h-svh w-full max-w-7xl flex-col justify-start px-5 pb-3 pt-[4.75rem] text-center sm:justify-center sm:px-8 sm:pb-4 sm:pt-16 lg:px-12">
         <motion.p className="text-[11px] font-medium uppercase tracking-[0.24em] text-[#2f8396]/78 sm:text-sm sm:tracking-[0.3em]" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.04 }}>Care Experience</motion.p>
         <motion.h1 className="mx-auto mt-1 max-w-5xl text-[clamp(2rem,9.6vw,2.5rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-[#1b2430] sm:mt-2 sm:text-[clamp(2.2rem,6.5svh,4.5rem)] sm:tracking-[-0.06em]" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.1 }}>Personalised guidance throughout the antenatal journey.</motion.h1>
         <motion.p className="mx-auto mt-1 max-w-2xl text-[13px] leading-5 text-[#526170]/86 sm:mt-2 sm:text-base sm:leading-6" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.18 }}>Gestation-specific information, investigation schedules and approved education — with a governed pathway for raising clinical concerns.</motion.p>

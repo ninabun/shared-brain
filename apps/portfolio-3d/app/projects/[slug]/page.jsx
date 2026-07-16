@@ -13,8 +13,10 @@ export function generateStaticParams() {
   return [...projects.map((project) => ({ slug: project.slug })), { slug: "antenatal-care-companion" }];
 }
 
-export function generateMetadata({ params }) {
-  if (params.slug === "antenatal-care-companion") {
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+
+  if (slug === "antenatal-care-companion") {
     return {
       title: "Pregnancy Companion | Wing Yee AI Lab",
       description: projectsBySlug["antenatal-companion"].oneLine,
@@ -22,7 +24,7 @@ export function generateMetadata({ params }) {
     };
   }
 
-  const project = projectsBySlug[params.slug];
+  const project = projectsBySlug[slug];
 
   return {
     title: project ? `${project.title} | Wing Yee AI Lab` : "Project | Wing Yee AI Lab",
@@ -30,46 +32,28 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function ProjectPage({ params }) {
-  if (params.slug === "antenatal-care-companion") {
+export default async function ProjectPage({ params }) {
+  const { slug } = await params;
+
+  if (slug === "antenatal-care-companion") {
     redirect("/projects/antenatal-companion");
   }
 
-  const project = projectsBySlug[params.slug];
+  const project = projectsBySlug[slug];
 
-  if (params.slug === "ai-music-video") {
-    return <AIAudioProjectPage />;
-  }
+  if (slug === "ai-music-video") return <AIAudioProjectPage />;
+  if (slug === "roster-automation") return <RosterAutomationPage />;
+  if (slug === "medication-verification") return <HealthcareApplicationPage app={applications["medication-verification"]} />;
+  if (slug === "antenatal-companion") return <HealthcareApplicationPage app={applications["antenatal-care-companion"]} />;
+  if (slug === "earth-observatory") return <EarthObservatoryPage />;
+  if (slug === "smart-reception") return <SmartReceptionPage />;
 
-  if (params.slug === "roster-automation") {
-    return <RosterAutomationPage />;
-  }
-
-  if (params.slug === "medication-verification") {
-    return <HealthcareApplicationPage app={applications["medication-verification"]} />;
-  }
-
-  if (params.slug === "antenatal-companion") {
-    return <HealthcareApplicationPage app={applications["antenatal-care-companion"]} />;
-  }
-
-  if (params.slug === "earth-observatory") {
-    return <EarthObservatoryPage />;
-  }
-
-  if (params.slug === "smart-reception") {
-    return <SmartReceptionPage />;
-  }
-
-  if (!project) {
-    notFound();
-  }
+  if (!project) notFound();
 
   if (project.solutionArea === "Healthcare Intelligence" && project.sections) {
     return <HealthcareIntelligencePage project={project} />;
   }
 
   const theme = solutionAreaThemes[project.solutionArea];
-
   return <ProjectPageTemplate project={{ ...project, ...theme }} />;
 }

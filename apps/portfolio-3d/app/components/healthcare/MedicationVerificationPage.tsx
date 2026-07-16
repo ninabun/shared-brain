@@ -27,7 +27,7 @@ export default function MedicationVerificationPage() {
   return (
     <MotionConfig reducedMotion="user">
       <Shell>
-        <section className="mx-auto flex h-svh w-full max-w-7xl flex-col justify-start overflow-hidden px-5 pb-3 pt-[4.75rem] text-center sm:justify-center sm:px-8 sm:pb-4 sm:pt-16 lg:px-12">
+        <section className="mx-auto flex min-h-svh w-full max-w-7xl flex-col justify-start px-5 pb-3 pt-[4.75rem] text-center sm:justify-center sm:px-8 sm:pb-4 sm:pt-16 lg:px-12">
           <motion.p className="text-[11px] font-medium uppercase tracking-[0.24em] text-[#2f8396]/78 sm:text-sm sm:tracking-[0.3em]" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.04 }}>
             Clinical Operations
           </motion.p>
