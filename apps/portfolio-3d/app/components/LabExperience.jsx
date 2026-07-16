@@ -347,7 +347,7 @@ function CollapsibleSection({ id, label, children }) {
           <ChevronDown size={18} className={`shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
         </span>
       </button>
-      <div id={`${id}-content`} className={`grid transition-[grid-template-rows,opacity] duration-500 ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
+      <div id={`${id}-content`} aria-hidden={!open} inert={!open} className={`grid transition-[grid-template-rows,opacity] duration-500 ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
         <div className="overflow-hidden">
           <div className="pb-12 pt-3 sm:pb-16">{children}</div>
         </div>

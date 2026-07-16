@@ -294,6 +294,7 @@ export default function SmartReceptionPage() {
                     href={href}
                     target="_blank"
                     rel="noreferrer"
+                    aria-label={`Open ${title}`}
                     className="mt-1 inline-flex items-center gap-1.5 rounded-full border border-[#2f8396]/18 bg-white/42 px-3 py-1.5 text-[12px] font-medium text-[#2f8396] transition hover:-translate-y-0.5 hover:bg-white/62"
                   >
                     Open <ArrowRight size={12} />

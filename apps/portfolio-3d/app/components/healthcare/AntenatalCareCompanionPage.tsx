@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { MotionConfig, motion, useReducedMotion } from "framer-motion";
 import { Baby, CalendarDays, Check, HeartPulse, ShieldCheck, Stethoscope } from "lucide-react";
 import { Shell } from "./Shared";
 
@@ -12,6 +12,8 @@ const journey = [
 ];
 
 function AntenatalHeroVisual() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.div
       className="relative w-full overflow-hidden rounded-[1.5rem] border border-white/80 bg-white/55 p-2.5 text-[#1b2430] shadow-[inset_0_1px_0_rgba(255,255,255,.95),0_28px_90px_rgba(50,76,92,.14)] ring-1 ring-[#243446]/5 backdrop-blur-2xl sm:rounded-[1.8rem] sm:p-4"
@@ -23,13 +25,13 @@ function AntenatalHeroVisual() {
       <motion.div
         aria-hidden="true"
         className="absolute -right-20 -top-28 h-64 w-64 rounded-full bg-[#8b7bff]/20 blur-3xl"
-        animate={{ scale: [0.94, 1.14, 0.94], opacity: [0.35, 0.7, 0.35] }}
+        animate={shouldReduceMotion ? undefined : { scale: [0.94, 1.14, 0.94], opacity: [0.35, 0.7, 0.35] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
         aria-hidden="true"
         className="absolute -bottom-24 -left-20 h-56 w-56 rounded-full bg-[#63d9bd]/18 blur-3xl"
-        animate={{ scale: [1.08, 0.9, 1.08], opacity: [0.28, 0.55, 0.28] }}
+        animate={shouldReduceMotion ? undefined : { scale: [1.08, 0.9, 1.08], opacity: [0.28, 0.55, 0.28] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       />
 
@@ -42,7 +44,7 @@ function AntenatalHeroVisual() {
           </div>
           <motion.div
             className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[linear-gradient(145deg,#8b7bff,#6d5ed8)] text-center text-white shadow-[0_12px_34px_rgba(110,94,216,.3)] sm:h-12 sm:w-12"
-            animate={{ y: [0, -5, 0], boxShadow: ["0 12px 28px rgba(110,94,216,.22)", "0 18px 42px rgba(110,94,216,.42)", "0 12px 28px rgba(110,94,216,.22)"] }}
+            animate={shouldReduceMotion ? undefined : { y: [0, -5, 0], boxShadow: ["0 12px 28px rgba(110,94,216,.22)", "0 18px 42px rgba(110,94,216,.42)", "0 12px 28px rgba(110,94,216,.22)"] }}
             transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
           >
             <span><b className="block text-base leading-4">15</b><small className="text-[8px] font-bold uppercase tracking-wider text-white/80">weeks</small></span>
@@ -54,14 +56,14 @@ function AntenatalHeroVisual() {
           <motion.div
             aria-hidden="true"
             className="absolute top-[16px] z-20 h-[7px] w-[7px] rounded-full bg-[#32ad91] shadow-[0_0_16px_rgba(50,173,145,.75)]"
-            animate={{ left: ["8%", "90%"] }}
+            animate={shouldReduceMotion ? undefined : { left: ["8%", "90%"] }}
             transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
           />
           {journey.map(({ week, label, detail, icon: Icon }, index) => (
             <motion.div
               key={week}
               className="relative z-10 min-w-0 text-center"
-              animate={{ y: [0, index % 2 ? -3 : 3, 0] }}
+              animate={shouldReduceMotion ? undefined : { y: [0, index % 2 ? -3 : 3, 0] }}
               transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut", delay: index * 0.28 }}
             >
               <span className={`mx-auto grid h-9 w-9 place-items-center rounded-full border sm:h-10 sm:w-10 ${index === 0 ? "border-[#7868e2] bg-[#7868e2] text-white" : "border-[#c7c0f1] bg-white/90 text-[#6558d1]"}`}><Icon size={16} strokeWidth={1.8} /></span>
@@ -95,7 +97,8 @@ function AntenatalHeroVisual() {
 
 export default function AntenatalCareCompanionPage() {
   return (
-    <Shell>
+    <MotionConfig reducedMotion="user">
+      <Shell>
       <section className="mx-auto flex min-h-svh w-full max-w-7xl flex-col justify-start px-5 pb-3 pt-[4.75rem] text-center sm:justify-center sm:px-8 sm:pb-4 sm:pt-16 lg:px-12">
         <motion.p className="text-[11px] font-medium uppercase tracking-[0.24em] text-[#2f8396]/78 sm:text-sm sm:tracking-[0.3em]" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.04 }}>Care Experience</motion.p>
         <motion.h1 className="mx-auto mt-1 max-w-5xl text-[clamp(2rem,9.6vw,2.5rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-[#1b2430] sm:mt-2 sm:text-[clamp(2.2rem,6.5svh,4.5rem)] sm:tracking-[-0.06em]" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.1 }}>Personalised guidance throughout the antenatal journey.</motion.h1>
@@ -111,6 +114,7 @@ export default function AntenatalCareCompanionPage() {
           <span className="max-w-xl text-left text-[10px] leading-4 text-[#74551f] sm:text-xs sm:leading-5"><b>Safety boundary: </b>The app supports information and escalation. Clinical decisions remain with healthcare professionals.</span>
         </div>
       </section>
-    </Shell>
+      </Shell>
+    </MotionConfig>
   );
 }
