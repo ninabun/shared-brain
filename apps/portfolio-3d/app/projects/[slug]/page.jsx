@@ -7,18 +7,21 @@ import ProjectPageTemplate from "../../components/ProjectPageTemplate";
 import RosterAutomationPage from "../../components/RosterAutomationPage";
 import SmartReceptionPage from "../../components/SmartReceptionPage";
 import { projects, projectsBySlug, solutionAreaThemes } from "../../data/projects";
-import { notFound } from "next/navigation";
-
-const clearedProjectSlugs = new Set([
-  "roster-automation",
-  "smart-reception",
-]);
+import { notFound, redirect } from "next/navigation";
 
 export function generateStaticParams() {
   return [...projects.map((project) => ({ slug: project.slug })), { slug: "antenatal-care-companion" }];
 }
 
 export function generateMetadata({ params }) {
+  if (params.slug === "antenatal-care-companion") {
+    return {
+      title: "Pregnancy Companion | Wing Yee AI Lab",
+      description: projectsBySlug["antenatal-companion"].oneLine,
+      alternates: { canonical: "/projects/antenatal-companion" },
+    };
+  }
+
   const project = projectsBySlug[params.slug];
 
   return {
@@ -28,6 +31,10 @@ export function generateMetadata({ params }) {
 }
 
 export default function ProjectPage({ params }) {
+  if (params.slug === "antenatal-care-companion") {
+    redirect("/projects/antenatal-companion");
+  }
+
   const project = projectsBySlug[params.slug];
 
   if (params.slug === "ai-music-video") {
@@ -42,7 +49,7 @@ export default function ProjectPage({ params }) {
     return <HealthcareApplicationPage app={applications["medication-verification"]} />;
   }
 
-  if (params.slug === "antenatal-companion" || params.slug === "antenatal-care-companion") {
+  if (params.slug === "antenatal-companion") {
     return <HealthcareApplicationPage app={applications["antenatal-care-companion"]} />;
   }
 
@@ -52,10 +59,6 @@ export default function ProjectPage({ params }) {
 
   if (params.slug === "smart-reception") {
     return <SmartReceptionPage />;
-  }
-
-  if (clearedProjectSlugs.has(params.slug)) {
-    return <main className="min-h-screen bg-[#f4f8fb]" />;
   }
 
   if (!project) {
