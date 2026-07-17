@@ -17,7 +17,7 @@ export const projects = [
   {
     slug: "projection-mapping",
     title: "Projection Mapping",
-    solutionArea: "Care Experience",
+    solutionArea: "Healthcare Intelligence",
     oneLine: "Immersive visual storytelling for care education and calming environments.",
     problem: [
       "Healthcare education can feel flat, abstract or hard to remember.",
@@ -197,7 +197,7 @@ export const projects = [
   },
   {
     slug: "antenatal-companion",
-    title: "AI Antenatal Companion",
+    title: "Pregnancy Companion",
     solutionArea: "Care Experience",
     oneLine: "Gestation-specific guidance, reminders and governed maternity-concern escalation.",
     problem:["Pregnant women face uncertainty about schedules, investigations and how to raise concerns."],

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, BellRing, CheckCircle2, ClipboardList, GitBranch, MonitorPlay, Route, ShieldCheck, Tablet } from "lucide-react";
-import HeroMotionBar from "./HeroMotionBar";
+import TechnologyExplainer from "./TechnologyExplainer";
 
 const navItems = [
   { label: "Solutions", href: "/#platform" },
@@ -22,7 +22,18 @@ const evidence = [
   ["Routed response", "AI-assisted logic sends requests toward the right role or pathway."],
   ["Human oversight", "Staff remain responsible for response, prioritisation and judgement."],
 ];
-const technology = ["Digital Reception", "AI Routing Logic", "Tablet Interface", "Notification Workflow", "Human Review", "React", "Next.js", "Workflow Design"];
+const technology = [
+  { name: "Digital Reception", purpose: "Creates a clear first contact point where visitors can submit routine needs without interrupting clinical staff." },
+  { name: "AI Routing Logic", purpose: "Classifies the request and directs it toward the most appropriate ward role or response pathway." },
+  { name: "Tablet Interface", purpose: "Provides an accessible visitor-facing screen designed for quick use at the ward entrance." },
+  { name: "Notification Workflow", purpose: "Delivers the routed request to staff and keeps the communication path visible until response." },
+  { name: "Human Review", purpose: "Keeps prioritisation, response and clinical judgement with authorised ward staff." },
+  { name: "React", purpose: "Builds responsive visitor and staff interfaces from reusable workflow components." },
+  { name: "Next.js", purpose: "Provides the application structure, routing and production-ready web delivery for both ward panels." },
+  { name: "Workflow Design", purpose: "Maps each visitor request to a clear operational step so technology reduces rather than adds interruption." },
+];
+const outsideWardPanelUrl = "https://smart-reception-indol.vercel.app/outside";
+const insideWardPanelUrl = "https://smart-reception-indol.vercel.app/ward";
 
 function Background() {
   return (
@@ -92,28 +103,128 @@ function WorkflowColumn({ title, items, accent }) {
   );
 }
 
+function ReceptionHeroVisual() {
+  const requests = ["Directions", "Visiting time", "Patient item"];
+  const wardSignals = ["Nurse alert", "Ward queue", "Resolved"];
+
+  return (
+    <motion.div
+      className="relative mx-auto mt-5 w-full max-w-5xl overflow-hidden rounded-[2.6rem] border border-white/72 bg-[linear-gradient(145deg,rgba(255,255,255,0.5),rgba(225,242,242,0.3))] p-6 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.92),inset_16px_18px_38px_rgba(255,255,255,0.25),inset_-18px_-22px_42px_rgba(80,100,120,0.1),0_28px_90px_rgba(40,70,88,0.13)] ring-1 ring-[#1b2430]/5 backdrop-blur-2xl"
+      initial={{ opacity: 0, y: 20, scale: 0.985 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.85, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 1000 420" preserveAspectRatio="none" aria-hidden="true">
+        <motion.path
+          d="M250 210 C390 95 610 95 750 210"
+          fill="none"
+          stroke="#2f8396"
+          strokeWidth="1"
+          strokeOpacity="0.26"
+          strokeDasharray="10 14"
+          animate={{ strokeDashoffset: [0, -48] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.path
+          d="M250 210 C390 325 610 325 750 210"
+          fill="none"
+          stroke="#63E6D8"
+          strokeWidth="1"
+          strokeOpacity="0.28"
+          strokeDasharray="8 16"
+          animate={{ strokeDashoffset: [0, 48] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
+        />
+      </svg>
+
+      <div className="relative z-10 grid items-center gap-8 lg:grid-cols-[0.9fr_0.45fr_0.9fr]">
+        <div className="mx-auto w-full max-w-xs rounded-[2.2rem] border border-white/72 bg-white/48 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_22px_54px_rgba(47,131,150,0.13)] backdrop-blur-xl">
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#526170]/70">Outside ward</p>
+            <Tablet className="text-[#2f8396]" size={20} strokeWidth={1.6} />
+          </div>
+          <div className="mt-6 min-h-64 rounded-[1.6rem] border border-white/70 bg-white/42 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.86)]">
+            <p className="text-2xl font-semibold tracking-[-0.05em] text-[#1b2430]">How can we help?</p>
+            <div className="mt-5 space-y-3">
+            {requests.map((item, index) => (
+              <motion.div
+                key={item}
+                className="rounded-2xl border border-white/74 bg-white/56 px-4 py-3 text-sm font-medium text-[#526170] shadow-[inset_0_1px_0_rgba(255,255,255,0.86)]"
+                animate={{ x: [0, 6, 0], opacity: [0.76, 1, 0.76] }}
+                transition={{ duration: 4 + index * 0.45, repeat: Infinity, ease: "easeInOut", delay: index * 0.25 }}
+              >
+                {item}
+              </motion.div>
+            ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="relative flex min-h-48 items-center justify-center">
+          {[0, 1, 2].map((index) => (
+            <motion.span
+              key={index}
+              className="absolute h-3 w-3 rounded-full bg-[#63E6D8] shadow-[0_0_24px_rgba(99,230,216,0.6)]"
+              animate={{ rotate: 360, x: [0, 74, 0, -74, 0], y: [-42, 0, 42, 0, -42], opacity: [0.2, 1, 0.55, 1, 0.2] }}
+              transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut", delay: index * 0.7 }}
+            />
+          ))}
+          <div className="relative z-10 flex h-24 w-24 items-center justify-center rounded-full border border-[#2f8396]/24 bg-white/58 text-[#2f8396] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_0_44px_rgba(99,230,216,0.24)] backdrop-blur-xl">
+            <motion.div animate={{ rotate: 360 }} transition={{ duration: 16, repeat: Infinity, ease: "linear" }}>
+              <Route size={34} strokeWidth={1.45} />
+            </motion.div>
+          </div>
+        </div>
+
+        <div className="mx-auto w-full max-w-xs rounded-[2.2rem] border border-white/72 bg-white/48 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_22px_54px_rgba(47,131,150,0.13)] backdrop-blur-xl">
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#526170]/70">Inside ward</p>
+            <ClipboardList className="text-[#2f8396]" size={20} strokeWidth={1.6} />
+          </div>
+          <div className="mt-6 min-h-64 rounded-[1.6rem] border border-white/70 bg-white/42 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.86)]">
+            <p className="text-2xl font-semibold tracking-[-0.05em] text-[#1b2430]">Ward queue</p>
+            <div className="mt-5 space-y-3">
+            {wardSignals.map((item, index) => (
+              <motion.div
+                key={item}
+                className="flex items-center justify-between rounded-2xl border border-white/74 bg-white/56 px-4 py-3 text-sm font-medium text-[#526170] shadow-[inset_0_1px_0_rgba(255,255,255,0.86)]"
+                animate={{ y: [0, index === 1 ? -4 : 4, 0], borderColor: ["rgba(255,255,255,0.7)", "rgba(99,230,216,0.34)", "rgba(255,255,255,0.7)"] }}
+                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: index * 0.22 }}
+              >
+                <span>{item}</span>
+                <span className="h-2 w-2 rounded-full bg-[#63E6D8] shadow-[0_0_14px_rgba(99,230,216,0.62)]" />
+              </motion.div>
+            ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function SmartReceptionPage() {
   return (
     <main className="min-h-screen overflow-hidden bg-[#f6f9fb] text-[#1b2430]">
       <Background />
       <Header />
 
-      <section className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-5 pb-16 pt-28 text-center sm:px-8 lg:px-12">
+      <section className="relative z-10 mx-auto flex min-h-svh max-w-7xl flex-col justify-center px-5 pb-8 pt-20 text-center sm:px-8 lg:px-12">
 <motion.p className="text-sm font-medium uppercase tracking-[0.3em] text-[#2f8396]/78" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.04 }}>
           Clinical Operations
         </motion.p>
-        <motion.h1 className="mx-auto mt-7 max-w-5xl text-5xl font-semibold leading-[0.98] tracking-[-0.06em] text-[#1b2430] sm:text-7xl lg:text-8xl" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.1 }}>
+        <motion.h1 className="mx-auto mt-4 max-w-5xl text-5xl font-semibold leading-[0.98] tracking-[-0.06em] text-[#1b2430] sm:text-6xl lg:text-7xl" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.1 }}>
           Smart Reception
         </motion.h1>
-        <motion.p className="mx-auto mt-8 max-w-2xl text-lg leading-8 text-[#526170]/86 sm:text-xl" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.18 }}>
+        <motion.p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#526170]/86 sm:text-lg" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.18 }}>
           A healthcare workflow optimisation solution that routes visitor enquiries before they interrupt clinical staff.
         </motion.p>
-        <motion.div className="mx-auto mt-10 grid w-full max-w-4xl gap-3 sm:grid-cols-3" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.26 }}>
+        <motion.div className="mx-auto mt-5 grid w-full max-w-4xl gap-2 sm:grid-cols-3" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.26 }}>
           {["Reduce interruption", "Standardise routing", "Improve visitor clarity"].map((item) => (
             <div key={item} className="rounded-full border border-white/64 bg-white/46 px-5 py-3 text-sm font-medium text-[#526170]/86 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_14px_30px_rgba(55,80,95,0.08)] backdrop-blur-xl">{item}</div>
           ))}
         </motion.div>
-              <HeroMotionBar accent="#2f8396" label="Reception rhythm" detail="Visitor request signal" />
+              <ReceptionHeroVisual />
       </section>
 
       <Section eyebrow="Healthcare Problem" title="Frontline teams are interrupted by unclear requests.">
@@ -139,25 +250,70 @@ export default function SmartReceptionPage() {
         </div>
       </Section>
 
-      <Section eyebrow="Experience The Workflow" title="A product demo space for visitor routing.">
-        <div className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
-          <GlassCard className="min-h-[360px] p-6">
-            <div className="flex h-full min-h-[300px] flex-col items-center justify-center rounded-[1.5rem] border border-dashed border-[#2f8396]/22 bg-white/32 text-center">
-              <MonitorPlay className="text-[#2f8396]" size={38} strokeWidth={1.5} />
-              <p className="mt-6 text-2xl font-semibold tracking-[-0.04em]">Demo Video</p>
-              <p className="mt-3 max-w-md text-sm leading-6 text-[#526170]/78">Visitor request capture, AI routing, staff notification and response tracking.</p>
+      <Section eyebrow="Experience The Workflow" title="Video demo and ward panel previews.">
+        <div className="grid gap-5 lg:grid-cols-[1.35fr_0.65fr]">
+          <GlassCard className="self-start p-3">
+            <div className="relative flex h-56 items-center justify-center overflow-hidden rounded-[1.65rem] border border-dashed border-[#2f8396]/24 bg-white/32 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.86)] sm:h-64">
+              <div className="px-6">
+                <MonitorPlay className="mx-auto text-[#2f8396]" size={42} strokeWidth={1.45} />
+                <p className="mt-6 text-2xl font-semibold tracking-[-0.04em]">Video Demo</p>
+                <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-[#526170]/78">
+                  Reserved space for the workflow video showing outside ward request, inside ward response and routing logic.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 px-4 pb-4 pt-5 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="text-xl font-semibold tracking-[-0.04em]">Smart Reception Demo</p>
+                <p className="mt-2 text-sm leading-6 text-[#526170]/76">
+                  Place the final recorded demo here when the video is ready.
+                </p>
+              </div>
+              <a
+                href="https://smart-reception-indol.vercel.app/"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex w-fit shrink-0 items-center gap-2 rounded-full bg-[#1b2430] px-5 py-3 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:bg-[#263343]"
+              >
+                Open Live Demo <ArrowRight size={15} />
+              </a>
             </div>
           </GlassCard>
+
           <div className="grid gap-5">
-            {[["Outside Visitor Interface", Tablet], ["Inside Staff Dashboard", ClipboardList], ["Routing Logic", Route]].map(([title, Icon]) => (
-              <GlassCard key={title} className="flex items-center justify-between gap-5 p-6">
-                <div><p className="text-xl font-semibold tracking-[-0.035em]">{title}</p><p className="mt-2 text-sm text-[#526170]/72">Workflow module</p></div>
-                <Icon className="text-[#2f8396]" size={24} strokeWidth={1.6} />
+            {[
+              ["Outside Ward Panel", "Visitor-facing tablet interface for submitting enquiries.", outsideWardPanelUrl, Tablet],
+              ["Inside Ward Panel", "Staff dashboard or ward-side response view.", insideWardPanelUrl, ClipboardList],
+            ].map(([title, body, href, Icon]) => (
+              <GlassCard key={title} className="p-6">
+                <div className="flex items-start justify-between gap-5">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#2f8396]/22 bg-white/62 text-[#2f8396] shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_16px_34px_rgba(80,120,140,0.1)]">
+                    <Icon size={23} strokeWidth={1.6} />
+                  </div>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`Open ${title}`}
+                    className="mt-1 inline-flex items-center gap-1.5 rounded-full border border-[#2f8396]/18 bg-white/42 px-3 py-1.5 text-[12px] font-medium text-[#2f8396] transition hover:-translate-y-0.5 hover:bg-white/62"
+                  >
+                    Open <ArrowRight size={12} />
+                  </a>
+                </div>
+                <p className="mt-7 text-xl font-semibold tracking-[-0.035em]">{title}</p>
+                <p className="mt-3 text-sm leading-6 text-[#526170]/78">{body}</p>
               </GlassCard>
             ))}
+
+            <GlassCard className="flex items-center justify-between gap-5 p-6">
+              <div>
+                <p className="text-xl font-semibold tracking-[-0.035em]">Routing Logic</p>
+                <p className="mt-2 text-sm text-[#526170]/72">Connects visitor request to the correct ward response path.</p>
+              </div>
+              <Route className="text-[#2f8396]" size={24} strokeWidth={1.6} />
+            </GlassCard>
           </div>
         </div>
-        <span className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#1b2430] px-6 py-3 text-sm font-medium text-white">Live Demo Coming Soon <ArrowRight size={15} /></span>
       </Section>
 
       <Section eyebrow="Operational Value" title="What should hospital management care about?">
@@ -185,9 +341,7 @@ export default function SmartReceptionPage() {
       </Section>
 
       <Section eyebrow="Technology" title="Technology exists to protect clinical attention.">
-        <div className="flex flex-wrap gap-3">
-          {technology.map((item) => <span key={item} className="rounded-full border border-white/68 bg-white/44 px-5 py-3 text-sm font-medium text-[#526170]/84 shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_12px_28px_rgba(55,80,95,0.08)] backdrop-blur-xl">{item}</span>)}
-        </div>
+        <TechnologyExplainer items={technology} accent="#2f8396" />
       </Section>
 
       <Section eyebrow="Future Direction" title="From smart reception to hospital communication layer.">

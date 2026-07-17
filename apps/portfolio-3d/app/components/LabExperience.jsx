@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Activity, ArrowRight, BrainCircuit, Menu, Sparkles, X } from "lucide-react";
+import { Activity, ArrowRight, BrainCircuit, ChevronDown, Menu, Sparkles, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import content from "../data/lab.json";
 import { getProjectSlug } from "../data/projects";
@@ -27,12 +27,6 @@ const iconMap = {
   "Care Experience": Sparkles,
   "Clinical Operations": Activity,
   "Healthcare Intelligence": BrainCircuit,
-};
-
-const areaCtas = {
-  "Care Experience": "Upcoming For More",
-  "Clinical Operations": "Upcoming For More",
-  "Healthcare Intelligence": "Upcoming For More",
 };
 
 const areaThemes = {
@@ -326,6 +320,42 @@ function Section({ id, eyebrow, title, children, className = "" }) {
   );
 }
 
+function CollapsibleSection({ id, label, children }) {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const openFromHash = () => {
+      if (window.location.hash === `#${id}`) setOpen(true);
+    };
+
+    openFromHash();
+    window.addEventListener("hashchange", openFromHash);
+    return () => window.removeEventListener("hashchange", openFromHash);
+  }, [id]);
+
+  return (
+    <section id={id} className="relative z-10 mx-auto w-full max-w-7xl scroll-mt-24 px-5 sm:scroll-mt-28 sm:px-8 lg:px-12">
+      <button
+        type="button"
+        className="group flex w-full items-center justify-between gap-6 border-t border-[#1b2430]/10 py-5 text-left sm:py-6"
+        aria-expanded={open}
+        aria-controls={`${id}-content`}
+        onClick={() => setOpen((current) => !current)}
+      >
+        <span className="text-sm font-semibold uppercase tracking-[0.22em] text-[#1b2430]/72 sm:text-base">{label}</span>
+        <span className="flex items-center text-[#526170]/62">
+          <ChevronDown size={18} className={`shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+        </span>
+      </button>
+      <div id={`${id}-content`} aria-hidden={!open} inert={!open} className={`grid transition-[grid-template-rows,opacity] duration-500 ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
+        <div className="overflow-hidden">
+          <div className="pb-12 pt-3 sm:pb-16">{children}</div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function HeroCrystalLoop() {
   const canvasRef = useRef(null);
   const framesRef = useRef([]);
@@ -437,7 +467,7 @@ function ThinkingFramework() {
   const steps = content.thinking;
 
   return (
-    <div className="relative mt-16 max-w-3xl">
+    <div className="relative mt-5 max-w-3xl sm:mt-6">
       <motion.div
         className="absolute bottom-10 left-[1.15rem] top-7 w-px bg-gradient-to-b from-cyan-100/0 via-[#2f8396]/28 to-cyan-100/0"
         initial={{ scaleY: 0, opacity: 0 }}
@@ -491,8 +521,7 @@ function PlatformArchitecture({ modules, onActivateArea }) {
       <div className="relative grid gap-6 lg:grid-cols-3">
       {modules.map((area, areaIndex) => {
         const Icon = iconMap[area.title] || Sparkles;
-        const visibleProjects = area.projects.slice(0, area.title === "Care Experience" ? 5 : 3);
-        const cta = areaCtas[area.title] || "View Solutions";
+        const visibleProjects = area.projects;
         const theme = areaThemes[area.title] || areaThemes["Care Experience"];
 
         return (
@@ -531,7 +560,7 @@ function PlatformArchitecture({ modules, onActivateArea }) {
               <p className="mt-5 min-h-20 text-[15px] leading-7 text-[#334155]/82">{area.description}</p>
               <div className="mt-8 border-t border-[#1b2430]/10 pt-6">
                 <p className="text-[13px] font-medium uppercase tracking-[0.2em] text-[#526170]/72">Projects</p>
-                <div className={`mt-4 grid gap-2.5 ${area.title === "Care Experience" ? "sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2" : ""}`}>
+                <div className="mt-4 grid grid-cols-1 gap-2.5">
                   {visibleProjects.map((project) => {
                     const slug = getProjectSlug(project.name);
                     const hasProjectPage = slug !== "#contact";
@@ -555,13 +584,6 @@ function PlatformArchitecture({ modules, onActivateArea }) {
                   })}
                 </div>
               </div>
-              <a
-                href="#contact"
-                className="mt-8 inline-flex w-fit items-center gap-2 rounded-full border border-[#1b2430]/10 bg-white/70 px-5 py-3 text-sm font-medium text-[#1b2430]/82 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_16px_36px_rgba(27,36,48,0.08)] transition hover:-translate-y-0.5 hover:border-[rgba(var(--area-rgb),0.5)] hover:text-[var(--area-color)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_18px_42px_rgba(var(--area-rgb),0.2)]"
-                onMouseEnter={() => onActivateArea?.(area.title)}
-              >
-                {cta} <ArrowRight size={14} />
-              </a>
             </div>
           </motion.div>
         );
@@ -604,7 +626,7 @@ export default function LabExperience() {
           animate={{ x: ["-4%", "5%", "-4%"], opacity: [0.025, 0.075, 0.025] }}
           transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
         />
-        <div className="relative z-10 flex min-h-[calc(100vh-3.5rem)] w-full flex-col items-center justify-center gap-4 pt-4 sm:gap-5 sm:pt-6">
+        <div className="relative z-10 flex min-h-[calc(100vh-3.5rem)] w-full -translate-y-8 flex-col items-center justify-center gap-4 pt-4 sm:-translate-y-10 sm:gap-5 sm:pt-6">
           <HeroCrystalLoop />
           <motion.div
             className="flex max-w-5xl flex-col items-center px-5 py-1 sm:px-8"
@@ -657,16 +679,12 @@ export default function LabExperience() {
         <PlatformArchitecture modules={modules} onActivateArea={setActiveArea} />
       </Section>
 
-      <Section
-        id="how"
-        eyebrow="How I Think"
-        title="The product development framework behind AI solutions."
-      >
+      <CollapsibleSection id="how" label="How I Think">
         <ThinkingFramework />
-      </Section>
+      </CollapsibleSection>
 
-      <Section id="about" eyebrow="About" title="Built between care, code and product design.">
-        <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_0.8fr]">
+      <CollapsibleSection id="about" label="About">
+        <div className="mt-5 grid gap-10 sm:mt-6 lg:grid-cols-[1fr_0.8fr]">
           <div className="max-w-2xl space-y-3 text-lg leading-8 tracking-[-0.005em] text-[#526170]/82">
             <p>Wing Yee builds AI-powered healthcare products by combining clinical experience, computer science and product design.</p>
             <p>The goal is to transform everyday healthcare workflows into practical AI systems.</p>
@@ -685,54 +703,51 @@ export default function LabExperience() {
             )}
           </div>
         </div>
-      </Section>
+      </CollapsibleSection>
 
-      <Section id="mission" eyebrow="Mission" title="Technology should give healthcare professionals more time to care.">
-        <p className="mt-8 max-w-2xl text-lg leading-8 text-[#526170]/82">
+      <CollapsibleSection id="mission" label="Mission">
+        <p className="mt-5 max-w-2xl text-lg leading-8 text-[#526170]/82 sm:mt-6">
           AI should reduce repetitive work, improve communication, and create better healthcare experiences.
         </p>
-      </Section>
+      </CollapsibleSection>
 
-      <Section id="roadmap" eyebrow="Roadmap" title="Future versions.">
-        <div className="mt-14 grid gap-4 sm:grid-cols-2">
+      <CollapsibleSection id="roadmap" label="Roadmap">
+        <div className="mt-5 grid gap-4 sm:mt-6 sm:grid-cols-2">
           {futureRoadmap.map((item, index) => (
             <motion.div
               key={item}
-              className="min-h-36 rounded-[1.35rem] border border-[#1b2430]/[0.085] bg-white/72 p-5 shadow-[0_18px_60px_rgba(80,120,140,0.08)] backdrop-blur-xl"
+              className="rounded-[1.2rem] border border-[#1b2430]/[0.085] bg-white/72 p-4 shadow-[0_18px_60px_rgba(80,120,140,0.08)] backdrop-blur-xl sm:p-5"
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: index * 0.05 }}
             >
-              <span className="text-[13px] text-[#2f8396]/62">0{index + 1}</span>
-              <p className="mt-10 text-base tracking-[-0.025em] text-[#1b2430]/76">{item}</p>
-              <p className="mt-5 text-[13px] uppercase tracking-[0.2em] text-[#2f8396]/62">
-                Future Version
-              </p>
+              <div className="flex items-center justify-between gap-4">
+                <span className="text-[12px] text-[#2f8396]/62">0{index + 1}</span>
+                <span className="text-[11px] uppercase tracking-[0.18em] text-[#2f8396]/62">Future Version</span>
+              </div>
+              <p className="mt-4 text-lg font-medium leading-7 tracking-[-0.025em] text-[#1b2430]/80">{item}</p>
             </motion.div>
           ))}
         </div>
-        <a
-          href="#contact"
-          className="mt-10 inline-flex w-fit items-center gap-3 rounded-full border border-[#1b2430]/10 bg-white/72 px-5 py-3 text-[15px] font-medium text-[#1b2430]/78 transition hover:border-[#2f8396]/30 hover:text-[#1b2430]"
-        >
-          View Roadmap <ArrowRight size={15} />
-        </a>
-      </Section>
+      </CollapsibleSection>
 
-      <Section id="contact" eyebrow="Contact" title="Start a practical AI workflow conversation.">
-        <div className="mt-10 flex flex-col gap-5 border-t border-[#1b2430]/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
+      <CollapsibleSection id="contact" label="Contact">
+        <div className="mt-5 flex flex-col gap-5 sm:mt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="max-w-2xl text-base leading-8 text-[#526170]/78">
             Bring a healthcare workflow problem, patient experience idea, or AI automation concept into the lab.
           </p>
           <a
-            href="#contact"
+            href="https://wa.me/85251395439?text=Hi%2C%20there.%20I%20want%20to%20know%20more%20about%20Wing%20Yee%20AI%20Lab."
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Start a WhatsApp conversation with Wing Yee AI Lab"
             className="inline-flex w-fit items-center gap-3 rounded-full bg-[#1b2430] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#263343]"
           >
             Start conversation <ArrowRight size={16} />
           </a>
         </div>
-      </Section>
+      </CollapsibleSection>
 
     </main>
   );
