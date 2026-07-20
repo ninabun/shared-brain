@@ -332,7 +332,7 @@ export default function RosterAutomationPage() {
           {[['Roster engine','Generate and validate the schedule.'],['n8n','Coordinate review, approval, publication, notification and version history.'],['Management','Review exceptions, approve publication and retain authority.']].map(([title,body])=><GlassCard key={title} className="p-6"><p className="text-sm uppercase tracking-[0.2em] text-[#4F8BFF]">{title}</p><p className="mt-4 text-base leading-7 text-[#526170]">{body}</p></GlassCard>)}
         </div>
         <p className="mt-8 rounded-3xl border border-amber-300/40 bg-amber-50/70 p-6 text-[#76531f]">A technically valid roster still requires operational and clinical management review.</p>
-        <div className="mt-7 flex flex-wrap gap-3"><a href="https://n8nrostering.vercel.app/operations.html" className="inline-flex items-center gap-3 rounded-full bg-[#1b2430] px-6 py-3 text-sm font-medium text-white">Open Workflow Extension <ArrowRight size={15}/></a><a href="/#platform" className="inline-flex items-center gap-3 rounded-full border border-[#1b2430]/15 bg-white/60 px-6 py-3 text-sm font-medium">Healthcare AI</a></div>
+        <div className="mt-7 flex flex-wrap gap-3"><a href="https://n8nrostering.vercel.app/operations.html" className="inline-flex items-center gap-3 rounded-full bg-[#1b2430] px-6 py-3 text-sm font-medium text-white">Open Workflow Extension <ArrowRight size={15}/></a></div>
       </section>
     </main>
   );
